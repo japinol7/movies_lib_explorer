@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Movies Library Metadata Explorer - Upload {{ director.last_name }} Photo{% endblock %}
+
+{% block content %}
+    <br/>
+    <h2>Upload Photo for {{ director.last_name }}</h2>
+
+    {% if form.errors %}
+        <div class="alert alert-danger">Correct any errors before continuing.</div>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="id_director_photo">Choose File</label>
+            <input type="file" class="form-control-file" name="director_photo"
+                   id="id_director_photo">
+        </div>
+
+        <button class="btn btn-dark" type="submit">Save</button>
+    </form>
+
+{% endblock content %}

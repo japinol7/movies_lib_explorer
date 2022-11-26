@@ -1,0 +1,109 @@
+[
+  {
+    "model": "catalog.director",
+    "pk": 1,
+    "fields": {
+      "last_name": "Huston",
+      "first_name": "John",
+      "created": "2022-09-25T18:42:22.592Z",
+      "updated": "2022-09-25T18:42:22.592Z"
+    }
+  },
+  {
+    "model": "catalog.director",
+    "pk": 2,
+    "fields": {
+      "last_name": "Capra",
+      "first_name": "Frank",
+      "created": "2022-09-25T18:42:22.611Z",
+      "updated": "2022-09-25T18:42:22.611Z"
+    }
+  },
+  {
+    "model": "catalog.director",
+    "pk": 3,
+    "fields": {
+      "last_name": "Kurosawa",
+      "first_name": "Akira",
+      "created": "2022-09-25T18:42:22.637Z",
+      "updated": "2022-09-25T18:42:22.637Z"
+    }
+  },
+  {
+    "model": "catalog.movie",
+    "pk": 1,
+    "fields": {
+      "title": "The Maltese Falcon",
+      "director": 1,
+      "year": 1959,
+      "created": "2022-09-25T18:42:22.601Z",
+      "updated": "2022-09-25T18:42:22.601Z"
+    }
+  },
+  {
+    "model": "catalog.movie",
+    "pk": 2,
+    "fields": {
+      "title": "Arsenic and Old Lace",
+      "director": 2,
+      "year": 1944,
+      "created": "2022-09-25T18:42:22.621Z",
+      "updated": "2022-09-25T18:42:22.621Z"
+    }
+  },
+  {
+    "model": "catalog.movie",
+    "pk": 3,
+    "fields": {
+      "title": "It Happened One Night",
+      "director": 2,
+      "year": 1938,
+      "created": "2022-09-25T18:42:22.628Z",
+      "updated": "2022-09-25T18:42:22.628Z"
+    }
+  },
+  {
+    "model": "catalog.movie",
+    "pk": 4,
+    "fields": {
+      "title": "Ikiru",
+      "director": 3,
+      "year": 1952,
+      "created": "2022-09-25T18:42:22.647Z",
+      "updated": "2022-09-25T18:42:22.647Z"
+    }
+  },
+  {
+    "model": "catalog.movie",
+    "pk": 5,
+    "fields": {
+      "title": "Throne of Blood",
+      "director": 3,
+      "year": 1957,
+      "created": "2022-09-25T18:42:22.654Z",
+      "updated": "2022-09-25T18:42:22.654Z"
+    }
+  },
+  {
+    "model": "catalog.movie",
+    "pk": 6,
+    "fields": {
+      "title": "Seven Samurai",
+      "director": 3,
+      "year": 1954,
+      "created": "2022-09-25T18:42:22.664Z",
+      "updated": "2022-09-25T18:42:22.664Z"
+    }
+  },
+  {
+    "model": "catalog.movie",
+    "pk": 7,
+    "fields": {
+      "title": "Ran",
+      "director": 3,
+      "year": 1985,
+      "created": "2022-09-25T18:42:22.673Z",
+      "updated": "2022-09-25T18:42:22.673Z"
+    }
+  }
+]

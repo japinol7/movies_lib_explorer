@@ -1,0 +1,29 @@
+from django.test import TestCase
+
+from catalog.models.director import Director
+from catalog.models.movie import Movie
+
+
+class CatalogTestCase(TestCase):
+
+    def setUp(self):
+        super().setUp()
+        director = Director.objects.create(last_name="Kurusawa")
+        Movie.objects.create(title="Seven samurais", director=director, year=1954)
+
+    def test_movie_director_repr(self):
+        movie = Movie.objects.get(id=1)
+        result = repr(movie)
+        expected = f'director_id={movie.director.id}'
+        self.assertIn(expected, result)
+
+    def test_movie_repr(self):
+        movie = Movie.objects.get(id=1)
+        result = repr(movie)
+        expected = f'title="{movie.title}"'
+        self.assertIn(expected, result)
+
+    def test_movie_list(self):
+        response = self.client.get('/catalog/movie_list/')
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(1, len(response.context["movies"]))

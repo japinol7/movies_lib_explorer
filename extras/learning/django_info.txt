@@ -1,0 +1,180 @@
+----------------------------------------
+ General django commands
+----------------------------------------
+> Run django server.
+python ./manage.py runserver
+
+> Create an App.
+  Create the app (addon) structure for an app named: catalog.
+./manage.py startapp catalog
+
+> Create migration scripts for all apps.
+./manage.py makemigrations
+
+> Create migration scripts for an app named catalog.
+./manage.py makemigrations catalog
+
+> Creates a new database and all the tables needed.
+./manage.py migrate
+
+> Run django interactive console shell.
+./manage.py shell
+
+> Run database interactive console shell.
+./manage.py dbshell
+
+> Dump data from an app to a json file.
+./manage.py dumpdata catalog > catalog.json
+
+> Restore a  data dump file from one json file or more.
+./manage.py loaddata catalog.json
+
+> Restore a  data dump file from one json file or more from fixtures:
+./manage.py loaddata catalog
+
+> Execute all Tests.
+./manage.py test
+
+> Execute all Tests from the folder: tests.
+./manage.py test tests
+
+> Test just one class.
+./manage.py test tests.catalog.test_catalog.CatalogTestCase
+----------------------------------------
+----------------------------------------
+
+
+
+
+
+
+
+----------------------------------------
+ django interactive console shell
+----------------------------------------
+from catalog.models import Director, Movie
+john_huston = Director.objects.create(last_name="Huston", first_name="John")
+maltese_falcon = Movie.objects.create(title="The Maltese Falcon", director=john_huston, year=1959)
+
+frank_capra = Director.objects.create(last_name="Capra", first_name="Frank")
+arsenic_n_old_lace = Movie.objects.create(title="Arsenic and Old Lace", director=frank_capra, year=1944)
+it_happened_one_night = Movie.objects.create(title="It Happened One Night", director=frank_capra, year=1938)
+
+akira_kurosawa = Director.objects.create(last_name="Kurosawa", first_name="Akira")
+ikiru = Movie.objects.create(title="Ikiru", director=akira_kurosawa, year=1952)
+throne_of_blood = Movie.objects.create(title="Throne of Blood", director=akira_kurosawa, year=1957)
+seven_samurai = Movie.objects.create(title="Seven Samurai", director=akira_kurosawa, year=1954)
+ran = Movie.objects.create(title="Ran", director=akira_kurosawa, year=1985)
+
+
+> Update a field
+john_huston.first_name = "John"
+
+> Save change to the db
+john_huston.save()
+
+> Get a director by its id
+director1 = Director.objects.get(id=1)
+print(director1.last_name)
+
+> Get all movies
+movies = Movie.objects.all()
+
+
+> Get all movies with "ran" in the title.
+movies = Movie.objects.filter(title="ran")
+print(movies)
+
+> Get all movies from the director object: akira_kurosawa.
+movies = Movie.objects.filter(director=akira_kurosawa)
+for movie in movies:
+    print(movie)
+    print('-' * 50)
+
+
+> Get all movies filtered by years from 1954 to 1959.
+movies = Movie.objects.filter(year__gt=1953,year__lt=1960)
+for movie in movies:
+    print(movie)
+    print('-' * 50)
+
+----------------------------------------
+----------------------------------------
+
+
+
+
+
+
+
+----------------------------------------
+ General database commands
+----------------------------------------
+$./manage.py dbshell
+----
+.tables
+select * from catalog_movie;
+----------------------------------------
+----------------------------------------
+
+
+
+
+
+
+
+----------------------------------------
+ Users: Admins, Staff, Users
+----------------------------------------
+> Create an admin super user
+./manage.py createsuperuser
+
+    > Username: admin
+    > Email address: admin@ex.com
+    > Password:
+
+> Access the admin user from the web browser.
+http://127.0.0.1:8000/admin/
+----------------------------------------
+----------------------------------------
+
+
+
+
+
+
+----------------------------------------------
+ Configuring Pycharm with Django's dev server
+----------------------------------------------
+> Script path: V:\repos\git\movies_lib_explorer-0\manage.py
+> Parameters: runserver
+----------------------------------------------
+----------------------------------------------
+
+
+
+
+
+----------------------------------------
+> Some initial content for the db.
+
+from catalog.models import Director, Movie
+john_huston = Director.objects.create(last_name="Huston", first_name="John")
+maltese_falcon = Movie.objects.create(title="The Maltese Falcon", director=john_huston, year=1959)
+
+frank_capra = Director.objects.create(last_name="Capra", first_name="Frank")
+arsenic_n_old_lace = Movie.objects.create(title="Arsenic and Old Lace", director=frank_capra, year=1944)
+it_happened_one_night = Movie.objects.create(title="It Happened One Night", director=frank_capra, year=1938)
+
+akira_kurosawa = Director.objects.create(last_name="Kurosawa", first_name="Akira")
+ikiru = Movie.objects.create(title="Ikiru", director=akira_kurosawa, year=1952)
+throne_of_blood = Movie.objects.create(title="Throne of Blood", director=akira_kurosawa, year=1957)
+seven_samurai = Movie.objects.create(title="Seven Samurai", director=akira_kurosawa, year=1954)
+ran = Movie.objects.create(title="Ran", director=akira_kurosawa, year=1985)
+
+movies = Movie.objects.filter(director=akira_kurosawa)
+for movie in movies:
+    print(movie)
+    print('-' * 50)
+----------------------------------------
+----------------------------------------
