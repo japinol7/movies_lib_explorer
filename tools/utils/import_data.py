@@ -12,7 +12,7 @@ class ImportDataException(Exception):
     pass
 
 
-def import_if_empty():
+def import_initial_data():
     data = {
         'movies': Movie.objects.order_by('title', 'director__last_name', 'director__first_name', 'year'),
         'directors': Director.objects.order_by('last_name', 'first_name'),
