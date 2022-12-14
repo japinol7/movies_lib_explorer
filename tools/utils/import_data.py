@@ -50,7 +50,7 @@ def __get_dataset_from_json(dataset_file_name, columns_mapping, column_to_add_to
 
 
 def __import_catalog_movies():
-    log.info(f"Start to Import movie lib movies file")
+    log.info("Start to Import movie lib movies file")
     if config.DATASET_SOURCE_FORMAT == config.DATASET_SOURCE_CSV:
         dataset = __get_dataset_from_csv(config.MOVIE_DATASET_FILE,
                                          config.MOVIE_COLUMNS_MAPPING,
@@ -62,7 +62,7 @@ def __import_catalog_movies():
                                           config.MOVIE_COLUMN_TO_ADD_TO_GROUP,
                                           config.MOVIE_COLUMN_TO_GROUP_BY)
     else:
-        raise ImportDataException(f"Internal Error extracting database files. "
+        raise ImportDataException("Internal Error extracting database files. "
                                   f"Source Format not supported: {config.DATASET_SOURCE_FORMAT}")
 
     count_movies = 0
@@ -77,11 +77,11 @@ def __import_catalog_movies():
         vals['director_id'] = director.id
         Movie.objects.create(**vals)
     log.info("Committing to database")
-    log.info(f"End Import movie lib movies file")
+    log.info("End Import movie lib movies file")
 
 
 def __import_catalog_directors():
-    log.info(f"Start to Import movie lib directors file")
+    log.info("Start to Import movie lib directors file")
     if config.DATASET_SOURCE_FORMAT == config.DATASET_SOURCE_CSV:
         dataset = __get_dataset_from_csv(config.DIRECTOR_DATASET_FILE,
                                          config.DIRECTOR_COLUMNS_MAPPING,
@@ -106,4 +106,4 @@ def __import_catalog_directors():
         log.info(f"Adding director num {count_directors:6} to database: {key}")
         Director.objects.create(**vals)
     log.info("Committing to database")
-    log.info(f"End Import director lib directors file")
+    log.info("End Import director lib directors file")

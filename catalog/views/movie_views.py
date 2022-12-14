@@ -13,6 +13,12 @@ def movie_list(request):
         }
     return render(request, "catalog/movie_list.html", data)
 
+def movie_with_image_list(request):
+    data = {
+        'movies': Movie.objects.order_by('title', 'director__last_name', 'director__first_name', 'year')
+        }
+    return render(request, "catalog/movie_with_image_list.html", data)
+
 
 def movie(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)

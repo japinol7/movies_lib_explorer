@@ -4,10 +4,7 @@
 
 {% block content %}
     <br/>
-    <h3>Movies</h3>
-    <p>
-        <a class="btn btn-dark" href="{% url 'movie_with_image_list' %}">Movies with image</a>
-    </p>
+    <h3>Movies with image</h3>
     <p>
         {% for movie in movies %}
             <b><a href="{% url 'movie' movie_id=movie.id %}">{{ movie.title }}</a></b>;

@@ -8,6 +8,7 @@ from home.views import home_views
 
 urlpatterns = [
     path('movie_list/', movie_views.movie_list, name='movie_list'),
+    path('movie_with_image_list/', movie_views.movie_with_image_list, name='movie_with_image_list'),
     path('movie/<int:movie_id>/', movie_views.movie, name='movie'),
     path('upload_movie_photo/<int:movie_id>/', movie_views.upload_movie_photo,
          name="upload_movie_photo"),
