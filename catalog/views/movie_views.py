@@ -13,11 +13,12 @@ def movie_list(request):
         }
     return render(request, "catalog/movie_list.html", data)
 
-def movie_with_image_list(request):
+
+def movie_with_picture_list(request):
     data = {
-        'movies': Movie.objects.order_by('title', 'director__last_name', 'director__first_name', 'year')
+        'movies': Movie.objects.filter(picture__isnull=True).order_by('title', 'director__last_name', 'director__first_name', 'year')
         }
-    return render(request, "catalog/movie_with_image_list.html", data)
+    return render(request, "catalog/movie_with_picture_list.html", data)
 
 
 def movie(request, movie_id):

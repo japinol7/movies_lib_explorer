@@ -4,7 +4,7 @@
 
 {% block content %}
     <br/>
-    <h3>Movies with image</h3>
+    <h3>Movies with picture</h3>
     <p>
         {% for movie in movies %}
             <b><a href="{% url 'movie' movie_id=movie.id %}">{{ movie.title }}</a></b>;
