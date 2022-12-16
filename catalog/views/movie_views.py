@@ -16,7 +16,8 @@ def movie_list(request):
 
 def movie_with_picture_list(request):
     data = {
-        'movies': Movie.objects.filter(picture__isnull=True).order_by('title', 'director__last_name', 'director__first_name', 'year')
+        'movies': Movie.objects.exclude(picture='').order_by(
+            'title', 'director__last_name', 'director__first_name', 'year')
         }
     return render(request, "catalog/movie_with_picture_list.html", data)
 

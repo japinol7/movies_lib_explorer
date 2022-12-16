@@ -7,6 +7,16 @@
     <h3>Movies with picture</h3>
     <p>
         {% for movie in movies %}
+            <p>
+                {% if movie.picture %}
+                    <img src="{{ movie.picture.url }}" style="max-height:250px">
+                {% elif not movie.picture and request.user.is_authenticated %}
+                    <a class="btn btn-sm btn-dark" id="id_movie_upload"
+                       href="{% url 'upload_movie_photo' movie.id %}">Upload Movie Photo</a>
+                {% endif %}
+
+                <br/>
+            </p>
             <b><a href="{% url 'movie' movie_id=movie.id %}">{{ movie.title }}</a></b>;
             {{ movie.year }};
             {% if movie.director.first_name %}{{ movie.director.first_name }}{% endif %}
@@ -14,7 +24,7 @@
             <br/>
 
         {% empty %}
-            <i>There are no movies in the database.</i>
+            <i>There are no movies with picture in the database.</i>
         {% endfor %}
     </p>
 {% endblock content %}
