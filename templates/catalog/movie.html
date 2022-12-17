@@ -46,7 +46,7 @@
 
     <p>
         {% if movie.picture %}
-            <img src="{{ movie.picture.url }}" style="max-height:250px">
+            <img src="{{ movie.picture.url }}" style="max-height:750px">
         {% elif not movie.picture and request.user.is_authenticated %}
             <a class="btn btn-sm btn-dark" id="id_movie_upload"
                href="{% url 'upload_movie_photo' movie.id %}">Upload Movie Photo</a>
