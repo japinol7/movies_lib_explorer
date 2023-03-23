@@ -13,9 +13,9 @@
 	author_gitHub: japinol7
 	author_twitter: @japinol
 	requirements: Django 4.1
-	Python requires: 3.9 or greater.
+	Python requires: 3.10 or greater.
 	Python versions tested: 
-        > 3.9.12 64bits under Windows 11
+        > 3.10.10 64bits under Windows 11
 
 
 ## Screenshots
@@ -34,5 +34,7 @@
 	    2. Go to its folder in your system.
 	    3. $ pip install -r requirements.txt
 	    4. $ python manage.py runserver
-	    5. Open the website indicated in the console in your browser.
+	    5. The first time you must create a new database with the right tables this way:
+	       $ python manage.py migrate
+	    6. Open the website indicated in the console in your browser.
 	       Example: http://127.0.0.1:8000/
