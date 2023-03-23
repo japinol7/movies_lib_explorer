@@ -1,5 +1,5 @@
-Django>=4.1
-django-debug-toolbar>=3.7.0
-django-grappelli>=3.0.3
-djangorestframework>=3.14.0
-Pillow>=9.3.0
+Django>=4.1.7,<5
+django-debug-toolbar>=3.8.1,<4
+django-grappelli>=3.0.5,<4
+djangorestframework>=3.14.0,<4
+Pillow>=9.4.0,<10
