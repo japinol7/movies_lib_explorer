@@ -33,10 +33,10 @@
 	    1. Clone this repository in your local system.
 	    2. Go to its folder in your system.
 	    3. $ pip install -r requirements.txt
-	    4. $ python manage.py runserver
-	    5. The first time you must create a new database with the right tables this way:
+	    4. The first time you must create a new database with the right tables this way:
 	       $ python manage.py migrate
-	       5.1 You can also create an admin user this way, so you can log in, create other users, etc:
+	       4.1 You can also create an admin user this way, so you can log in, create other users, etc:
 	          $ python manage.py createsuperuser
+	    5. $ python manage.py runserver
 	    6. Open the website indicated in the console in your browser.
 	       Example: http://127.0.0.1:8000/
