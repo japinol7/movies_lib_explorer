@@ -27,6 +27,41 @@
 <img src="screenshots/screenshot5.png"> <br/>
 
 
+## Catalog Directors REST API
+
+http://127.0.0.1:8000/catalog/api/v1/directors/
+http://127.0.0.1:8000/catalog/api/v1/directors/1/
+
+
+* Get all directors <br/>
+curl -i http://127.0.0.1:8000/catalog/api/v1/directors/
+
+
+* Get director with id 1 <br/>
+curl -i http://127.0.0.1:8000/catalog/api/v1/directors/1/ -w '\n'
+
+
+* Create new director <br/>
+curl -i http://127.0.0.1:8000/catalog/api/v1/directors/ \
+-X POST \
+-H 'Content-Type: application/json' \
+-d '{"last_name": "Test-Director-Last_Name", "first_name": "Test-Director-First_Name"}' \
+-w '\n'
+
+
+* Change name of director with id 314 <br/>
+curl -i http://127.0.0.1:8000/catalog/api/v1/directors/314/ \
+-X PUT \
+-H 'Content-Type: application/json' \
+-d '{"last_name": "Test-Director-Last_Name Updated", "first_name": "Test-Director-First_Name Updated"}' \
+-w '\n'
+
+
+* Delete director with id 3 <br/>
+curl -i http://127.0.0.1:8000/catalog/api/v1/directors/314/ \
+-X DELETE
+
+
 **To make this app server work**
 
 	Do this:

@@ -1,8 +1,9 @@
 from django.urls import path
+from rest_framework.urlpatterns import format_suffix_patterns
 
 from catalog.views import director_views
 from catalog.views import movie_views
-from catalog.views_api import director_views_api
+from catalog.views_api.v1 import director_views_api as director_views_api_v1
 from catalog.views import load_data_views
 from home.views import home_views
 
@@ -17,8 +18,12 @@ urlpatterns = [
     path('director/<int:director_id>/', director_views.director, name="director"),
     path('upload_director_photo/<int:director_id>/', director_views.upload_director_photo,
          name="upload_director_photo"),
-    path('list_directors_api/', director_views_api.list_directors_api),
+
+    path('api/v1/directors/', director_views_api_v1.director_list),
+    path('api/v1/directors/<int:pk>/', director_views_api_v1.director_detail, name="director"),
 
     path('about/', home_views.about, name="about"),
     path('load_data/', load_data_views.load_data, name="load_data"),
     ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
