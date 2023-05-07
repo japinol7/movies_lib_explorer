@@ -20,7 +20,7 @@ urlpatterns = [
          name="upload_director_photo"),
 
     path('api/v1/directors/', director_views_api_v1.DirectorList.as_view()),
-    path('api/v1/directors/<int:pk>/', director_views_api_v1.DirectorDetail.as_view(), name="director"),
+    path('api/v1/directors/<int:pk>/', director_views_api_v1.DirectorDetail.as_view()),
 
     path('about/', home_views.about, name="about"),
     path('load_data/', load_data_views.load_data, name="load_data"),

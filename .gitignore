@@ -1,5 +1,8 @@
 /.idea/
 
+/resources/uploads/movies_lib_explorer/*.png
+/resources/uploads/movies_lib_explorer/*.jpg
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.pyc

@@ -1,0 +1,1 @@
+This server application saves in this directory the pictures of movies and directors you upload.
