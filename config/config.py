@@ -74,3 +74,5 @@ DIRECTOR_COLUMN_TO_ADD_TO_GROUP = DirectorColumnToAddToGroup('id_and_last_name',
 DATE_COLUMNS = []
 AMOUNT_COLUMNS = []
 COLUMNS_TO_STRIP_WHITESPACE_FROM = ['title']
+
+ERROR_PERMISSION_MSG = "You do not have permission to perform this action."

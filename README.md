@@ -29,7 +29,8 @@
 
 ## Catalog Directors REST API
 
-http://127.0.0.1:8000/catalog/api/v1/directors/
+http://127.0.0.1:8000/  <br/>
+http://127.0.0.1:8000/catalog/api/v1/directors/  <br/>
 http://127.0.0.1:8000/catalog/api/v1/directors/1/
 
 
@@ -45,7 +46,7 @@ curl -i http://127.0.0.1:8000/catalog/api/v1/directors/1/ -w '\n'
 curl -i http://127.0.0.1:8000/catalog/api/v1/directors/ \
 -X POST \
 -H 'Content-Type: application/json' \
--H 'Authorization: Token YOUR_TOKEN_HERE' \
+-H 'Authorization: Token '$MLE_REST_API_TOKEN \
 -d '{"last_name": "Test-Director-Last_Name", "first_name": "Test-Director-First_Name"}' \
 -w '\n'
 
@@ -54,7 +55,7 @@ curl -i http://127.0.0.1:8000/catalog/api/v1/directors/ \
 curl -i http://127.0.0.1:8000/catalog/api/v1/directors/314/ \
 -X PUT \
 -H 'Content-Type: application/json' \
--H 'Authorization: Token YOUR_TOKEN_HERE' \
+-H 'Authorization: Token '$MLE_REST_API_TOKEN \
 -d '{"last_name": "Test-Director-Last_Name Updated", "first_name": "Test-Director-First_Name Updated"}' \
 -w '\n'
 
@@ -62,12 +63,14 @@ curl -i http://127.0.0.1:8000/catalog/api/v1/directors/314/ \
 * Delete director with id 3 <br/>
 curl -i http://127.0.0.1:8000/catalog/api/v1/directors/317/ \
 -X DELETE \
--H 'Authorization: Token YOUR_TOKEN_HERE'
+-H 'Authorization: Token '$MLE_REST_API_TOKEN
 
 
-* How to create a token for the admin user to authenticate on the REST API
+* How to create a token for the admin user to authenticate on the REST API <br/>
 ./manage.py drf_create_token admin
+* Then set an env variable MLE_REST_API_TOKEN to the generated token
 <br/> <br/>
+
 
 ## To make this app server work
 
