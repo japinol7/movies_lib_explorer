@@ -135,6 +135,10 @@ select * from catalog_movie;
 
 > Access the admin user from the web browser.
 http://127.0.0.1:8000/admin/
+
+-------
+> Create token for the admin user to authenticate on the REST API
+./manage.py drf_create_token admin
 ----------------------------------------
 ----------------------------------------
 
