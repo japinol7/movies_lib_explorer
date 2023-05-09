@@ -47,20 +47,18 @@ curl -i http://127.0.0.1:8000/catalog/api/v1/directors/ \
 -X POST \
 -H 'Content-Type: application/json' \
 -H 'Authorization: Token '$MLME_REST_API_TOKEN \
--d '{"last_name": "Test-Director-Last_Name", "first_name": "Test-Director-First_Name"}' \
--w '\n'
+-d '{"last_name": "Test-Director-Last_Name", "first_name": "Test-Director-First_Name"}'
 
 
-* Change name of director with id 314 <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/directors/314/ \
+* Change name of director with id 317 <br/>
+curl -i http://127.0.0.1:8000/catalog/api/v1/directors/317/ \
 -X PUT \
 -H 'Content-Type: application/json' \
 -H 'Authorization: Token '$MLME_REST_API_TOKEN \
--d '{"last_name": "Test-Director-Last_Name Updated", "first_name": "Test-Director-First_Name Updated"}' \
--w '\n'
+-d '{"last_name": "Test-Director-Last_Name Updated", "first_name": "Test-Director-First_Name Updated"}'
 
 
-* Delete director with id 3 <br/>
+* Delete director with id 317 <br/>
 curl -i http://127.0.0.1:8000/catalog/api/v1/directors/317/ \
 -X DELETE \
 -H 'Authorization: Token '$MLME_REST_API_TOKEN

@@ -1,21 +1,37 @@
 ----------------------------------------
- General django commands
+ Django links
+----------------------------------------
+> Django documentation | Django
+https://docs.djangoproject.com/
+
+> Django REST framework
+https://www.django-rest-framework.org/
+
+
+----------------------------------------
+ General Django commands
 ----------------------------------------
 > Run django server.
 python ./manage.py runserver
 
+> Create a Django project.
+  Create the project structure for a Django project with name movies_lib_explorer in the current directory.
+django-admin startproject movies_lib_explorer .
+
 > Create an App.
   Create the app (addon) structure for an app named: catalog.
 ./manage.py startapp catalog
+  Or
+django-admin startapp catalog
+
+> Create a new database and all the tables needed.
+./manage.py migrate
 
 > Create migration scripts for all apps.
 ./manage.py makemigrations
 
 > Create migration scripts for an app named catalog.
 ./manage.py makemigrations catalog
-
-> Creates a new database and all the tables needed.
-./manage.py migrate
 
 > Run django interactive console shell.
 ./manage.py shell
