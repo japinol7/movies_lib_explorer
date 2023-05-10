@@ -53,8 +53,8 @@ class UploadTestCase(TestCase):
 
         # Re-fetch Director, should now have a file field
         director = Director.objects.get(id=director.id)
-        self.assertEqual(f"1_{PHOTO_FILE_NAME}", director.picture.name)
+        self.assertEqual(f"1_director_{PHOTO_FILE_NAME}", director.picture.name)
 
         # Clean up
-        path = Path(settings.MEDIA_ROOT) / f"1_{PHOTO_FILE_NAME}"
+        path = Path(settings.MEDIA_ROOT) / f"1_director_{PHOTO_FILE_NAME}"
         path.unlink()

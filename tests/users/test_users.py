@@ -9,5 +9,4 @@ class UsersTestCase(TestCase):
 
     def test_404(self):
         response = self.client.get('/not_a_valid_url/')
-        expected = 'The pages are still blank,'
-        self.assertIn(expected, str(response.content))
+        self.assertEqual(404, response.status_code)
