@@ -26,23 +26,22 @@ class UploadTestCase(TestCase):
 
         # Test upload button isn't there if not signed in
         response = self.client.get(director_url)
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(response.status_code, 200)
         self.assertNotIn('id="id_director_upload"', str(response.content))
 
         # Test login_required fires
         response = self.client.get(upload_url)
-        self.assertEqual(302, response.status_code)
+        self.assertEqual(response.status_code, 302)
         self.assertIn('login', response.url)
 
         # Sign-in, check for button
         self.client.login(username=self.user, password=self.PASSWORD)
         response = self.client.get(director_url)
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(response.status_code, 200)
         self.assertIn('id="id_director_upload"', str(response.content))
 
         # Test image upload
         with open(f"tests/data/{PHOTO_FILE_NAME}", 'rb') as f:
-            content = f.read()
             photo = SimpleUploadedFile(PHOTO_FILE_NAME, f.read(), 'image/jpeg')
             data = {
                 'director_photo': photo,
@@ -53,7 +52,7 @@ class UploadTestCase(TestCase):
 
         # Re-fetch Director, should now have a file field
         director = Director.objects.get(id=director.id)
-        self.assertEqual(f"1_director_{PHOTO_FILE_NAME}", director.picture.name)
+        self.assertEqual(director.picture.name, f"1_director_{PHOTO_FILE_NAME}")
 
         # Clean up
         path = Path(settings.MEDIA_ROOT) / f"1_director_{PHOTO_FILE_NAME}"

@@ -25,5 +25,5 @@ class CatalogTestCase(TestCase):
 
     def test_movie_list(self):
         response = self.client.get('/catalog/movie_list/')
-        self.assertEqual(200, response.status_code)
-        self.assertEqual(1, len(response.context["movies"]))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context["movies"]), 1)

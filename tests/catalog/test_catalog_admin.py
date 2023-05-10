@@ -31,7 +31,7 @@ class CatalogAdminTestCase(TestCase):
 
         # Fetch movie listing page
         response = self.client.get("/admin/catalog/movie/")
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(response.status_code, 200)
 
         # Check show_movies field
         director = Director.objects.create(last_name="Test_Director")
