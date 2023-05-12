@@ -94,3 +94,21 @@ class DirectorAPITestCase(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Director.objects.count(), self.director_count - 1)
+
+    def test_create_director(self):
+        self._log_as_admin_user()
+        log.info("Create director")
+        vals = {
+            'last_name': 'Test-Director-Last_Name',
+            'first_name': 'Test-Director-First_Name',
+            }
+        response = self.client.post(
+            path=reverse('api_directors'),
+            content_type='application/json',
+            data=json.dumps(vals))
+        json_data = response.json()
+        log.info(f"Create director Response json: {json_data}")
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(json_data['last_name'], 'Test-Director-Last_Name')
+        self.assertEqual(Director.objects.count(), self.director_count + 1)
