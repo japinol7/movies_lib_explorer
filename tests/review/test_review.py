@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
-from rest_framework import status
 
 from catalog.models.director import Director
 from catalog.models.movie import Movie
@@ -27,13 +26,13 @@ class ReviewTestCase(TestCase):
         # Verify no-review state
         movie_url = reverse('movie', args=(movie.id,))
         response = self.client.get(movie_url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, 200)
         self.assertIn("No reviews yet!", str(response.content))
 
         # Verify login redirect
         review_url = reverse('review_movie', args=(movie.id,))
         response = self.client.get(review_url)
-        self.assertEqual(response.status_code, status.HTTP_302_FOUND)
+        self.assertEqual(response.status_code, 302)
         self.assertIn('login', response.url)
 
         # Post a review
@@ -43,7 +42,7 @@ class ReviewTestCase(TestCase):
             }
         self.client.login(username=self.users[0], password=self.PASSWORD)
         response = self.client.post(review_url, review_data1)
-        self.assertEqual(response.status_code, status.HTTP_302_FOUND)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, f'/catalog/movie/{movie.id}/')
 
         review = movie.review_set.first()
@@ -66,7 +65,7 @@ class ReviewTestCase(TestCase):
         # Verify that the movie page has reviews
         self.client.logout()
         response = self.client.get(movie_url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, 200)
         self.assertIn(f"{self.users[0].username} rating {review_data1['rating']}",
                       str(response.content))
         self.assertIn(f"{self.users[1].username} rating {review_data2['rating']}",
