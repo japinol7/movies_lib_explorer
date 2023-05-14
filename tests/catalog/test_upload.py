@@ -3,8 +3,9 @@ from pathlib import Path
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import TestCase, Client
+from django.test import TestCase
 from django.urls import reverse
+from rest_framework import status
 
 from catalog.models.director import Director
 
@@ -26,18 +27,18 @@ class UploadTestCase(TestCase):
 
         # Test upload button isn't there if not signed in
         response = self.client.get(director_url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertNotIn('id="id_director_upload"', str(response.content))
 
         # Test login_required fires
         response = self.client.get(upload_url)
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, status.HTTP_302_FOUND)
         self.assertIn('login', response.url)
 
         # Sign-in, check for button
         self.client.login(username=self.user, password=self.PASSWORD)
         response = self.client.get(director_url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn('id="id_director_upload"', str(response.content))
 
         # Test image upload
@@ -47,7 +48,7 @@ class UploadTestCase(TestCase):
                 'director_photo': photo,
                 }
             response = self.client.post(upload_url, data)
-            self.assertEqual(302, response.status_code)
+            self.assertEqual(response.status_code, status.HTTP_302_FOUND)
             self.assertIn('director', response.url)
 
         # Re-fetch Director, should now have a file field

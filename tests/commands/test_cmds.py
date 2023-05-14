@@ -23,19 +23,19 @@ class CommandsTestCase(TestCase):
 
     def test_director(self):
         out = self.run_command('directors')
-        self.assertEqual(1, out.count('\n'))
+        self.assertEqual(out.count('\n'), 1)
         self.assertIn('l_name', out)
 
     def test_movie(self):
         # Test --all
         out = self.run_command('movie', all=True)
-        self.assertEqual(2, out.count('\n'))
+        self.assertEqual(out.count('\n'), 2)
         self.assertIn('title1', out)
         self.assertIn('title2', out)
 
         # Test id argument
         out = self.run_command('movie', self.movie1.id)
-        self.assertEqual(1, out.count('\n'))
+        self.assertEqual(out.count('\n'), 1)
         self.assertIn('title1', out)
 
         # Test error management
