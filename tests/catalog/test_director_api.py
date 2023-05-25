@@ -55,6 +55,67 @@ class DirectorAPITestCase(APITestCase):
         self.assertEqual(director['last_name'], self.director.last_name)
         self.assertEqual(director['first_name'], self.director.first_name)
 
+    def test_get_director_list_filtered_by_last_name(self):
+        log.info("Get director list filtered by last name")
+        Director.objects.create(last_name='Kurusawa', first_name='Dummy')
+        Director.objects.create(last_name='Hawks', first_name='Howard')
+
+        search_name = 'Kurusawa'
+        response = self.client.get(
+            path=rf"http://127.0.0.1:8000/catalog/api/v1/directors/?last_name={search_name}",
+            content_type='application/json')
+        json_data = response.json()
+        directors = json_data
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(directors), 2)
+        self.assertEqual(directors[0]['last_name'], self.director.last_name)
+        self.assertEqual(directors[0]['first_name'], self.director.first_name)
+        self.assertEqual(directors[1]['last_name'], 'Kurusawa')
+        self.assertEqual(directors[1]['first_name'], 'Dummy')
+
+    def test_get_director_list_filter_first_name_and_order_last_name(self):
+        log.info("Get director list filtered by first name and ordered by last name")
+        Director.objects.create(last_name='Ford', first_name='John')
+        Director.objects.create(last_name='Badham', first_name='John')
+
+        search_name = 'John'
+        response = self.client.get(
+            path=rf"http://127.0.0.1:8000/catalog/api/v1/directors/?first_name={search_name}&ordering=last_name",
+            content_type='application/json')
+        json_data = response.json()
+        directors = json_data
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(directors), 2)
+        self.assertEqual(directors[0]['last_name'], 'Badham')
+        self.assertEqual(directors[0]['first_name'], 'John')
+        self.assertEqual(directors[1]['last_name'], 'Ford')
+        self.assertEqual(directors[1]['first_name'], 'John')
+
+    def test_get_director_list_search_first_name_and_order_last_name(self):
+        log.info("Get director list searched by first name and ordered by last name")
+        Director.objects.create(last_name='Ford', first_name='John')
+        Director.objects.create(last_name='Badham', first_name='John')
+        Director.objects.create(last_name='Dummy', first_name='Jane')
+        Director.objects.create(last_name='Jonsson', first_name='Dummy')
+
+        search_name = 'Jo'
+        response = self.client.get(
+            path=rf"http://127.0.0.1:8000/catalog/api/v1/directors/?search={search_name}&ordering=last_name",
+            content_type='application/json')
+        json_data = response.json()
+        directors = json_data
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(directors), 3)
+        self.assertEqual(directors[0]['last_name'], 'Badham')
+        self.assertEqual(directors[0]['first_name'], 'John')
+        self.assertEqual(directors[1]['last_name'], 'Ford')
+        self.assertEqual(directors[1]['first_name'], 'John')
+        self.assertEqual(directors[2]['last_name'], 'Jonsson')
+        self.assertEqual(directors[2]['first_name'], 'Dummy')
+
     def test_get_director_detail(self):
         log.info("Get director detail")
         response = self.client.get(
@@ -85,7 +146,7 @@ class DirectorAPITestCase(APITestCase):
         self.assertEqual(director['last_name'], f"{self.director.last_name} Updated")
         self.assertEqual(director['first_name'], f"{self.director.first_name} Updated")
 
-    def test_delete_director_detail(self):
+    def test_delete_director(self):
         self._log_as_admin_user()
         log.info("Delete director")
         response = self.client.delete(

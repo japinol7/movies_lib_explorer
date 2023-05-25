@@ -1,6 +1,8 @@
 from rest_framework import generics
 from rest_framework import authentication
 from rest_framework.exceptions import ValidationError
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 from catalog.models.director import Director
 from catalog.serializers import DirectorSerializer
@@ -16,6 +18,10 @@ class DirectorList(generics.ListCreateAPIView):
 
     queryset = Director.objects.all()
     serializer_class = DirectorSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['last_name', 'first_name']
+    search_fields = ['last_name', 'first_name']
+    ordering_fields = ['last_name', 'first_name']
 
     def perform_create(self, serializer):
         if not self.request.user.is_superuser:

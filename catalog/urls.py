@@ -4,6 +4,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from catalog.views import director_views
 from catalog.views import movie_views
 from catalog.views_api.v1 import director_views_api as director_views_api_v1
+from catalog.views_api.v1 import movie_views_api as movie_views_api_v1
 from catalog.views import load_data_views
 from home.views import home_views
 
@@ -21,6 +22,9 @@ urlpatterns = [
 
     path('api/v1/directors/', director_views_api_v1.DirectorList.as_view(), name="api_directors"),
     path('api/v1/directors/<int:pk>/', director_views_api_v1.DirectorDetail.as_view(), name="api_director_detail"),
+
+    path('api/v1/movies/', movie_views_api_v1.MovieList.as_view(), name="api_movies"),
+    path('api/v1/movies/<int:pk>/', movie_views_api_v1.MovieDetail.as_view(), name="api_movie_detail"),
 
     path('about/', home_views.about, name="about"),
     path('load_data/', load_data_views.load_data, name="load_data"),
