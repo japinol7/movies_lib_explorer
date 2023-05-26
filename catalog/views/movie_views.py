@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
 
+from catalog.models.actor import Actor
 from catalog.models.movie import Movie
 
 
@@ -24,7 +25,9 @@ def movie_with_picture_list(request):
 
 def movie(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
-    return render(request, 'catalog/movie.html', {'movie': movie})
+    actors = Actor.objects.filter(movie=movie)
+    return render(request, 'catalog/movie.html',
+                  {'movie': movie, 'actors': actors})
 
 
 @login_required

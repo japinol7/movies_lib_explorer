@@ -7,7 +7,7 @@
 
 	program: Movies Library Metadata Explorer using Django.
     name as a package: movies_lib_explorer 
-	version: 0.0.1
+	version: 0.0.2
 	author: Joan A. Pinol
 	author_nickname: japinol
 	author_gitHub: japinol7

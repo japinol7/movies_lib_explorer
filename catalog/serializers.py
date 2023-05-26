@@ -1,7 +1,14 @@
 from rest_framework import serializers
 
+from catalog.models.actor import Actor
 from catalog.models.director import Director
 from catalog.models.movie import Movie
+
+
+class ActorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Actor
+        fields = ['id', 'first_name', 'last_name', 'created', 'updated']
 
 
 class DirectorSerializer(serializers.ModelSerializer):

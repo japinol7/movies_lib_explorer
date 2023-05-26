@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <br/>
+    <h3>Actors</h3>
+
+    <p>
+        {% for actor in actors %}
+            <b><a href="{% url 'actor' actor_id=actor.id %}"
+            >{% if actor.first_name %}{{ actor.first_name }}{% endif %}
+                {% if actor.last_name %} {{ actor.last_name }}{% endif %}
+            </a></b>
+            <br/>
+
+        {% empty %}
+            <i>There are no actors in the database</i>
+        {% endfor %}
+
+    </p>
+{% endblock content %}
