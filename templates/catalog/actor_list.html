@@ -3,7 +3,10 @@
 {% block content %}
     <br/>
     <h3>Actors</h3>
-
+    <p>
+        <a class="btn btn-dark" href="{% url 'calc_new_actors_from_cast' %}"
+            >Calculate new actor links from movies cast without links</a>
+    </p>
     <p>
         {% for actor in actors %}
             <b><a href="{% url 'actor' actor_id=actor.id %}"

@@ -1,11 +1,14 @@
 from zipfile import ZipFile
 
+from django.db import models
+
 from config import config
 from tools.dataset.csv_dataset import CsvDataset
 from tools.logger.logger import log
 
 from catalog.models.movie import Movie
 from catalog.models.director import Director
+from catalog.models.actor import Actor
 
 
 class ImportDataException(Exception):
@@ -23,7 +26,12 @@ def import_initial_data():
 
     __unzip_data_files()
     __import_catalog_directors()
+    __import_catalog_actors()
     __import_catalog_movies()
+
+    data = get_data_to_update_actors_n_movie_actor_links()
+    if data['movies']:
+        update_actors_n_movie_actor_links(data)
 
 
 def __unzip_data_files():
@@ -107,3 +115,77 @@ def __import_catalog_directors():
         Director.objects.create(**vals)
     log.info("Committing to database")
     log.info("End Import director lib directors file")
+
+
+def __import_catalog_actors():
+    log.info("Start to Import movie lib actors file")
+    if config.DATASET_SOURCE_FORMAT == config.DATASET_SOURCE_CSV:
+        dataset = __get_dataset_from_csv(config.ACTOR_DATASET_FILE,
+                                         config.ACTOR_COLUMNS_MAPPING,
+                                         config.ACTOR_COLUMN_TO_ADD_TO_GROUP,
+                                         config.ACTOR_COLUMN_TO_GROUP_BY)
+    elif config.DATASET_SOURCE_FORMAT == config.DATASET_SOURCE_JSON:
+        dataset = __get_dataset_from_json(config.ACTOR_DATASET_FILE,
+                                          config.ACTOR_COLUMNS_MAPPING,
+                                          config.ACTOR_COLUMN_TO_ADD_TO_GROUP,
+                                          config.ACTOR_COLUMN_TO_GROUP_BY)
+    else:
+        raise ImportDataException(f"Internal Error extracting database files. "
+                                  f"Source Format not supported: {config.DATASET_SOURCE_FORMAT}")
+
+    count_actors = 0
+    for key, rows in dataset:
+        if not key:
+            continue
+        count_actors += 1
+        vals = list(rows)[0]
+        del vals[config.ACTOR_COLUMN_TO_GROUP_BY]
+        log.info(f"Adding actor num {count_actors:6} to database: {key}")
+        Actor.objects.create(**vals)
+    log.info("Committing to database")
+    log.info("End Import actor lib actors file")
+
+
+def get_data_to_update_actors_n_movie_actor_links():
+    return {
+        'movies': Movie.objects.exclude(cast__isnull=True).exclude(cast__exact='').
+                  exclude(actors__isnull=False).
+                  order_by('title', 'director__last_name', 'director__first_name', 'year'),
+        'actors': Actor.objects.order_by('last_name', 'first_name'),
+        }
+
+
+def update_actors_n_movie_actor_links(data):
+    log.info("Start to create actors movie links")
+    for movie in data['movies']:
+        if not movie.cast:
+            continue
+        cast = movie.cast.replace('…', '').replace('...', '').replace('\n', '').\
+            replace(', Jr.', ' __Jr.__').\
+            replace(', Sr.', ' __Sr.__').split(',')
+        cast = [actor.replace(' __Jr.__', ', Jr.').
+                replace(' __Sr.__', ', Sr.').strip() for actor in cast]
+        if cast and movie.actors.count() > 0:
+            log.info(f"Clear movie previous actors: to the movie: {movie.id} {movie.title}")
+            movie.actors.clear()
+
+        for actor_name in cast:
+            if actor_name.strip() == '':
+                continue
+            old_actors = Actor.objects.filter(
+                models.Q(last_name=actor_name))
+            actor_already_exists = old_actors.count() > 0
+            if actor_already_exists:
+                old_actor = old_actors[0]
+                log.info(f"Add link to existing actor {old_actor.id} {old_actor.last_name} "
+                         f"to the movie: {movie.id} {movie.title}")
+                movie.actors.add(old_actor)
+                continue
+            vals = {
+                'last_name': actor_name
+                }
+            new_actor = Actor.objects.create(**vals)
+            new_actor.save()
+            log.info(f"Add link to new actor {new_actor.id} {new_actor.last_name} "
+                     f"to the movie: {movie.id} {movie.title}")
+            movie.actors.add(new_actor)

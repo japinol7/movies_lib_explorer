@@ -4,7 +4,12 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
 
+from catalog.import_data.import_data import (
+    update_actors_n_movie_actor_links,
+    get_data_to_update_actors_n_movie_actor_links,
+    )
 from catalog.models.actor import Actor
+from tools.logger.logger import log
 
 
 def actor_list(request):
@@ -17,6 +22,19 @@ def actor_list(request):
 def actor(request, actor_id):
     actor = get_object_or_404(Actor, id=actor_id)
     return render(request, 'catalog/actor.html', {'actor': actor})
+
+
+def calc_new_actors_from_cast(request):
+    data = get_data_to_update_actors_n_movie_actor_links()
+    if not data['movies']:
+        log.info("Skip calculating new actors from cast. There is no new data to process.")
+        return render(request, 'catalog/calc_new_actors_from_cast_aborted.html', data)
+
+    update_actors_n_movie_actor_links(data)
+
+    data = {
+        }
+    return render(request, 'catalog/calc_new_actors_from_cast.html', data)
 
 
 @login_required

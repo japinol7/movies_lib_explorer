@@ -190,3 +190,6 @@ http://127.0.0.1:8000/
 	    5. $ python manage.py runserver
 	    6. Open the website indicated in the console in your browser.
 	       Example: http://127.0.0.1:8000/
+	    7. The first time, press the button [Load Initial Data] on the main web page.
+	       This imports sample data with several movies, directors and actors.
+	       This also creates links between actors and movies.

@@ -31,6 +31,8 @@ urlpatterns = [
     path('actor/<int:actor_id>/', actor_views.actor, name="actor"),
     path('upload_actor_photo/<int:actor_id>/', actor_views.upload_actor_photo,
          name="upload_actor_photo"),
+    path('calc_new_actors_from_cast/', actor_views.calc_new_actors_from_cast,
+         name="calc_new_actors_from_cast"),
 
     path('about/', home_views.about, name="about"),
     path('load_data/', load_data_views.load_data, name="load_data"),

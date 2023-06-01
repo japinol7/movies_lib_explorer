@@ -13,7 +13,7 @@ class Movie(models.Model):
         )
     actors = models.ManyToManyField(
         Actor,
-        blank=True, null=True,
+        blank=True,
         )
     runtime = models.IntegerField(default=0)
     year = models.IntegerField()

@@ -114,4 +114,5 @@ ENV/
 /db.sqlite3
 /resources/data/main_catalog_director.csv
 /resources/data/main_catalog_movie.csv
+/resources/data/main_catalog_actor.csv
 /identifier.sqlite
