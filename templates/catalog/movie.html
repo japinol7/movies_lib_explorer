@@ -29,6 +29,16 @@
         {{ movie.cast }}
     </p>
 
+    <h5>Cast links</h5>
+    <p>
+        {% for actor in actors.all %}
+            <a href="{% url 'actor' actor_id=actor.id %}"
+            >{{ actor.first_name }} {{ actor.last_name }}</a>,
+        {% empty %}
+            <i>No actor set</i>
+        {% endfor %}
+    </p>
+
     <h5>Country</h5>
     <p>
         {{ movie.country }}

@@ -3,7 +3,8 @@
 
 {% block content %}
     <br/>
-    <h2>Upload Photo for {{ director.last_name }}</h2>
+    <h2>Upload Photo for director: <br/>
+        {{ director.first_name }} {{ director.last_name }}</h2>
 
     {% if form.errors %}
         <div class="alert alert-danger">Correct any errors before continuing.</div>

@@ -7,7 +7,7 @@
 
 	program: Movies Library Metadata Explorer using Django.
     name as a package: movies_lib_explorer 
-	version: 0.0.1
+	version: 0.0.2
 	author: Joan A. Pinol
 	author_nickname: japinol
 	author_gitHub: japinol7
@@ -190,3 +190,6 @@ http://127.0.0.1:8000/
 	    5. $ python manage.py runserver
 	    6. Open the website indicated in the console in your browser.
 	       Example: http://127.0.0.1:8000/
+	    7. The first time, press the button [Load Initial Data] on the main web page.
+	       This imports sample data with several movies, directors and actors.
+	       This also creates links between actors and movies.

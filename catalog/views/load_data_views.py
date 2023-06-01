@@ -2,8 +2,8 @@ from django.shortcuts import render
 
 from catalog.models.movie import Movie
 from catalog.models.director import Director
-from tools.logger.logger import  log
-from tools.utils.import_data import import_initial_data
+from catalog.import_data.import_data import import_initial_data
+from tools.logger.logger import log
 
 
 def load_data(request):

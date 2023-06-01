@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{% block title %}Movies Library Metadata Explorer - Upload {{ movie.title }} {{ movie.year }} Photo{% endblock %}
+{% block title %}Movies Library Metadata Explorer - Upload {{ actor.last_name }} Photo{% endblock %}
 
 {% block content %}
     <br/>
-    <h2>Upload Photo for movie of year {{ movie.year }}: <br/>
-        {{ movie.title }}</h2>
+    <h2>Upload Photo for actor: <br/>
+        {{ actor.first_name }} {{ actor.last_name }}</h2>
 
     {% if form.errors %}
         <div class="alert alert-danger">Correct any errors before continuing.</div>
@@ -14,9 +14,9 @@
         {% csrf_token %}
 
         <div class="form-group">
-            <label for="id_movie_photo">Choose File</label>
-            <input type="file" class="form-control-file" name="movie_photo"
-                   id="id_movie_photo">
+            <label for="id_actor_photo">Choose File</label>
+            <input type="file" class="form-control-file" name="actor_photo"
+                   id="id_actor_photo">
         </div>
 
         <button class="btn btn-dark" type="submit">Save</button>

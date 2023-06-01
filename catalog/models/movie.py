@@ -1,5 +1,6 @@
 from django.db import models
 
+from catalog.models.actor import Actor
 from catalog.models.director import Director
 
 
@@ -9,7 +10,11 @@ class Movie(models.Model):
     director = models.ForeignKey(
         Director, on_delete=models.DO_NOTHING,
         blank=True, null=True,
-    )
+        )
+    actors = models.ManyToManyField(
+        Actor,
+        blank=True,
+        )
     runtime = models.IntegerField(default=0)
     year = models.IntegerField()
     country = models.CharField(max_length=3, blank=True)
