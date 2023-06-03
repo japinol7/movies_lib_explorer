@@ -18,10 +18,12 @@ class DirectorSerializer(serializers.ModelSerializer):
 
 
 class MovieSerializer(serializers.ModelSerializer):
+    actors = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
     class Meta:
         model = Movie
         fields = ['id', 'title', 'title_original', 'director', 'runtime',
-                  'year', 'country', 'language', 'cast', 'genres',
+                  'year', 'country', 'language', 'cast', 'actors', 'genres',
                   'writer', 'producer', 'cinematography', 'production_company', 'note',
                   'description', 'created', 'updated',
                   ]

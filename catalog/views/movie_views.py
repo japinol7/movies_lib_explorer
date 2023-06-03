@@ -1,3 +1,5 @@
+from collections import defaultdict
+from itertools import groupby
 from pathlib import Path
 
 from django.conf import settings
@@ -21,6 +23,54 @@ def movie_with_picture_list(request):
             'title', 'director__last_name', 'director__first_name', 'year')
         }
     return render(request, "catalog/movie_with_picture_list.html", data)
+
+
+def movie_list_by_year(request):
+    data = {
+        'movies': Movie.objects.order_by('year', 'title', 'director__last_name', 'director__first_name')
+        }
+    return render(request, "catalog/movie_list_by_year.html", _group_data_by_year(data['movies']))
+
+
+def _group_data_by_year(data):
+    def key_func(x):
+        return x[0]
+
+    data_with_year = ((x.year, x) for x in data)
+    data_by_year = groupby(sorted(data_with_year, key=key_func), key_func)
+
+    res = defaultdict(list)
+    for year, movies in data_by_year:
+        for movie in movies:
+            res[year].append(movie)
+
+    return {
+        'years': dict(res)
+        }
+
+
+def movie_list_by_decade(request):
+    data = {
+        'movies': Movie.objects.order_by('title', 'director__last_name', 'director__first_name')
+        }
+    return render(request, "catalog/movie_list_by_decade.html", _group_data_by_decade(data['movies']))
+
+
+def _group_data_by_decade(data):
+    def key_func(x):
+        return x[0]
+
+    data_with_decade = ((x.decade, x) for x in data)
+    data_by_decade = groupby(sorted(data_with_decade, key=key_func), key_func)
+
+    res = defaultdict(list)
+    for decade, movies in data_by_decade:
+        for movie in movies:
+            res[decade].append(movie)
+
+    return {
+        'decades': dict(res)
+        }
 
 
 def movie(request, movie_id):

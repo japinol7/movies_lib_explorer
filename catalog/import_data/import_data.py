@@ -28,7 +28,10 @@ def import_initial_data():
     __import_catalog_directors()
     __import_catalog_actors()
     __import_catalog_movies()
+    __create_movie_actor_links()
 
+
+def __create_movie_actor_links():
     data = get_data_to_update_actors_n_movie_actor_links()
     if data['movies']:
         update_actors_n_movie_actor_links(data)
@@ -82,10 +85,16 @@ def __import_catalog_movies():
         log.info(f"Adding movie num {count_movies:6} to database: {key}")
         director = Director.objects.get(id=vals['director_id'])
         del vals[config.MOVIE_COLUMN_TO_GROUP_BY]
+        year = int(vals['year']) if vals['year'] and vals['year'].isnumeric() else 0
+        vals['decade'] = _get_decade_from_year(year)
         vals['director_id'] = director.id
         Movie.objects.create(**vals)
     log.info("Committing to database")
     log.info("End Import movie lib movies file")
+
+
+def _get_decade_from_year(year):
+    return year - (year % 10) if 1900 <= year <= 9999 else 0
 
 
 def __import_catalog_directors():
