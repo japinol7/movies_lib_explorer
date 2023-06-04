@@ -81,6 +81,19 @@ curl -i http://127.0.0.1:8000/catalog/api/v1/directors/317/ \
 <br/> <br/>
 
 
+## Catalog Actors REST API
+
+http://127.0.0.1:8000/catalog/api/v1/actors/  <br/>
+http://127.0.0.1:8000/catalog/api/v1/actors/27/
+
+### Similar to directors REST API. For example:
+
+* Get all actors which last name is "Toshiro Mifune"<br/>
+curl -i "http://127.0.0.1:8000/catalog/api/v1/actors/?last_name=Toshiro%20Mifune"
+
+<br/> <br/>
+
+
 ## Catalog Movies REST API
 
 http://127.0.0.1:8000/catalog/api/v1/movies/  <br/>

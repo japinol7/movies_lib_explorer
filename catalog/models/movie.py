@@ -16,7 +16,8 @@ class Movie(models.Model):
         blank=True,
         )
     runtime = models.IntegerField(default=0)
-    year = models.IntegerField()
+    year = models.IntegerField(default=0)
+    decade = models.IntegerField(default=0)
     country = models.CharField(max_length=3, blank=True)
     language = models.CharField(max_length=25, blank=True)
     cast = models.CharField(max_length=254, blank=True)
@@ -36,8 +37,10 @@ class Movie(models.Model):
         verbose_name = 'Movie'
         verbose_name_plural = 'Movies'
         indexes = [
-            models.Index(fields=['title', 'director'])
-        ]
+            models.Index(fields=['title', 'director']),
+            models.Index(fields=['year', 'title', 'director']),
+            models.Index(fields=['decade', 'year', 'title', 'director']),
+            ]
 
     def __str__(self):
         return f"Id: {self.id}, \n" \

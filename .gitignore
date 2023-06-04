@@ -112,7 +112,8 @@ ENV/
 # PyCharm
 .idea/
 /db.sqlite3
+/identifier.sqlite
+/db.sqlite3-journal
 /resources/data/main_catalog_director.csv
 /resources/data/main_catalog_movie.csv
 /resources/data/main_catalog_actor.csv
-/identifier.sqlite
