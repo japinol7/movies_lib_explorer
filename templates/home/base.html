@@ -27,10 +27,10 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <a class="btn btn-dark" href="{% url 'movie_list' %}">Movies</a>
-    <a class="btn btn-dark" href="{% url 'director_list' %}">Directors</a>
-    <a class="btn btn-dark" href="{% url 'actor_list' %}">Actors</a>
-    <a class="btn btn-dark" href="{% url 'about' %}">About</a>
+    <a class="btn btn-dark" href="{% url 'catalog:movie_list' %}">Movies</a>
+    <a class="btn btn-dark" href="{% url 'catalog:director_list' %}">Directors</a>
+    <a class="btn btn-dark" href="{% url 'catalog:actor_list' %}">Actors</a>
+    <a class="btn btn-dark" href="{% url 'home:about' %}">About</a>
 
     <div class="collapse navbar-collapse" id="main_nav_bar">
         <ul class="navbar-nav ml-auto">

@@ -4,17 +4,31 @@
 > Django documentation | Django
 https://docs.djangoproject.com/
 
+> Django website
+https://www.djangoproject.com/start/overview/
+
 > Django REST framework
 https://www.django-rest-framework.org/
 
 > django-filter package documentation
 https://django-filter.readthedocs.io/
 
+> Django installation - Official
+https://docs.djangoproject.com/en/4.1/topics/install/
+
+> Django installation on Windows - Official
+https://docs.djangoproject.com/en/4.1/howto/windows/
+
+> Setting up Virtual environment in Python - venv
+https://docs.python.org/3/library/venv.html
+
 ----------------------------------------
  General Django commands
 ----------------------------------------
 > Run django server.
 python ./manage.py runserver
+  Or
+django-admin runserver
 
 > Create a Django project.
   Create the project structure for a Django project with name movies_lib_explorer in the current directory.
@@ -24,16 +38,22 @@ django-admin startproject movies_lib_explorer .
   Create the app (addon) structure for an app named: catalog.
 ./manage.py startapp catalog
   Or
-django-admin startapp catalog
+python -m django startapp catalog
 
 > Create a new database and all the tables needed.
 ./manage.py migrate
+  Or
+django-admin migrate
 
 > Create migration scripts for all apps.
 ./manage.py makemigrations
+  Or
+django-admin makemigrations
 
 > Create migration scripts for an app named catalog.
 ./manage.py makemigrations catalog
+  Or
+django-admin makemigrations catalog
 
 > Run django interactive console shell.
 ./manage.py shell

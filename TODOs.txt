@@ -1,6 +1,3 @@
 ## TODOs & Wishlist ##
 
-* Movie Actor cast name for movie 46 Bringing Up Baby:
-   > Katherine Hepburn
-     must be:
-     > Katharine Hepburn
+* Fix Save photo button action when file not chosen yet.

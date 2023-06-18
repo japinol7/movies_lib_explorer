@@ -38,4 +38,4 @@ def upload_director_photo(request, director_id):
             output.write(chunk)
     director.picture = path.name
     director.save()
-    return redirect('director', director.id)
+    return redirect('catalog:director', director.id)

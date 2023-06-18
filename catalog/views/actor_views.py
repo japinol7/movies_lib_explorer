@@ -56,4 +56,4 @@ def upload_actor_photo(request, actor_id):
             output.write(chunk)
     actor.picture = path.name
     actor.save()
-    return redirect('actor', actor.id)
+    return redirect('catalog:actor', actor.id)

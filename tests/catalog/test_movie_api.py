@@ -59,7 +59,7 @@ class MovieAPITestCase(APITestCase):
     def test_get_movie_list(self):
         log.info("Get movie list")
         response = self.client.get(
-            path=reverse('api_movies'),
+            path=reverse('catalog:api_movies'),
             content_type='application/json')
         json_data = response.json()
         movie = json_data[-1]
@@ -386,7 +386,7 @@ class MovieAPITestCase(APITestCase):
             'cast': "Takeshi Sakamoto, Chōko Iida, Kōji Mitsui, Rieko Yagumo, Yoshiko Tsubouchi",
             }
         response = self.client.post(
-            path=reverse('api_movies'),
+            path=reverse('catalog:api_movies'),
             content_type='application/json',
             data=json.dumps(vals))
         json_data = response.json()

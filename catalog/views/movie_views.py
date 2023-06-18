@@ -99,4 +99,4 @@ def upload_movie_photo(request, movie_id):
             output.write(chunk)
     movie.picture = path.name
     movie.save()
-    return redirect('movie', movie.id)
+    return redirect('catalog:movie', movie.id)

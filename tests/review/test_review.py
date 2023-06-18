@@ -24,13 +24,13 @@ class ReviewTestCase(TestCase):
         movie = Movie.objects.create(title="movie", director=director, year=1900)
 
         # Verify no-review state
-        movie_url = reverse('movie', args=(movie.id,))
+        movie_url = reverse('catalog:movie', args=(movie.id,))
         response = self.client.get(movie_url)
         self.assertEqual(response.status_code, 200)
         self.assertIn("No reviews yet!", str(response.content))
 
         # Verify login redirect
-        review_url = reverse('review_movie', args=(movie.id,))
+        review_url = reverse('review:review_movie', args=(movie.id,))
         response = self.client.get(review_url)
         self.assertEqual(response.status_code, 302)
         self.assertIn('login', response.url)

@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.test import TestCase
 
 from catalog.models.director import Director
@@ -24,6 +25,8 @@ class CatalogTestCase(TestCase):
         self.assertIn(expected, result)
 
     def test_movie_list(self):
-        response = self.client.get('/catalog/movie_list/')
+        response = self.client.get(
+            path=reverse('catalog:movie_list'),
+            content_type='application/json')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context["movies"]), 1)

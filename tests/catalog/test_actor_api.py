@@ -46,7 +46,7 @@ class ActorAPITestCase(APITestCase):
     def test_get_actor_list(self):
         log.info("Get actor list")
         response = self.client.get(
-            path=reverse('api_actors'),
+            path=reverse('catalog:api_actors'),
             content_type='application/json')
         json_data = response.json()
         actor = json_data[-1]
@@ -164,7 +164,7 @@ class ActorAPITestCase(APITestCase):
             'first_name': 'Test-Actor-First_Name',
             }
         response = self.client.post(
-            path=reverse('api_actors'),
+            path=reverse('catalog:api_actors'),
             content_type='application/json',
             data=json.dumps(vals))
         json_data = response.json()

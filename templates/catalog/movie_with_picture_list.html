@@ -12,17 +12,17 @@
             <div class="grid-item">
                 <p>
                     {% if movie.picture %}
-                        <a href="{% url 'movie' movie_id=movie.id %}">
+                        <a href="{% url 'catalog:movie' movie_id=movie.id %}">
                             <img src="{{ movie.picture.url }}"
-                                 href="{% url 'upload_movie_photo' movie.id %}"
+                                 href="{% url 'catalog:upload_movie_photo' movie.id %}"
                                  style="max-height:400px">
                         </a>
                     {% elif not movie.picture and request.user.is_authenticated %}
                         <a class="btn btn-sm btn-dark" id="id_movie_upload"
-                           href="{% url 'upload_movie_photo' movie.id %}">Upload Movie Photo</a>
+                           href="{% url 'catalog:upload_movie_photo' movie.id %}">Upload Movie Photo</a>
                     {% endif %}
                     <br/>
-                    <b><a href="{% url 'movie' movie_id=movie.id %}">{{ movie.title }}</a></b><br/>
+                    <b><a href="{% url 'catalog:movie' movie_id=movie.id %}">{{ movie.title }}</a></b><br/>
                     {{ movie.year }}
                     {% if movie.director.first_name %}{{ movie.director.first_name }}{% endif %}
                     {% if movie.director.last_name %} {{ movie.director.last_name }}{% endif %}

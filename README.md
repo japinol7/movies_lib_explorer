@@ -61,8 +61,8 @@ curl -i http://127.0.0.1:8000/catalog/api/v1/directors/ \
 -d '{"last_name": "Test-Director-Last_Name", "first_name": "Test-Director-First_Name"}'
  
 
-* Change name of director with id 317 <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/directors/317/ \
+* Change name of director with id 610 <br/>
+curl -i http://127.0.0.1:8000/catalog/api/v1/directors/610/ \
 -X PUT \
 -H 'Content-Type: application/json' \
 -H 'Authorization: Token '$MLME_REST_API_TOKEN \

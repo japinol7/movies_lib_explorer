@@ -21,8 +21,8 @@ class UploadTestCase(TestCase):
 
     def test_photo_upload(self):
         director = Director.objects.create(first_name="Robert", last_name="California")
-        director_url = reverse('director', args=(director.id,))
-        upload_url = reverse('upload_director_photo', args=(director.id,))
+        director_url = reverse('catalog:director', args=(director.id,))
+        upload_url = reverse('catalog:upload_director_photo', args=(director.id,))
 
         # Test upload button isn't there if not signed in
         response = self.client.get(director_url)

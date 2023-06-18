@@ -6,9 +6,9 @@
     <br/>
     <h3>Movies by Decade</h3>
     <p>
-        <a class="btn btn-dark" href="{% url 'movie_list' %}">Movies</a>
-        <a class="btn btn-dark" href="{% url 'movie_list_by_year' %}">Movies by Year</a>
-        <a class="btn btn-dark" href="{% url 'movie_with_picture_list' %}">Movies with picture</a>
+        <a class="btn btn-dark" href="{% url 'catalog:movie_list' %}">Movies</a>
+        <a class="btn btn-dark" href="{% url 'catalog:movie_list_by_year' %}">Movies by Year</a>
+        <a class="btn btn-dark" href="{% url 'catalog:movie_with_picture_list' %}">Movies with picture</a>
     </p>
     <p>
     {% for decade, movies in decades.items %}
@@ -17,7 +17,7 @@
             {{ decade }}
         </h4>
         {% for decade, movie in movies %}
-            <b><a href="{% url 'movie' movie_id=movie.id %}">{{ movie.title }}</a></b>;
+            <b><a href="{% url 'catalog:movie' movie_id=movie.id %}">{{ movie.title }}</a></b>;
             {{ movie.year }};
             {% if movie.director.first_name %}{{ movie.director.first_name }}{% endif %}
             {% if movie.director.last_name %} {{ movie.director.last_name }}{% endif %}

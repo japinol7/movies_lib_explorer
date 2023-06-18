@@ -46,7 +46,7 @@ class DirectorAPITestCase(APITestCase):
     def test_get_director_list(self):
         log.info("Get director list")
         response = self.client.get(
-            path=reverse('api_directors'),
+            path=reverse('catalog:api_directors'),
             content_type='application/json')
         json_data = response.json()
         director = json_data[-1]
@@ -164,7 +164,7 @@ class DirectorAPITestCase(APITestCase):
             'first_name': 'Test-Director-First_Name',
             }
         response = self.client.post(
-            path=reverse('api_directors'),
+            path=reverse('catalog:api_directors'),
             content_type='application/json',
             data=json.dumps(vals))
         json_data = response.json()

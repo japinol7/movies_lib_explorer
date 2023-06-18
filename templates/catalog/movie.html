@@ -9,7 +9,7 @@
 
     <h5>Director</h5>
     <p>
-        <a href="{% url 'director' director_id=movie.director_id %}">
+        <a href="{% url 'catalog:director' director_id=movie.director_id %}">
             {{ movie.director.first_name }} {{ movie.director.last_name }}
         </a>
     </p>
@@ -32,7 +32,7 @@
     <h5>Cast links</h5>
     <p>
         {% for actor in actors.all %}
-            <a href="{% url 'actor' actor_id=actor.id %}"
+            <a href="{% url 'catalog:actor' actor_id=actor.id %}"
             >{{ actor.first_name }} {{ actor.last_name }}</a>,
         {% empty %}
             <i>No actor set</i>
@@ -59,7 +59,7 @@
             <img src="{{ movie.picture.url }}" style="max-height:750px">
         {% elif not movie.picture and request.user.is_authenticated %}
             <a class="btn btn-sm btn-dark" id="id_movie_upload"
-               href="{% url 'upload_movie_photo' movie.id %}">Upload Movie Photo</a>
+               href="{% url 'catalog:upload_movie_photo' movie.id %}">Upload Movie Photo</a>
         {% endif %}
 
         <br/>
@@ -105,7 +105,7 @@
             <h5>Movie reviews</h5>
         </div>
         <div class="col text-right">
-            <a class="btn btn-dark" href="{% url 'review_movie' movie.id %}">Review</a>
+            <a class="btn btn-dark" href="{% url 'review:review_movie' movie.id %}">Review</a>
         </div>
     </div>
 

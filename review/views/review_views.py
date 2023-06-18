@@ -22,7 +22,7 @@ def review_movie(request, movie_id):
             review.user = request.user
             review.movie = movie
             review.save()
-            return redirect('movie', movie_id=movie.id)
+            return redirect('catalog:movie', movie_id=movie.id)
 
         # Form not valid, re-render with errors
         data = {

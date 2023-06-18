@@ -10,6 +10,7 @@ from catalog.views_api.v1 import actor_views_api as actor_views_api_v1
 from catalog.views import load_data_views
 from home.views import home_views
 
+app_name = 'catalog'
 urlpatterns = [
     path('movie_list/', movie_views.movie_list, name='movie_list'),
     path('movie_list_by_year/', movie_views.movie_list_by_year, name='movie_list_by_year'),

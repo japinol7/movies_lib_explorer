@@ -6,13 +6,13 @@
     <br/>
     <h3>Movies</h3>
     <p>
-        <a class="btn btn-dark" href="{% url 'movie_list_by_year' %}">Movies by Year</a>
-        <a class="btn btn-dark" href="{% url 'movie_list_by_decade' %}">Movies by Decade</a>
-        <a class="btn btn-dark" href="{% url 'movie_with_picture_list' %}">Movies with Picture</a>
+        <a class="btn btn-dark" href="{% url 'catalog:movie_list_by_year' %}">Movies by Year</a>
+        <a class="btn btn-dark" href="{% url 'catalog:movie_list_by_decade' %}">Movies by Decade</a>
+        <a class="btn btn-dark" href="{% url 'catalog:movie_with_picture_list' %}">Movies with Picture</a>
     </p>
     <p>
         {% for movie in movies %}
-            <b><a href="{% url 'movie' movie_id=movie.id %}">{{ movie.title }}</a></b>;
+            <b><a href="{% url 'catalog:movie' movie_id=movie.id %}">{{ movie.title }}</a></b>;
             {{ movie.year }};
             {% if movie.director.first_name %}{{ movie.director.first_name }}{% endif %}
             {% if movie.director.last_name %} {{ movie.director.last_name }}{% endif %}
