@@ -19,11 +19,13 @@ urlpatterns = [
     path('movie/<int:movie_id>/', movie_views.movie, name='movie'),
     path('upload_movie_photo/<int:movie_id>/', movie_views.upload_movie_photo,
          name="upload_movie_photo"),
+    path('movie_edit/<int:movie_id>/', movie_views.movie_edit_form, name='movie_edit_form'),
 
     path('director_list/', director_views.director_list, name="director_list"),
     path('director/<int:director_id>/', director_views.director, name="director"),
     path('upload_director_photo/<int:director_id>/', director_views.upload_director_photo,
          name="upload_director_photo"),
+    path('director_edit/<int:director_id>/', director_views.director_edit_form, name='director_edit_form'),
 
     path('actor_list/', actor_views.actor_list, name="actor_list"),
     path('actor/<int:actor_id>/', actor_views.actor, name="actor"),
@@ -31,6 +33,7 @@ urlpatterns = [
          name="upload_actor_photo"),
     path('calc_new_actors_from_cast/', actor_views.calc_new_actors_from_cast,
          name="calc_new_actors_from_cast"),
+    path('actor_edit/<int:actor_id>/', actor_views.actor_edit_form, name='actor_edit_form'),
 
     path('api/v1/directors/', director_views_api_v1.DirectorList.as_view(), name="api_directors"),
     path('api/v1/directors/<int:pk>/', director_views_api_v1.DirectorDetail.as_view(), name="api_director_detail"),

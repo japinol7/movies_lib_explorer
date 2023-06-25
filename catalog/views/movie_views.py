@@ -4,15 +4,17 @@ from pathlib import Path
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect, render, get_object_or_404
 
 from catalog.models.actor import Actor
 from catalog.models.movie import Movie
+from catalog.forms.movie_forms import MovieEditForm
 
 
 def movie_list(request):
     data = {
-        'movies': Movie.objects.order_by('title', 'director__last_name', 'director__first_name', 'year')
+        'movies': Movie.objects.order_by('title', 'year', 'director__last_name', 'director__first_name', 'year')
         }
     return render(request, "catalog/movie_list.html", data)
 
@@ -51,7 +53,7 @@ def _group_data_by_year(data):
 
 def movie_list_by_decade(request):
     data = {
-        'movies': Movie.objects.order_by('title', 'director__last_name', 'director__first_name')
+        'movies': Movie.objects.order_by('title', 'year', 'director__last_name', 'director__first_name')
         }
     return render(request, "catalog/movie_list_by_decade.html", _group_data_by_decade(data['movies']))
 
@@ -100,3 +102,20 @@ def upload_movie_photo(request, movie_id):
     movie.picture = path.name
     movie.save()
     return redirect('catalog:movie', movie.id)
+
+
+@login_required
+def movie_edit_form(request, movie_id):
+    movie = get_object_or_404(Movie, id=movie_id)
+    form = MovieEditForm(instance=movie)
+
+    if request.method == 'POST':
+        if not request.user.is_staff:
+            raise PermissionDenied("Permission Denied. You are not allowed to edit this model")
+        form = MovieEditForm(request.POST, instance=movie)
+        if form.is_valid():
+            form.save()
+            return redirect('catalog:movie', movie.id)
+
+    return render(request, 'catalog/movie_edit_form.html',
+                  {'movie': movie, 'form': form})

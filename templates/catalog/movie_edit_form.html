@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}MLME - Movie edit - {{ movie.title }} {{ movie.year }}{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    <p>
+        <input type="submit" value="Save" class="btn btn-dark">
+        <a class="btn btn-dark" href="{% url 'catalog:movie' movie_id=movie.id %}">Cancel</a>
+    </p>
+
+    <div>Movie</div>
+    <h2>{{ movie.title }}</h2>
+    <br>
+    {{ form.as_p }}
+</form>
+
+{% endblock content %}

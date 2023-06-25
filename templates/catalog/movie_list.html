@@ -1,22 +1,21 @@
 {% extends "home/base.html" %}
 
-{% block title %}Movies Library Metadata Explorer - Sample {% endblock title %}
+{% block title %}MLME - Movie list {% endblock title %}
 
 {% block content %}
-    <br/>
-    <h3>Movies</h3>
     <p>
         <a class="btn btn-dark" href="{% url 'catalog:movie_list_by_year' %}">Movies by Year</a>
         <a class="btn btn-dark" href="{% url 'catalog:movie_list_by_decade' %}">Movies by Decade</a>
         <a class="btn btn-dark" href="{% url 'catalog:movie_with_picture_list' %}">Movies with Picture</a>
     </p>
+    <h3>Movies</h3>
     <p>
         {% for movie in movies %}
             <b><a href="{% url 'catalog:movie' movie_id=movie.id %}">{{ movie.title }}</a></b>;
             {{ movie.year }};
             {% if movie.director.first_name %}{{ movie.director.first_name }}{% endif %}
             {% if movie.director.last_name %} {{ movie.director.last_name }}{% endif %}
-            <br/>
+            <br>
 
         {% empty %}
             <i>There are no movies in the database.</i>

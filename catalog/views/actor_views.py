@@ -2,6 +2,7 @@ from pathlib import Path
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect, render, get_object_or_404
 
 from catalog.import_data.import_data import (
@@ -9,6 +10,7 @@ from catalog.import_data.import_data import (
     get_data_to_update_actors_n_movie_actor_links,
     )
 from catalog.models.actor import Actor
+from catalog.forms.actor_forms import ActorEditForm
 from tools.logger.logger import log
 
 
@@ -57,3 +59,20 @@ def upload_actor_photo(request, actor_id):
     actor.picture = path.name
     actor.save()
     return redirect('catalog:actor', actor.id)
+
+
+@login_required
+def actor_edit_form(request, actor_id):
+    actor = get_object_or_404(Actor, id=actor_id)
+    form = ActorEditForm(instance=actor)
+
+    if request.method == 'POST':
+        if not request.user.is_staff:
+            raise PermissionDenied("Permission Denied. You are not allowed to edit this model")
+        form = ActorEditForm(request.POST, instance=actor)
+        if form.is_valid():
+            form.save()
+            return redirect('catalog:actor', actor.id)
+
+    return render(request, 'catalog/actor_edit_form.html',
+                  {'actor': actor, 'form': form})

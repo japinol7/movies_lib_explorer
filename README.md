@@ -61,8 +61,8 @@ curl -i http://127.0.0.1:8000/catalog/api/v1/directors/ \
 -d '{"last_name": "Test-Director-Last_Name", "first_name": "Test-Director-First_Name"}'
  
 
-* Change name of director with id 610 <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/directors/610/ \
+* Change name of director with id 317 <br/>
+curl -i http://127.0.0.1:8000/catalog/api/v1/directors/317/ \
 -X PUT \
 -H 'Content-Type: application/json' \
 -H 'Authorization: Token '$MLME_REST_API_TOKEN \
@@ -186,6 +186,14 @@ curl -i http://127.0.0.1:8000/catalog/api/v1/movies/665/ \
 ## Default local url
 
 http://127.0.0.1:8000/
+<br/> <br/>
+
+
+## User Guide
+
+* Only staff users have permission to edit catalog data. This includes uploading photos. <br/>
+  So, the following buttons are hidden from no-staff users: \[Edit] &nbsp;&nbsp;\[Upload ... Photo]
+* Any user can add a movie review and edit the reviews they wrote.
 <br/> <br/>
 
 

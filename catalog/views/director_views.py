@@ -2,9 +2,11 @@ from pathlib import Path
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect, render, get_object_or_404
 
 from catalog.models.director import Director
+from catalog.forms.director_forms import DirectorEditForm
 
 
 def director_list(request):
@@ -39,3 +41,20 @@ def upload_director_photo(request, director_id):
     director.picture = path.name
     director.save()
     return redirect('catalog:director', director.id)
+
+
+@login_required
+def director_edit_form(request, director_id):
+    director = get_object_or_404(Director, id=director_id)
+    form = DirectorEditForm(instance=director)
+
+    if request.method == 'POST':
+        if not request.user.is_staff:
+            raise PermissionDenied("Permission Denied. You are not allowed to edit this model")
+        form = DirectorEditForm(request.POST, instance=director)
+        if form.is_valid():
+            form.save()
+            return redirect('catalog:director', director.id)
+
+    return render(request, 'catalog/director_edit_form.html',
+                  {'director': director, 'form': form})

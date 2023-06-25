@@ -5,8 +5,8 @@ from catalog.models.director import Director
 
 
 class Movie(models.Model):
-    title = models.CharField(max_length=60)
-    title_original = models.CharField(max_length=60)
+    title = models.CharField(max_length=90)
+    title_original = models.CharField(max_length=90)
     director = models.ForeignKey(
         Director, on_delete=models.DO_NOTHING,
         blank=True, null=True,
@@ -20,7 +20,7 @@ class Movie(models.Model):
     decade = models.IntegerField(default=0)
     country = models.CharField(max_length=3, blank=True)
     language = models.CharField(max_length=25, blank=True)
-    cast = models.CharField(max_length=254, blank=True)
+    cast = models.CharField(max_length=400, blank=True)
     genres = models.CharField(max_length=254, blank=True)
     writer = models.CharField(max_length=60, blank=True)
     producer = models.CharField(max_length=60, blank=True)
@@ -29,7 +29,7 @@ class Movie(models.Model):
     note = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    description = models.CharField(max_length=600, blank=True)
+    description = models.CharField(max_length=900, blank=True)
     picture = models.ImageField(blank=True, null=True)
 
     class Meta:

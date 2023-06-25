@@ -22,6 +22,14 @@ https://docs.djangoproject.com/en/4.1/howto/windows/
 > Setting up Virtual environment in Python - venv
 https://docs.python.org/3/library/venv.html
 
+> Server-side website programming - Learn web development | MDN
+https://developer.mozilla.org/en-US/docs/Learn/Server-side
+----------------------------------------
+----------------------------------------
+
+
+
+
 ----------------------------------------
  General Django commands
 ----------------------------------------
@@ -40,7 +48,8 @@ django-admin startproject movies_lib_explorer .
   Or
 python -m django startapp catalog
 
-> Create a new database and all the tables needed.
+> Execute migrations not executed yet. Also, undo migrations
+  The first time, it creates a new database and all the tables needed.
 ./manage.py migrate
   Or
 django-admin migrate
@@ -83,6 +92,30 @@ django-admin makemigrations catalog
 
 
 
+
+----------------------------------------
+ Migration commands
+----------------------------------------
+> Execute migrations not executed yet. Also, undo migrations
+  The first time, it creates a new database and all the tables needed.
+./manage.py migrate
+
+> Execute migration 0003 for the app catalog.
+./manage.py migrate catalog 0003
+
+> Create migration scripts for all apps.
+./manage.py makemigrations
+
+> Create migration scripts for an app named catalog.
+./manage.py makemigrations catalog
+
+> Shows the SQL script of migrations to be done
+./manage.py sqlmigrate
+
+>
+./manage.py showmigrations
+----------------------------------------
+----------------------------------------
 
 
 

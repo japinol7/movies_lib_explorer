@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <br/>
     <h3>Directors</h3>
 
     <p>
@@ -10,7 +9,7 @@
             >{% if director.first_name %}{{ director.first_name }}{% endif %}
                 {% if director.last_name %} {{ director.last_name }}{% endif %}
             </a></b>
-            <br/>
+            <br>
 
         {% empty %}
             <i>There are no directors in the database</i>

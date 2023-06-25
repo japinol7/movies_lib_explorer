@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Movies Lib Explorer - Review Movie: {{ movie.title }}{% endblock %}
+{% block title %}MLME - Review Movie: {{ movie.title }}{% endblock %}
 
 {% block content %}
     <h4>Review Movie: {{ movie.title }}</h4>
@@ -40,6 +40,7 @@
         </div>
 
         <button class="btn btn-dark" type="submit">Save</button>
+        <a class="btn btn-dark" href="{% url 'catalog:movie' movie_id=movie.id %}">Cancel</a>
     </form>
 
 {% endblock content %}

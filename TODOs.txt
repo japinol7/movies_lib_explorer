@@ -1,3 +1,4 @@
 ## TODOs & Wishlist ##
 
+* The Thing
 * Fix Save photo button action when file not chosen yet.

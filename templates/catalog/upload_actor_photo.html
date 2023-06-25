@@ -1,9 +1,8 @@
 {% extends "base.html" %}
-{% block title %}Movies Library Metadata Explorer - Upload {{ actor.last_name }} Photo{% endblock %}
+{% block title %}MLME - Upload photo - {{ actor.last_name }}{% endblock %}
 
 {% block content %}
-    <br/>
-    <h2>Upload Photo for actor: <br/>
+    <h2>Upload Photo for actor: <br>
         {{ actor.first_name }} {{ actor.last_name }}</h2>
 
     {% if form.errors %}
@@ -20,6 +19,7 @@
         </div>
 
         <button class="btn btn-dark" type="submit">Save</button>
+        <a class="btn btn-dark" href="{% url 'catalog:actor' actor_id=actor.id %}">Cancel</a>
     </form>
 
 {% endblock content %}
