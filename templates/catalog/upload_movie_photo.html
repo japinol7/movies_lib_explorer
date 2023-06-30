@@ -9,17 +9,21 @@
         <div class="alert alert-danger">Correct any errors before continuing.</div>
     {% endif %}
 
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
+    {% if request.user.is_staff %}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
 
-        <div class="form-group">
-            <label for="id_movie_photo">Choose File</label>
-            <input type="file" class="form-control-file" name="movie_photo"
-                   id="id_movie_photo">
-        </div>
+            <div class="form-group">
+                <label for="id_movie_photo">Choose File</label>
+                <input type="file" class="form-control-file" name="movie_photo"
+                       id="id_movie_photo">
+            </div>
 
-        <button class="btn btn-dark" type="submit">Save</button>
-        <a class="btn btn-dark" href="{% url 'catalog:movie' movie_id=movie.id %}">Cancel</a>
-    </form>
+            <button class="btn btn-dark" type="submit">Save</button>
+            <a class="btn btn-dark" href="{% url 'catalog:movie' movie_id=movie.id %}">Cancel</a>
+        </form>
+    {% else %}
+        <p>You do not have permission to upload director photos.</p>
+    {% endif %}
 
 {% endblock content %}
