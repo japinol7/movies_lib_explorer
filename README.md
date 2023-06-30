@@ -29,48 +29,48 @@
 
 ## Catalog Directors REST API
 
-http://127.0.0.1:8000/catalog/api/v1/directors/  <br/>
-http://127.0.0.1:8000/catalog/api/v1/directors/1/
+http://127.0.0.1:8000/catalog/api/v1/directors  <br/>
+http://127.0.0.1:8000/catalog/api/v1/directors/1
 
 
 * Get all directors <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/directors/
+curl -i http://127.0.0.1:8000/catalog/api/v1/directors
 
 
 * Get all directors which last name is Coppola<br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/directors/?last_name=Coppola
+curl -i http://127.0.0.1:8000/catalog/api/v1/directors?last_name=Coppola
 
 
 * Get all directors which last name is Coppola and first name is Sofia<br/>
-curl -i "http://127.0.0.1:8000//catalog/api/v1/directors/?last_name=Coppola&first_name=Sofia"
+curl -i "http://127.0.0.1:8000//catalog/api/v1/directors?last_name=Coppola&first_name=Sofia"
 
 
 * Get all directors searching for john in their last name or first name and ordering them by: last_name, first_name <br/>
-curl -i "http://127.0.0.1:8000/catalog/api/v1/directors/?search=john&ordering=last_name,first_name"
+curl -i "http://127.0.0.1:8000/catalog/api/v1/directors?search=john&ordering=last_name,first_name"
 
 
 * Get director with id 1 <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/directors/1/ -w '\n'
+curl -i http://127.0.0.1:8000/catalog/api/v1/directors/1 -w '\n'
 
 
 * Create new director <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/directors/ \
+curl -i http://127.0.0.1:8000/catalog/api/v1/directors \
 -X POST \
 -H 'Content-Type: application/json' \
 -H 'Authorization: Token '$MLME_REST_API_TOKEN \
 -d '{"last_name": "Test-Director-Last_Name", "first_name": "Test-Director-First_Name"}'
  
 
-* Change name of director with id 317 <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/directors/317/ \
+* Change name of director with id 626 <br/>
+curl -i http://127.0.0.1:8000/catalog/api/v1/directors/626 \
 -X PUT \
 -H 'Content-Type: application/json' \
 -H 'Authorization: Token '$MLME_REST_API_TOKEN \
 -d '{"last_name": "Test-Director-Last_Name Updated", "first_name": "Test-Director-First_Name Updated"}'
 
 
-* Delete director with id 317 <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/directors/317/ \
+* Delete director with id 626 <br/>
+curl -i http://127.0.0.1:8000/catalog/api/v1/directors/626 \
 -X DELETE \
 -H 'Authorization: Token '$MLME_REST_API_TOKEN
 
@@ -83,80 +83,80 @@ curl -i http://127.0.0.1:8000/catalog/api/v1/directors/317/ \
 
 ## Catalog Actors REST API
 
-http://127.0.0.1:8000/catalog/api/v1/actors/  <br/>
-http://127.0.0.1:8000/catalog/api/v1/actors/27/
+http://127.0.0.1:8000/catalog/api/v1/actors  <br/>
+http://127.0.0.1:8000/catalog/api/v1/actors/27
 
 ### Similar to directors REST API. For example:
 
 * Get all actors which last name is "Toshiro Mifune"<br/>
-curl -i "http://127.0.0.1:8000/catalog/api/v1/actors/?last_name=Toshiro%20Mifune"
+curl -i "http://127.0.0.1:8000/catalog/api/v1/actors?last_name=Toshiro%20Mifune"
 <br/> <br/>
 
 
 ## Catalog Movies REST API
 
-http://127.0.0.1:8000/catalog/api/v1/movies/  <br/>
-http://127.0.0.1:8000/catalog/api/v1/movies/1/
+http://127.0.0.1:8000/catalog/api/v1/movies  <br/>
+http://127.0.0.1:8000/catalog/api/v1/movies/1
 
 
 * Get all movies <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/movies/
+curl -i http://127.0.0.1:8000/catalog/api/v1/movies
 
 
 * Get all movies of year 1935 <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/movies/?year=1935
+curl -i http://127.0.0.1:8000/catalog/api/v1/movies?year=1935
 
 
 * Get movies of year 1935 ordered by director's last name and director's first name <br/>
-curl -i "http://127.0.0.1:8000/catalog/api/v1/movies/?year=1935&ordering=director__last_name,director__first_name"
+curl -i "http://127.0.0.1:8000/catalog/api/v1/movies?year=1935&ordering=director__last_name,director__first_name"
 
 
 * Get all movies for director's last name equal to Coppola <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/movies/?director__last_name=Coppola
+curl -i http://127.0.0.1:8000/catalog/api/v1/movies?director__last_name=Coppola
 
 
 * Get all movies for director's last name equal to Coppola and director's first name equal to Sofia <br/>
-curl -i "http://127.0.0.1:8000//catalog/api/v1/movies/?director__last_name=Coppola&director__first_name=Sofia"
+curl -i "http://127.0.0.1:8000//catalog/api/v1/movies?director__last_name=Coppola&director__first_name=Sofia"
 
 
 * Get all movies for director's id equal to 222 <br/>
-curl -i "http://127.0.0.1:8000/catalog/api/v1/movies/?director__id=222"
+curl -i "http://127.0.0.1:8000/catalog/api/v1/movies?director__id=222"
 
 
 * Get movies from year greater than 1922 to year lower than 1924 <br/>
-curl -i "http://127.0.0.1:8000/catalog/api/v1/movies/?year__gt=1921&year__lt=1924"
+curl -i "http://127.0.0.1:8000/catalog/api/v1/movies?year__gt=1921&year__lt=1924"
 
 
 * Get movies created on the database on a given date <br/>
-curl -i "http://127.0.0.1:8000/catalog/api/v1/movies/?created__date=2023-05-23"
+curl -i "http://127.0.0.1:8000/catalog/api/v1/movies?created__date=2023-05-23"
 
 
 * Get movies created on the database exactly on a given date <br/>
-curl -i "http://127.0.0.1:8000/catalog/api/v1/movies/?created=2023-05-23T20:53:28.449880Z"
+curl -i "http://127.0.0.1:8000/catalog/api/v1/movies?created=2023-05-23T20:53:28.449880Z"
 
 
 * Get movies created on the database between these date times (not inclusive): from 2023-05-23 20:53:00 to 2023-05-23 20:53:26  <br/>
-curl -i "http://127.0.0.1:8000/catalog/api/v1/movies/?created__date__gt=2023-05-22&created__date__lt=2023-05-24&created__time__gt=20:53:00&created__time__lt=20:53:26"
+curl -i "http://127.0.0.1:8000/catalog/api/v1/movies?created__date__gt=2023-05-22&created__date__lt=2023-05-24&created__time__gt=20:53:00&created__time__lt=20:53:26"
  
 
 * Get all movies searching for "thin man" in the search fields and ordering them by year <br/>
-curl -i "http://127.0.0.1:8000/catalog/api/v1/movies/?search=thin%20man&ordering=year"
+curl -i "http://127.0.0.1:8000/catalog/api/v1/movies?search=thin%20man&ordering=year"
 
 
 * Get all movies searching for "Cary Grant" in the search fields and ordering them by year <br/>
-curl -i "http://127.0.0.1:8000/catalog/api/v1/movies/?search=Cary%20Grant&ordering=year"
+curl -i "http://127.0.0.1:8000/catalog/api/v1/movies?search=Cary%20Grant&ordering=year"
 
 
 * Get all movies searching for "thin man" in the search fields and ordering them by year in descending order <br/>
-curl -i "http://127.0.0.1:8000/catalog/api/v1/movies/?search=thin%20man&ordering=-year"
+curl -i "http://127.0.0.1:8000/catalog/api/v1/movies?search=thin%20man&ordering=-year"
 
 
 * Get movie with id 1 <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/movies/1/ -w '\n'
+curl -i http://127.0.0.1:8000/catalog/api/v1/movies/1 -w '\n'
 
 
 * Create new movie <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/movies/ \
+curl -i http://127.0.0.1:8000/catalog/api/v1/movies \
 -X POST \
 -H 'Content-Type: application/json' \
 -H 'Authorization: Token '$MLME_REST_API_TOKEN \
@@ -164,7 +164,7 @@ curl -i http://127.0.0.1:8000/catalog/api/v1/movies/ \
 
 
 * Change name of movie with id 665 <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/movies/665/ \
+curl -i http://127.0.0.1:8000/catalog/api/v1/movies/665 \
 -X PUT \
 -H 'Content-Type: application/json' \
 -H 'Authorization: Token '$MLME_REST_API_TOKEN \
@@ -172,7 +172,7 @@ curl -i http://127.0.0.1:8000/catalog/api/v1/movies/665/ \
 
 
 * Delete movie with id 665 <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/movies/665/ \
+curl -i http://127.0.0.1:8000/catalog/api/v1/movies/665 \
 -X DELETE \
 -H 'Authorization: Token '$MLME_REST_API_TOKEN
 
@@ -185,7 +185,7 @@ curl -i http://127.0.0.1:8000/catalog/api/v1/movies/665/ \
 
 ## Default local url
 
-http://127.0.0.1:8000/
+http://127.0.0.1:8000
 <br/> <br/>
 
 
@@ -209,7 +209,7 @@ http://127.0.0.1:8000/
 	          $ python manage.py createsuperuser
 	    5. $ python manage.py runserver
 	    6. Open the website indicated in the console in your browser.
-	       Example: http://127.0.0.1:8000/
+	       Example: http://127.0.0.1:8000
 	    7. The first time, press the button [Load Initial Data] on the main web page.
 	       This imports sample data with several movies, directors and actors.
 	       This also creates links between actors and movies.

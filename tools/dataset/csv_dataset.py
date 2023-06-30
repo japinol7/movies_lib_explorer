@@ -1,7 +1,7 @@
 import csv
 from decimal import Decimal
 
-from config import config
+from catalog.config import config
 from .dataset import Dataset
 
 

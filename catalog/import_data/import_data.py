@@ -2,7 +2,7 @@ from zipfile import ZipFile
 
 from django.db import models
 
-from config import config
+from catalog.config import config
 from tools.dataset.csv_dataset import CsvDataset
 from tools.logger.logger import log
 

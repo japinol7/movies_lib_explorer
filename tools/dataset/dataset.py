@@ -2,7 +2,7 @@ from abc import ABCMeta, abstractmethod
 from datetime import datetime
 from itertools import groupby
 
-from config import config
+from catalog.config import config
 from tools.logger.logger import log
 
 

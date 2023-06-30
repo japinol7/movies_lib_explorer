@@ -1,6 +1,7 @@
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
 
+from catalog.config.config import API_ACTORS_PATH, API_DIRECTORS_PATH, API_MOVIES_PATH
 from catalog.views import actor_views
 from catalog.views import director_views
 from catalog.views import movie_views
@@ -35,14 +36,20 @@ urlpatterns = [
          name="calc_new_actors_from_cast"),
     path('actor_edit/<int:actor_id>/', actor_views.actor_edit_form, name='actor_edit_form'),
 
-    path('api/v1/directors/', director_views_api_v1.DirectorList.as_view(), name="api_directors"),
-    path('api/v1/directors/<int:pk>/', director_views_api_v1.DirectorDetail.as_view(), name="api_director_detail"),
+    path(API_DIRECTORS_PATH, director_views_api_v1.DirectorList.as_view(), name="api_directors"),
+    path(f'{API_DIRECTORS_PATH}/', director_views_api_v1.DirectorList.as_view(), name="api_directors"),
+    path(f'{API_DIRECTORS_PATH}/<int:pk>', director_views_api_v1.DirectorDetail.as_view(), name="api_director_detail"),
+    path(f'{API_DIRECTORS_PATH}/<int:pk>/', director_views_api_v1.DirectorDetail.as_view(), name="api_director_detail"),
 
-    path('api/v1/movies/', movie_views_api_v1.MovieList.as_view(), name="api_movies"),
-    path('api/v1/movies/<int:pk>/', movie_views_api_v1.MovieDetail.as_view(), name="api_movie_detail"),
+    path(API_MOVIES_PATH, movie_views_api_v1.MovieList.as_view(), name="api_movies"),
+    path(f'{API_MOVIES_PATH}/', movie_views_api_v1.MovieList.as_view(), name="api_movies"),
+    path(f'{API_MOVIES_PATH}/<int:pk>', movie_views_api_v1.MovieDetail.as_view(), name="api_movie_detail"),
+    path(f'{API_MOVIES_PATH}/<int:pk>/', movie_views_api_v1.MovieDetail.as_view(), name="api_movie_detail"),
 
-    path('api/v1/actors/', actor_views_api_v1.ActorList.as_view(), name="api_actors"),
-    path('api/v1/actors/<int:pk>/', actor_views_api_v1.ActorDetail.as_view(), name="api_actor_detail"),
+    path(API_ACTORS_PATH, actor_views_api_v1.ActorList.as_view(), name="api_actors"),
+    path(f'{API_ACTORS_PATH}/', actor_views_api_v1.ActorList.as_view(), name="api_actors"),
+    path(f'{API_ACTORS_PATH}/<int:pk>', actor_views_api_v1.ActorDetail.as_view(), name="api_actor_detail"),
+    path(f'{API_ACTORS_PATH}/<int:pk>/', actor_views_api_v1.ActorDetail.as_view(), name="api_actor_detail"),
 
     path('about/', home_views.about, name="about"),
     path('load_data/', load_data_views.load_data, name="load_data"),
