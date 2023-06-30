@@ -1,6 +1,7 @@
 ## Movies Library Metadata Explorer - MLME
 
     Movies Library Metadata Explorer using Django.
+    It includes a REST API for the catalog models using Django REST framework.
 
 
    * The program 
