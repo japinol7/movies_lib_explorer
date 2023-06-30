@@ -38,6 +38,10 @@ http://127.0.0.1:8000/catalog/api/v1/directors/1
 curl -i http://127.0.0.1:8000/catalog/api/v1/directors
 
 
+* Get director with id 1 <br/>
+curl -i http://127.0.0.1:8000/catalog/api/v1/directors/1 -w '\n'
+
+
 * Get all directors which last name is Coppola<br/>
 curl -i http://127.0.0.1:8000/catalog/api/v1/directors?last_name=Coppola
 
@@ -48,10 +52,6 @@ curl -i "http://127.0.0.1:8000//catalog/api/v1/directors?last_name=Coppola&first
 
 * Get all directors searching for john in their last name or first name and ordering them by: last_name, first_name <br/>
 curl -i "http://127.0.0.1:8000/catalog/api/v1/directors?search=john&ordering=last_name,first_name"
-
-
-* Get director with id 1 <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/directors/1 -w '\n'
 
 
 * Create new director <br/>
@@ -104,6 +104,10 @@ http://127.0.0.1:8000/catalog/api/v1/movies/1
 curl -i http://127.0.0.1:8000/catalog/api/v1/movies
 
 
+* Get movie with id 1 <br/>
+curl -i http://127.0.0.1:8000/catalog/api/v1/movies/1 -w '\n'
+
+
 * Get all movies of year 1935 <br/>
 curl -i http://127.0.0.1:8000/catalog/api/v1/movies?year=1935
 
@@ -150,10 +154,6 @@ curl -i "http://127.0.0.1:8000/catalog/api/v1/movies?search=Cary%20Grant&orderin
 
 * Get all movies searching for "thin man" in the search fields and ordering them by year in descending order <br/>
 curl -i "http://127.0.0.1:8000/catalog/api/v1/movies?search=thin%20man&ordering=-year"
-
-
-* Get movie with id 1 <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/movies/1 -w '\n'
 
 
 * Create new movie <br/>
