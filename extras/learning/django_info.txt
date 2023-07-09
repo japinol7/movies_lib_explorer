@@ -210,6 +210,9 @@ http://127.0.0.1:8000/admin/
 -------
 > Create token for the admin user to authenticate on the REST API
 ./manage.py drf_create_token admin
+
+> Regenerate the token; for example if it has been compromised or leaked
+./manage.py drf_create_token -r admin
 ----------------------------------------
 ----------------------------------------
 
@@ -251,5 +254,33 @@ movies = Movie.objects.filter(director=akira_kurosawa)
 for movie in movies:
     print(movie)
     print('-' * 50)
+----------------------------------------
+----------------------------------------
+
+
+
+
+
+
+
+----------------------------------------
+ Tools
+----------------------------------------
+> pipenv
+https://pipenv.pypa.io/en/latest/
+
+> List of HTTP status codes
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+
+> Curl command line tool and library for transferring data with URLs
+https://curl.se/
+
+> Postman API Platform
+https://www.postman.com/
+https://postman-echo.com/
+
+> Insomnia
+https://insomnia.rest/
+https://docs.insomnia.rest/insomnia/get-started
 ----------------------------------------
 ----------------------------------------

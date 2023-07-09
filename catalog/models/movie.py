@@ -8,7 +8,7 @@ class Movie(models.Model):
     title = models.CharField(max_length=90)
     title_original = models.CharField(max_length=90)
     director = models.ForeignKey(
-        Director, on_delete=models.DO_NOTHING,
+        Director, on_delete=models.PROTECT,
         blank=True, null=True,
         )
     actors = models.ManyToManyField(

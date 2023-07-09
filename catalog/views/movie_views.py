@@ -14,22 +14,24 @@ from catalog.forms.movie_forms import MovieEditForm
 
 def movie_list(request):
     data = {
-        'movies': Movie.objects.order_by('title', 'year', 'director__last_name', 'director__first_name', 'year')
+        'movies': Movie.objects.select_related('director').
+                  order_by('title', 'year', 'director__last_name', 'director__first_name', 'year')
         }
     return render(request, "catalog/movie_list.html", data)
 
 
 def movie_with_picture_list(request):
     data = {
-        'movies': Movie.objects.exclude(picture='').order_by(
-            'title', 'director__last_name', 'director__first_name', 'year')
+        'movies': Movie.objects.exclude(picture='').select_related('director').
+                  order_by('title', 'director__last_name', 'director__first_name', 'year')
         }
     return render(request, "catalog/movie_with_picture_list.html", data)
 
 
 def movie_list_by_year(request):
     data = {
-        'movies': Movie.objects.order_by('year', 'title', 'director__last_name', 'director__first_name')
+        'movies': Movie.objects.select_related('director').
+                  order_by('year', 'title', 'director__last_name', 'director__first_name')
         }
     return render(request, "catalog/movie_list_by_year.html", _group_data_by_year(data['movies']))
 
@@ -53,7 +55,8 @@ def _group_data_by_year(data):
 
 def movie_list_by_decade(request):
     data = {
-        'movies': Movie.objects.order_by('title', 'year', 'director__last_name', 'director__first_name')
+        'movies': Movie.objects.select_related('director').
+                  order_by('title', 'year', 'director__last_name', 'director__first_name')
         }
     return render(request, "catalog/movie_list_by_decade.html", _group_data_by_decade(data['movies']))
 

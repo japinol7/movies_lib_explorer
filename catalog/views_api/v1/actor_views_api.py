@@ -3,6 +3,7 @@ from rest_framework import authentication
 from rest_framework.exceptions import ValidationError
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
+from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
 
 from catalog.models.actor import Actor
 from catalog.serializers import ActorSerializer
@@ -15,6 +16,7 @@ class ActorList(generics.ListCreateAPIView):
     """List all actors or create a new actor."""
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [IsAdminOrReadOnly]
+    throttle_classes = [AnonRateThrottle, UserRateThrottle]
 
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
@@ -36,6 +38,7 @@ class ActorDetail(generics.RetrieveUpdateDestroyAPIView):
     """Retrieve, update or delete a actor."""
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [IsAdminOrReadOnly]
+    throttle_classes = [AnonRateThrottle, UserRateThrottle]
 
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer

@@ -49,7 +49,7 @@ class DirectorAPITestCase(APITestCase):
             path=reverse('catalog:api_directors'),
             content_type='application/json')
         json_data = response.json()
-        director = json_data[-1]
+        director = json_data['results'][-1]
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(director['last_name'], self.director.last_name)
@@ -65,7 +65,7 @@ class DirectorAPITestCase(APITestCase):
             path=rf"http://127.0.0.1:8000/catalog/api/v1/directors/?last_name={search_name}",
             content_type='application/json')
         json_data = response.json()
-        directors = json_data
+        directors = json_data['results']
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(directors), 2)
@@ -84,7 +84,7 @@ class DirectorAPITestCase(APITestCase):
             path=rf"http://127.0.0.1:8000/catalog/api/v1/directors/?first_name={search_name}&ordering=last_name",
             content_type='application/json')
         json_data = response.json()
-        directors = json_data
+        directors = json_data['results']
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(directors), 2)
@@ -105,7 +105,7 @@ class DirectorAPITestCase(APITestCase):
             path=rf"http://127.0.0.1:8000/catalog/api/v1/directors/?search={search_name}&ordering=last_name",
             content_type='application/json')
         json_data = response.json()
-        directors = json_data
+        directors = json_data['results']
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(directors), 3)

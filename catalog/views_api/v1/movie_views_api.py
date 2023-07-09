@@ -4,6 +4,7 @@ from rest_framework.exceptions import ValidationError
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from django_filters import rest_framework as drf_filters
+from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
 
 from catalog.models.movie import Movie
 from catalog.serializers import MovieSerializer
@@ -17,6 +18,7 @@ class MovieList(generics.ListCreateAPIView):
     """List all movies or create a new movie."""
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [IsAdminOrReadOnly]
+    throttle_classes = [AnonRateThrottle, UserRateThrottle]
 
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
@@ -41,6 +43,7 @@ class MovieDetail(generics.RetrieveUpdateDestroyAPIView):
     """Retrieve, update or delete a movie."""
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [IsAdminOrReadOnly]
+    throttle_classes = [AnonRateThrottle, UserRateThrottle]
 
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer

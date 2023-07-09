@@ -62,7 +62,7 @@ class MovieAPITestCase(APITestCase):
             path=reverse('catalog:api_movies'),
             content_type='application/json')
         json_data = response.json()
-        movie = json_data[-1]
+        movie = json_data['results'][-1]
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(movie['title'], self.movie.title)
@@ -95,7 +95,7 @@ class MovieAPITestCase(APITestCase):
             path=rf"http://127.0.0.1:8000/catalog/api/v1/movies/?year={search_year}",
             content_type='application/json')
         json_data = response.json()
-        movies = json_data
+        movies = json_data['results']
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(movies), 2)
@@ -133,7 +133,7 @@ class MovieAPITestCase(APITestCase):
             path=rf"http://127.0.0.1:8000/catalog/api/v1/movies/?year={search_year}&ordering=director__last_name",
             content_type='application/json')
         json_data = response.json()
-        movies = json_data
+        movies = json_data['results']
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(movies), 2)
@@ -177,7 +177,7 @@ class MovieAPITestCase(APITestCase):
             path=url_path,
             content_type='application/json')
         json_data = response.json()
-        movies = json_data
+        movies = json_data['results']
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(movies), 2)
@@ -229,7 +229,7 @@ class MovieAPITestCase(APITestCase):
             path=url_path,
             content_type='application/json')
         json_data = response.json()
-        movies = json_data
+        movies = json_data['results']
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(movies), 2)
@@ -271,7 +271,7 @@ class MovieAPITestCase(APITestCase):
             path=rf"http://127.0.0.1:8000/catalog/api/v1/movies/?director__id={search_director_id}&ordering=id",
             content_type='application/json')
         json_data = response.json()
-        movies = json_data
+        movies = json_data['results']
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(movies), 2)
@@ -309,7 +309,7 @@ class MovieAPITestCase(APITestCase):
             path=rf"http://127.0.0.1:8000/catalog/api/v1/movies/?search={search_text}&ordering=-year",
             content_type='application/json')
         json_data = response.json()
-        movies = json_data
+        movies = json_data['results']
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(movies), 2)
@@ -336,6 +336,7 @@ class MovieAPITestCase(APITestCase):
         self.assertEqual(movie['title'], self.movie.title)
         self.assertEqual(movie['title_original'], self.movie.title)
         self.assertEqual(movie['director'], self.movie.director.id)
+        self.assertEqual(movie['director_data']['last_name'], self.movie.director.last_name)
         self.assertEqual(movie['runtime'], self.movie.runtime)
         self.assertEqual(movie['year'], self.movie.year)
         self.assertEqual(movie['country'], self.movie.country)
@@ -348,7 +349,7 @@ class MovieAPITestCase(APITestCase):
         vals = {
             'title': f"{self.movie.title} Updated",
             'title_original': f"{self.movie.title_original} Updated",
-            'year': self.movie.year + 1000,
+            'year': self.movie.year + 100,
             }
         response = self.client.put(
             path=rf"http://127.0.0.1:8000/catalog/api/v1/movies/{self.movie.id}/",
@@ -360,7 +361,7 @@ class MovieAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(movie['title'], f"{self.movie.title} Updated")
         self.assertEqual(movie['title_original'], f"{self.movie.title_original} Updated")
-        self.assertEqual(movie['year'], self.movie.year + 1000)
+        self.assertEqual(movie['year'], self.movie.year + 100)
 
     def test_delete_movie(self):
         self._log_as_admin_user()

@@ -38,6 +38,11 @@ http://127.0.0.1:8000/catalog/api/v1/directors/1
 curl -i http://127.0.0.1:8000/catalog/api/v1/directors
 
 
+* Get all directors as an authenticated user <br/>
+curl -i http://127.0.0.1:8000/catalog/api/v1/directors \\ <br/>
+-H 'Authorization: Token '$MLME_REST_API_TOKEN
+
+
 * Get director with id 1 <br/>
 curl -i http://127.0.0.1:8000/catalog/api/v1/directors/1 -w '\n'
 
@@ -55,30 +60,25 @@ curl -i "http://127.0.0.1:8000/catalog/api/v1/directors?search=john&ordering=las
 
 
 * Create new director <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/directors \
--X POST \
--H 'Content-Type: application/json' \
--H 'Authorization: Token '$MLME_REST_API_TOKEN \
+curl -i http://127.0.0.1:8000/catalog/api/v1/directors \\ <br/>
+-X POST \\ <br/>
+-H 'Content-Type: application/json' \\ <br/>
+-H 'Authorization: Token '$MLME_REST_API_TOKEN \\ <br/>
 -d '{"last_name": "Test-Director-Last_Name", "first_name": "Test-Director-First_Name"}'
  
 
 * Change name of director with id 626 <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/directors/626 \
--X PUT \
--H 'Content-Type: application/json' \
--H 'Authorization: Token '$MLME_REST_API_TOKEN \
+curl -i http://127.0.0.1:8000/catalog/api/v1/directors/626 \\ <br/>
+-X PUT \\ <br/>
+-H 'Content-Type: application/json' \\ <br/>
+-H 'Authorization: Token '$MLME_REST_API_TOKEN \\ <br/>
 -d '{"last_name": "Test-Director-Last_Name Updated", "first_name": "Test-Director-First_Name Updated"}'
 
 
 * Delete director with id 626 <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/directors/626 \
--X DELETE \
+curl -i http://127.0.0.1:8000/catalog/api/v1/directors/626 \\ <br/>
+-X DELETE \\ <br/>
 -H 'Authorization: Token '$MLME_REST_API_TOKEN
-
-
-* How to create a token for the admin user to authenticate on the REST API <br/>
-./manage.py drf_create_token admin
-* Then set an env variable MLME_REST_API_TOKEN to the generated token
 <br/> <br/>
 
 
@@ -89,8 +89,13 @@ http://127.0.0.1:8000/catalog/api/v1/actors/27
 
 ### Similar to directors REST API. For example:
 
-* Get all actors which last name is "Toshiro Mifune"<br/>
+* Get all actors which last name is "Toshiro Mifune" <br/>
 curl -i "http://127.0.0.1:8000/catalog/api/v1/actors?last_name=Toshiro%20Mifune"
+<br/> <br/>
+
+* Get all actors which last name is "Toshiro Mifune" as an authenticated user <br/>
+curl -i "http://127.0.0.1:8000/catalog/api/v1/actors?last_name=Toshiro%20Mifune" \\ <br/>
+-H 'Authorization: Token '$MLME_REST_API_TOKEN
 <br/> <br/>
 
 
@@ -102,6 +107,11 @@ http://127.0.0.1:8000/catalog/api/v1/movies/1
 
 * Get all movies <br/>
 curl -i http://127.0.0.1:8000/catalog/api/v1/movies
+
+
+* Get all movies as an authenticated user <br/>
+curl -i http://127.0.0.1:8000/catalog/api/v1/movies \\ <br/>
+-H 'Authorization: Token '$MLME_REST_API_TOKEN
 
 
 * Get movie with id 1 <br/>
@@ -157,29 +167,53 @@ curl -i "http://127.0.0.1:8000/catalog/api/v1/movies?search=thin%20man&ordering=
 
 
 * Create new movie <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/movies \
--X POST \
--H 'Content-Type: application/json' \
--H 'Authorization: Token '$MLME_REST_API_TOKEN \
+curl -i http://127.0.0.1:8000/catalog/api/v1/movies \\ <br/>
+-X POST \\ <br/>
+-H 'Content-Type: application/json' \\ <br/>
+-H 'Authorization: Token '$MLME_REST_API_TOKEN \\ <br/>
 -d '{"title": "Test: A Story of Floating Weeds", "title_original": "Test: Ukikusa monogatari", "director": "4", "year": "1934", "runtime": "86", "country": "JP", "language": "Japanese", "cast": "Takeshi Sakamoto, Chōko Iida, Kōji Mitsui, Rieko Yagumo, Yoshiko Tsubouchi"}'
 
 
-* Change name of movie with id 665 <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/movies/665 \
--X PUT \
--H 'Content-Type: application/json' \
--H 'Authorization: Token '$MLME_REST_API_TOKEN \
+* Change name of movie with id 1371 <br/>
+curl -i http://127.0.0.1:8000/catalog/api/v1/movies/1371 \\ <br/>
+-X PUT \\ <br/>
+-H 'Content-Type: application/json' \\ <br/>
+-H 'Authorization: Token '$MLME_REST_API_TOKEN \\ <br/>
 -d '{"title": "Test 2: A Story of Floating Weeds", "title_original": "Test 2: Ukikusa monogatari", "year": "1934"}'
 
 
-* Delete movie with id 665 <br/>
-curl -i http://127.0.0.1:8000/catalog/api/v1/movies/665 \
--X DELETE \
+* Delete movie with id 1371 <br/>
+curl -i http://127.0.0.1:8000/catalog/api/v1/movies/1371 \\ <br/>
+-X DELETE \\ <br/>
 -H 'Authorization: Token '$MLME_REST_API_TOKEN
+<br/> <br/>
 
 
-* How to create a token for the admin user to authenticate on the REST API <br/>
+## Catalog Movies REST API - Format as XML instead of JSON
+
+### Similar to previous examples but adding format=xml. For example:
+
+* Get all movies of year 1935 formatted as XML<br/>
+curl -i http://127.0.0.1:8000/catalog/api/v1/movies?year=1935&format=xml
+<br/> <br/>
+
+
+## How to create a token to authenticate on the REST API
+
+### How to create a token for a  given user; for example, the admin user <br/>
+
 ./manage.py drf_create_token admin
+* Then set an env variable MLME_REST_API_TOKEN to the generated token
+<br/>
+
+### How to ask a token to the API for a given user <br/>
+
+* First, set env variables for the username and their password: MLME_USERNAME, MLME_PASSWORD .
+* Then: <br/>
+curl -i http://127.0.0.1:8000/catalog/api/v1/token-auth \\ <br/>
+-X POST \\ <br/>
+-d 'username='$MLME_USERNAME \\ <br/>
+-d 'password='$MLME_PASSWORD
 * Then set an env variable MLME_REST_API_TOKEN to the generated token
 <br/> <br/>
 
@@ -195,6 +229,13 @@ http://127.0.0.1:8000/
 * Only staff users have permission to edit catalog data. This includes uploading photos. <br/>
   So, the following buttons are hidden from no-staff users: \[Edit] &nbsp;&nbsp;\[Upload ... Photo]
 * Any user can add a movie review and edit the reviews they wrote.
+<br/> <br/>
+
+
+## To run the tests for this project
+
+* You need to run the tests using the test settings file this way: <br/>
+python manage.py test --settings=movies_lib_explorer.test_settings
 <br/> <br/>
 
 

@@ -1,7 +1,8 @@
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
+from rest_framework.authtoken.views import obtain_auth_token
 
-from catalog.config.config import API_ACTORS_PATH, API_DIRECTORS_PATH, API_MOVIES_PATH
+from catalog.config.config import API_ACTORS_PATH, API_DIRECTORS_PATH, API_MOVIES_PATH, API_AUTH_TOKEN_PATH
 from catalog.views import actor_views
 from catalog.views import director_views
 from catalog.views import movie_views
@@ -50,6 +51,8 @@ urlpatterns = [
     path(f'{API_ACTORS_PATH}/', actor_views_api_v1.ActorList.as_view(), name="api_actors"),
     path(f'{API_ACTORS_PATH}/<int:pk>', actor_views_api_v1.ActorDetail.as_view(), name="api_actor_detail"),
     path(f'{API_ACTORS_PATH}/<int:pk>/', actor_views_api_v1.ActorDetail.as_view(), name="api_actor_detail"),
+
+    path(API_AUTH_TOKEN_PATH, obtain_auth_token),
 
     path('about/', home_views.about, name="about"),
     path('load_data/', load_data_views.load_data, name="load_data"),

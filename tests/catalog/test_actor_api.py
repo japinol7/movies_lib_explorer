@@ -49,7 +49,7 @@ class ActorAPITestCase(APITestCase):
             path=reverse('catalog:api_actors'),
             content_type='application/json')
         json_data = response.json()
-        actor = json_data[-1]
+        actor = json_data['results'][-1]
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(actor['last_name'], self.actor.last_name)
@@ -65,7 +65,7 @@ class ActorAPITestCase(APITestCase):
             path=rf"http://127.0.0.1:8000/catalog/api/v1/actors/?last_name={search_name}",
             content_type='application/json')
         json_data = response.json()
-        actors = json_data
+        actors = json_data['results']
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(actors), 2)
@@ -84,7 +84,7 @@ class ActorAPITestCase(APITestCase):
             path=rf"http://127.0.0.1:8000/catalog/api/v1/actors/?first_name={search_name}&ordering=last_name",
             content_type='application/json')
         json_data = response.json()
-        actors = json_data
+        actors = json_data['results']
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(actors), 2)
@@ -105,7 +105,7 @@ class ActorAPITestCase(APITestCase):
             path=rf"http://127.0.0.1:8000/catalog/api/v1/actors/?search={search_name}&ordering=last_name",
             content_type='application/json')
         json_data = response.json()
-        actors = json_data
+        actors = json_data['results']
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(actors), 3)

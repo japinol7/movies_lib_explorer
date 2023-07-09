@@ -3,6 +3,7 @@ from rest_framework import authentication
 from rest_framework.exceptions import ValidationError
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
+from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
 
 from catalog.models.director import Director
 from catalog.serializers import DirectorSerializer
@@ -15,6 +16,7 @@ class DirectorList(generics.ListCreateAPIView):
     """List all directors or create a new director."""
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [IsAdminOrReadOnly]
+    throttle_classes = [AnonRateThrottle, UserRateThrottle]
 
     queryset = Director.objects.all()
     serializer_class = DirectorSerializer
@@ -36,6 +38,7 @@ class DirectorDetail(generics.RetrieveUpdateDestroyAPIView):
     """Retrieve, update or delete a director."""
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [IsAdminOrReadOnly]
+    throttle_classes = [AnonRateThrottle, UserRateThrottle]
 
     queryset = Director.objects.all()
     serializer_class = DirectorSerializer
