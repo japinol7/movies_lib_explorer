@@ -218,6 +218,17 @@ curl -i http://127.0.0.1:8000/catalog/api/v1/token-auth \\ <br/>
 <br/> <br/>
 
 
+## Default API settings
+ 
+* Pagination <br/>
+  API_PAGE_SIZE = 300 <br/>
+<br/>
+* Throttling for anonymous and authorized users <br/>
+  API_DEFAULT_THROTTLE_RATES_ANON = '300/day' <br/>
+  API_DEFAULT_THROTTLE_RATES_USER = '30/minute' <br/>
+<br/> <br/>
+
+
 ## Default local url
 
 http://127.0.0.1:8000/
