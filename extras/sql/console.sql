@@ -4,7 +4,7 @@ select * from catalog_actor order by id;
 
 select * from catalog_movie_actors order by id;
 
--- 1364 movies
+-- 1372 movies
 select count(*) from catalog_movie;
 
 -- Empty catalog tables
