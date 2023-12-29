@@ -249,8 +249,23 @@ http://127.0.0.1:8000/
 python manage.py test --settings=movies_lib_explorer.test_settings
 <br/> <br/>
 
+  
+## To make this app server work - Quick start with data already loaded
 
-## To make this app server work
+	Do this:
+	    1. Clone this repository in your local system.
+	    2. Go to its folder in your system.
+	    3. $ pip install -r requirements.txt
+	    4. The first time you must create/update the database with the right tables this way:
+	       $ python manage.py migrate
+	       4.1 You can also create an admin user this way, so you can log in, create other users, etc:
+	          $ python manage.py createsuperuser
+	    5. $ python manage.py runserver
+	    6. Open the website indicated in the console in your browser.
+	       Example: http://127.0.0.1:8000/
+
+
+## To make this app server work - Recommended steps
 
 	Do this:
 	    1. Clone this repository in your local system.

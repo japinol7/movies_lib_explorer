@@ -4,7 +4,7 @@ select * from catalog_actor order by id;
 
 select * from catalog_movie_actors order by id;
 
--- 1372 movies
+-- 1374 movies
 select count(*) from catalog_movie;
 
 -- Empty catalog tables
@@ -27,11 +27,39 @@ select count(*) from catalog_movie;
 -- [IMP] resources: Add and fix data.
 --------------------
 --------------------
+-- Genres:
+--
+-- Action
+-- Adventure
+-- Animation
+-- Comedy
+-- Crime
+-- Documentary
+-- Drama
+-- Fantasy
+-- History
+-- Horror
+-- Mystery
+-- Music
+-- Science Fiction
+-- Romance
+-- Thriller
+-- TV Movie
+-- War
+-- Western
+--------------------
+--------------------
+-- get movies with no genres
+select id, title, genres from catalog_movie where genres = '' order by title;
+--------------------
+select id, title, genres from catalog_movie where genres like '%fantasy%' order by title;
+--------------------
+--------------------
 select cm.id, cm.title, cm.year, cm.decade, cm.runtime,
        cm.director_id, cd.first_name director_fn, cd.last_name director_ln,
-       cm.country, cm.title_original, cm.cast,
+       cm.country, cm.genres, cm.title_original, cm.cast,
        cm.description, cm.language, cm.note, cm.production_company,
-       cm.cinematography, cm.genres, cm.picture, cm.producer, cm.writer,
+       cm.cinematography, cm.picture, cm.producer, cm.writer,
        cm.created, cm.updated
     from catalog_movie cm
     left join catalog_director cd on cm.director_id = cd.id
