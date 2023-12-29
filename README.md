@@ -270,6 +270,7 @@ python manage.py test --settings=movies_lib_explorer.test_settings
 	Do this:
 	    1. Clone this repository in your local system.
 	    2. Go to its folder in your system.
+	       2.1 Delete the demo database file: db.sqlite3
 	    3. $ pip install -r requirements.txt
 	    4. The first time you must create a new database with the right tables this way:
 	       $ python manage.py migrate
