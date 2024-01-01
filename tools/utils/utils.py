@@ -1,3 +1,6 @@
+import functools
+import weakref
+
 from tools.logger.logger import log
 
 
@@ -57,3 +60,20 @@ def time_seconds_format_to_min_sec(seconds, zero_first=False):
 
 def str_to_html(text):
     return text.replace('\n', '<br>')
+
+
+def weak_lru(maxsize=128, typed=False):
+    """LRU Cache decorator that keeps a weak reference to self.
+    You can use it to cache methods of a class.
+    """
+    def wrapper(func):
+        @functools.lru_cache(maxsize, typed)
+        def _func(_self, *args, **kwargs):
+            return func(_self(), *args, **kwargs)
+
+        @functools.wraps(func)
+        def inner(self, *args, **kwargs):
+            return _func(weakref.ref(self), *args, **kwargs)
+
+        return inner
+    return wrapper

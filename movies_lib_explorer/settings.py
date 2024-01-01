@@ -25,12 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # TODO SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = utils.read_file_as_string(os.path.join(
-    str(Path.home()), '.api_keys', 'movies_lib_explorer_secret_keys',
-    'movies_lib_explorer_secret_key.key'))
+SECRET_KEY = None
 
 # TODO SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -53,6 +51,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
+    "django_htmx",
 ]
 
 MIDDLEWARE = [
@@ -64,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_htmx.middleware.HtmxMiddleware",
 ]
 
 ROOT_URLCONF = 'movies_lib_explorer.urls'

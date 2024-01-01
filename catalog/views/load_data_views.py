@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from catalog.models.movie import Movie
 from catalog.models.director import Director
-from catalog.import_data.import_data import import_initial_data
+from catalog.src_modules.import_data.import_data import import_initial_data
 from tools.logger.logger import log
 
 

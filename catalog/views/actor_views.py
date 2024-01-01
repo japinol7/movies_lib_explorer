@@ -5,13 +5,16 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect, render, get_object_or_404
 
-from catalog.import_data.import_data import (
+from catalog.src_modules.import_data.import_data import (
     update_actors_n_movie_actor_links,
     get_data_to_update_actors_n_movie_actor_links,
     )
 from catalog.models.actor import Actor
 from catalog.forms.actor_forms import ActorEditForm
+from catalog.src_modules.controller.tmdb_controller import TMDBController, TMDB_CONNECTOR_INFO
 from tools.logger.logger import log
+
+controller = TMDBController()
 
 
 def actor_list(request):
@@ -76,3 +79,35 @@ def actor_edit_form(request, actor_id):
 
     return render(request, 'catalog/actor_edit_form.html',
                   {'actor': actor, 'form': form})
+
+
+@login_required
+def tmdb_actor_link(request, actor_id):
+    log.info(f"Start view: tmdb_actor_link - actor_id: {actor_id}")
+    actor = get_object_or_404(Actor, id=actor_id)
+
+    return render(request, 'catalog/partials/tmdb_actor_link.html',
+                  context={'actor': actor})
+
+
+@login_required
+def tmdb_actor_search_form(request, actor_id):
+    log.info(f"Start view: tmdb_actor_search_form - actor_id: {actor_id}")
+    actor = get_object_or_404(Actor, id=actor_id)
+
+    tmdb_data = []
+    if request.method == 'POST':
+        search_actor_name = request.POST.get('search_actor_name')
+
+        if not controller.client:
+            controller.get_client()
+
+        tmdb_data = controller.get_search_person(search_actor_name, filter_='')
+
+    return render(request, 'catalog/partials/tmdb_actor_search_form.html',
+                  context={
+                      'actor': actor,
+                      'tmdb_actors': tmdb_data,
+                      'tmdb_info': TMDB_CONNECTOR_INFO,
+                      'tmdb_errors': controller.tmdb_errors,
+                  })

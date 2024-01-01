@@ -57,7 +57,9 @@
 
     {% if movie.picture %}
         <p>
-        <img src="{{ movie.picture.url }}" style="max-height:750px">
+        <a href="{{ movie.picture.url }}" target="_self">
+            <img src="{{ movie.picture.url }}" style="max-height:550px">
+        </a>
         <p>
     {% endif %}
 
@@ -66,35 +68,48 @@
         {{ movie.genres }}
     </p>
 
-    <h5>Writer</h5>
-    <p>
-        {{ movie.writer }}
-    </p>
+    {% if movie.writer %}
+        <h5>Writer</h5>
+        <p>
+            {{ movie.writer }}
+        </p>
+    {% endif %}
 
-    <h5>Producer</h5>
-    <p>
-        {{ movie.producer }}
-    </p>
 
-    <h5>Cinematography</h5>
-    <p>
-        {{ movie.cinematography }}
-    </p>
+    {% if movie.producer %}
+        <h5>Producer</h5>
+        <p>
+            {{ movie.producer }}
+        </p>
+    {% endif %}
 
-    <h5>Production company</h5>
-    <p>
-        {{ movie.production_company }}
-    </p>
+    {% if movie.cinematography %}
+        <h5>Cinematography</h5>
+        <p>
+            {{ movie.cinematography }}
+        </p>
+    {% endif %}
 
-    <h5>Note</h5>
-    <p>
-        {{ movie.note }}
-    </p>
+    {% if movie.production_company %}
+        <h5>Production company</h5>
+        <p>
+            {{ movie.production_company }}
+        </p>
+    {% endif %}
 
-    <h5>Description</h5>
-    <p>
-        {{ movie.description }}
-    </p>
+    {% if movie.note %}
+        <h5>Note</h5>
+        <p>
+            {{ movie.note }}
+        </p>
+    {% endif %}
+
+    {% if movie.description %}
+        <h5>Description</h5>
+        <p>
+            {{ movie.description }}
+        </p>
+    {% endif %}
 
     <div class="row">
         <div class="col">
@@ -119,5 +134,18 @@
             No reviews yet!
         </div>
     {% endfor %}
+
+    <!-- Form section for TMDB data connector -->
+    <div class="container tmdb-data movie">
+      <br>
+      <hr style="border-width:5px;border-color:dodgerblue">
+      <div class="row click-to-add justify-content-left">
+        <div class="col-md-10">
+          {% include "catalog/partials/tmdb_movie_link.html" %}
+        </div>
+      </div>
+      <hr style="border-width:5px;border-color:dodgerblue">
+      <br> <br>
+    </div>
 
 {% endblock content %}

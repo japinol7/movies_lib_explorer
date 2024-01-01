@@ -19,6 +19,27 @@ API_AUTH_TOKEN_PATH = f'api/v{API_VERSION}/token-auth'
 MOVIE_YEAR_MIN = 1900
 MOVIE_YEAR_MAX = 2500
 
+MOVIE_GENRES = [
+    'Action',
+    'Adventure',
+    'Animation',
+    'Comedy',
+    'Crime',
+    'Documentary',
+    'Drama',
+    'Fantasy',
+    'History',
+    'Horror',
+    'Mystery',
+    'Music',
+    'Science Fiction',
+    'Romance',
+    'Thriller',
+    'TV Movie',
+    'War',
+    'Western',
+    ]
+
 DATASET_SOURCE_FORMAT = 'csv'
 
 DELIMITER_CSV = ','

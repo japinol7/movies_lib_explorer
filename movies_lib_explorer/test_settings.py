@@ -1,5 +1,18 @@
 from movies_lib_explorer.settings import *
 
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
+
+# TODO SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = utils.read_file_as_string(os.path.join(
+    str(Path.home()), '.api_keys', 'movies_lib_explorer_secret_keys',
+    'movies_lib_explorer_secret_key.key'))
+
+# TODO SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS = []
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

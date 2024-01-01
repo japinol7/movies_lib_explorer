@@ -7,9 +7,14 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect, render, get_object_or_404
 
+from catalog.config.config import MOVIE_GENRES
 from catalog.models.actor import Actor
 from catalog.models.movie import Movie
 from catalog.forms.movie_forms import MovieEditForm
+from catalog.src_modules.controller.tmdb_controller import TMDBController, TMDB_CONNECTOR_INFO
+from tools.logger.logger import log
+
+controller = TMDBController()
 
 
 def movie_list(request):
@@ -78,6 +83,23 @@ def _group_data_by_decade(data):
         }
 
 
+def movie_list_by_genre(request):
+    data = {'movies': []}
+    search_genre = ''
+    if request.method == 'POST':
+        search_genre = request.POST.get('search_genres') or ''
+        if search_genre:
+            data['movies'] = list(Movie.objects.filter(genres__contains=search_genre).select_related('director').
+                                  order_by('title', 'year', 'director__last_name', 'director__first_name'))
+
+    return render(request, "catalog/movie_list_by_genre.html",
+                  context={
+                      'movies': data['movies'],
+                      'genres': MOVIE_GENRES,
+                      'search_genre': search_genre,
+                  })
+
+
 def movie(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
     actors = Actor.objects.filter(movie=movie)
@@ -109,6 +131,7 @@ def upload_movie_photo(request, movie_id):
 
 @login_required
 def movie_edit_form(request, movie_id):
+    log.info(f"Start view: movie_edit_form - movie_id: {movie_id}")
     movie = get_object_or_404(Movie, id=movie_id)
     form = MovieEditForm(instance=movie)
 
@@ -122,3 +145,40 @@ def movie_edit_form(request, movie_id):
 
     return render(request, 'catalog/movie_edit_form.html',
                   {'movie': movie, 'form': form})
+
+
+@login_required
+def tmdb_movie_link(request, movie_id):
+    log.info(f"Start view: tmdb_movie_link - movie_id: {movie_id}")
+    movie = get_object_or_404(Movie, id=movie_id)
+
+    return render(request, 'catalog/partials/tmdb_movie_link.html',
+                  context={'movie': movie})
+
+
+@login_required
+def tmdb_movie_search_form(request, movie_id):
+    log.info(f"Start view: tmdb_movie_search_form - movie_id: {movie_id}")
+    movie = get_object_or_404(Movie, id=movie_id)
+
+    tmdb_data = []
+    if request.method == 'POST':
+        search_movie_title = request.POST.get('search_movie_title')
+        search_movie_year = request.POST.get('search_movie_year') or ''
+
+        filter_ = f"include_adult=false"
+        if search_movie_year:
+            filter_ += f"&year={search_movie_year}"
+
+        if not controller.client:
+            controller.get_client()
+
+        tmdb_data = controller.get_search_movie(search_movie_title, filter_)
+
+    return render(request, 'catalog/partials/tmdb_movie_search_form.html',
+                  context={
+                      'movie': movie,
+                      'tmdb_movies': tmdb_data,
+                      'tmdb_info': TMDB_CONNECTOR_INFO,
+                      'tmdb_errors': controller.tmdb_errors,
+                  })

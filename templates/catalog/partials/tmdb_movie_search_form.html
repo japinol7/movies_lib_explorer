@@ -1,0 +1,89 @@
+{% load static %}
+<form class="tmdb-movie-search-form fade-me-in fade-me-out"
+    method="POST">
+  {% csrf_token %}
+
+  <div style="clear:both">
+    <div style="float:left">
+        <div style="font-size: larger;color:dodgerblue">{{ tmdb_info.tmdb_connector_title }}</div>
+        <div style="font-size: large;color:dodgerblue">{{ tmdb_info.tmdb_connector_attribution_notice }}</div>
+        <div style="font-size: medium;color:dodgerblue"
+            >API version: {{ tmdb_info.tmdb_connector_api_version }},
+             URL: {{ tmdb_info.tmdb_connector_api_uri }}</div>
+        <div style="font-size: medium;color:dodgerblue">{{ tmdb_info.tmdb_connector_body }}</div>
+        <div style="font-size: medium;color:dodgerblue">{{ movie.title }} [{{ movie.year }}]</div>
+    </div>
+    <div style="float:right">
+        <a href="{{ tmdb_info.tmdb_connector_website_uri }}" target="_self">
+         <img class="logo-img" src="{% static 'tmdb/logo.svg' %}">
+        </a>
+    </div>
+  </div>
+
+  <div style="clear:both">
+    <p>
+      <label for="search_movie_title"><p>Movie title</p></label>
+      <input type="text" class="form-control" id="search_movie_title" name="search_movie_title"
+             required
+             value="{{ movie.title }}">
+    </p>
+    <p>
+      <label for="search_movie_year"><p>Release Year around:</p></label>
+      <input type="number" class="form-control" id="search_movie_year" name="search_movie_year"
+             value="{{ movie.year }}">
+    </p>
+  </div>
+
+  <div>
+    <br>
+    <button name="tmdb_movie_search" id="tmdb_movie_search"
+        class="btn btn-success"
+        style="background:#bfe67b;border-color:#bfe67b;color:#013f01"
+        hx-post="{% url 'catalog:tmdb_movie_search_form' movie_id=movie.id %}"
+        hx-target=".tmdb-movie-search-form"
+        >Search</button>
+    &nbsp
+    <button class="btn btn-warning"
+        style="background-color:#bababa;border-color:#bababa;color:#1c1b1b"
+        hx-get="{% url 'catalog:tmdb_movie_link' movie_id=movie.id %}"
+        hx-target=".tmdb-movie-search-form"
+        >Cancel</button>
+  </div>
+  <br> <br>
+
+  {#  Body for the TMDB movie search results #}
+  <div class="body" style="color:dodgerblue">
+    {% if tmdb_errors %}
+        {% for item in tmdb_errors %}
+            <div  style="color:#ff253a">
+                <p><strong>{{ item }}</strong></p>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if tmdb_movies %}
+        {% for item in tmdb_movies %}
+            <p>Title: {{ item.title }}</p>
+            <p>Release date: {{ item.release_date }}</p>
+            <p>Runtime: {{ item.mlde_runtime }}</p>
+            <p>Genres: {{ item.mlde_genres }}</p>
+            <p>Overview: {{ item.overview }}</p>
+            {%  if item.mlde_is_orig_title_diff %}
+                <p>Original title: {{ item.original_title }}</p>
+            {% endif %}
+            <p>Original language: {{ item.original_language }}</p>
+            {%  if item.mlde_im_poster_uri %}
+                <a href="{{ item.mlde_im_poster_uri }}" target="_self">
+                <img src="{{ item.mlde_im_poster_uri }}" style="height: 300px;"
+                     alt="{{ item.mlde_im_poster_uri }} picture">
+                </a>
+            {% endif %}
+            <hr style="border-width:2px;border-color:dodgerblue">
+
+        {% endfor %}
+    {% else %}
+        <p class="tmdb_movie">
+        </p>
+    {% endif %}
+  </div>
+</form>

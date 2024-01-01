@@ -1,0 +1,54 @@
+{% extends "home/base.html" %}
+
+{% block title %}MLME - Movie list by Genre{% endblock title %}
+
+{% block content %}
+    <p>
+        <a class="btn btn-dark" href="{% url 'catalog:movie_list' %}">Movies</a> &nbsp;
+        <a class="btn btn-dark" href="{% url 'catalog:movie_list_by_decade' %}">By Decade</a> &nbsp;
+        <a class="btn btn-dark" href="{% url 'catalog:movie_list_by_year' %}">By Year</a> &nbsp;
+        <a class="btn btn-dark" href="{% url 'catalog:movie_with_picture_list' %}">Movies with picture</a>
+    </p>
+        <h3>Select Genre</h3>
+    <p>
+
+    <form class="tmdb-genre-search-form fade-me-in fade-me-out"
+          method="POST">
+       {% csrf_token %}
+        <select name="search_genres" id="search_genres" type="text"
+            style="width:260px">
+            {% for genre in genres %}
+                <option value="{{ genre }}">{{ genre }}</option>
+            {% endfor %}
+        </select>
+        <br> <br>
+        <div>
+        <button name="movie_list_by_genre" id="movie_list_by_genre"
+            class="btn btn-success"
+            style="background:#bfe67b;border-color:#bfe67b;color:#013f01"
+            >Search</button>
+        </div>
+
+        {% if search_genre %}
+            <div>
+               <br> <br>
+                <p>
+                    Search by Genre: &nbsp;<b>{{ search_genre }}</b>
+                </p>
+                <h3>Movies</h3>
+                <p>
+                    {% for movie in movies %}
+                        <b><a href="{% url 'catalog:movie' movie_id=movie.id %}">{{ movie.title }}</a></b>;
+                        {{ movie.year }};
+                        {% if movie.director.first_name %}{{ movie.director.first_name }}{% endif %}
+                        {% if movie.director.last_name %} {{ movie.director.last_name }}{% endif %}
+                        <br>
+                    {% empty %}
+                        <i>There are no movies of the selected genre.</i>
+                    {% endfor %}
+                </p>
+            </div>
+        {% endif %}
+    </form>
+
+{% endblock content %}

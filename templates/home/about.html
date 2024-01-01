@@ -3,21 +3,60 @@
 {% block title %}MLME - About {% endblock title %}
 
 {% block content %}
-    <h1>Movies Library Metadata Explorer</h1>
+  {% load static %}
+
+  <h1>Movies Library Metadata Explorer</h1>
+
+  <div style="clear:both">
     <p class="body about-information"><br>
         Objective: <br> Make a very simple Movies Library Metadata Explorer. <br>
         Its purpose is to be used as a Django example. <br>
-        It includes a REST API for the catalog models using Django REST framework.
+        It includes a REST API for the catalog models using Django REST Framework.
+        <br> <br>
+        About the demo data: All the MLME demo metadata has been entered <br>
+        manually over the years as a hobby by the author of MLME.
         <br> <br>
         More info here:
         <a href = "https://github.com/japinol7/movies_lib_explorer">🚀 Repository on GitHub</a>
-        <br> <br>
+    </p>
+  </div>
+
+  <div style="clear:both;color:dodgerblue">
+    <div style="float:left">
+        <p class="body about-information"><br>
+        <hr style="border-width:2px;border-color:dodgerblue">
+            Starting with version 0.1.0, MLME includes a TMDB integration with <br>
+            the TMDB REST API that the user cant use to get movie data from TMDB. <br>
+            Regarding the TMDB integration: <br>
+            <ul>
+              <li> This product uses the TMDB API but is not endorsed or certified by TMDB </li>
+              <li> You will need to get a TMDB API access token to use this integration: </li>
+                <a href="https://api.themoviedb.org" target="_self"
+                >https://api.themoviedb.org</a>
+            </ul>
+        <hr style="border-width:2px;border-color:dodgerblue">
+        </p>
+    </div>
+    <div style="float:left">
+        <br> <br> <br> <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="https://www.themoviedb.org" target="_self">
+         <img class="logo-img" src="{% static 'tmdb/logo.svg' %}">
+        </a>
+    </div>
+  </div>
+
+
+
+  <div style="clear:both">
+    <p class="body about-information"><br>
         Program: movies_lib_explorer<br>
-        Version: 0.0.2<br>
+        Version: 0.1.0<br>
         Author: Joan A. Pinol<br>
         Author_nickname: japinol<br>
         Author_gitHub: japinol7<br>
         Author_twitter: @japinol<br>
-        Python requires: 3.10 or greater.<br>
+        Python requires: 3.11 or greater.<br>
     </p>
+  </div>
+
 {% endblock content %}

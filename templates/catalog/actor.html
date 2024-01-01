@@ -17,7 +17,9 @@
 
     {% if actor.picture %}
         <p>
-        <img src="{{ actor.picture.url }}" style="max-height:250px">
+        <a href="{{ actor.picture.url }}" target="_self">
+           <img src="{{ actor.picture.url }}" style="max-height:250px">
+        </a>
         <p>
     {% else %}
         <br>
@@ -34,5 +36,18 @@
             <i>No movies available</i>
         {% endfor %}
     </p>
+
+    <!-- Form section for TMDB data connector -->
+    <div class="container tmdb-data actor">
+      <br>
+      <hr style="border-width:5px;border-color:dodgerblue">
+      <div class="row click-to-add justify-content-left">
+        <div class="col-md-10">
+          {% include "catalog/partials/tmdb_actor_link.html" %}
+        </div>
+      </div>
+      <hr style="border-width:5px;border-color:dodgerblue">
+      <br> <br>
+    </div>
 
 {% endblock content %}

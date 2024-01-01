@@ -1,0 +1,83 @@
+{% load static %}
+<form class="tmdb-actor-search-form fade-me-in fade-me-out"
+    method="POST">
+  {% csrf_token %}
+
+  <div style="clear:both">
+    <div style="float:left">
+        <div style="font-size: larger;color:dodgerblue">{{ tmdb_info.tmdb_connector_title }}</div>
+        <div style="font-size: large;color:dodgerblue">{{ tmdb_info.tmdb_connector_attribution_notice }}</div>
+        <div style="font-size: medium;color:dodgerblue"
+            >API version: {{ tmdb_info.tmdb_connector_api_version }},
+             URL: {{ tmdb_info.tmdb_connector_api_uri }}</div>
+        <div style="font-size: medium;color:dodgerblue">{{ tmdb_info.tmdb_connector_body }}</div>
+        <div style="font-size: medium;color:dodgerblue">{{ actor.first_name }} {{ actor.last_name }}</div>
+    </div>
+    <div style="float:right">
+        <a href="{{ tmdb_info.tmdb_connector_website_uri }}" target="_self">
+         <img class="logo-img" src="{% static 'tmdb/logo.svg' %}">
+        </a>
+    </div>
+  </div>
+
+  <div style="clear:both">
+    <p>
+      <label for="search_actor_name"><p>Full name</p></label>
+      <input type="text" class="form-control" id="search_actor_name" name="search_actor_name"
+             required
+             value="{{ actor.first_name }} {{ actor.last_name }}">
+    </p>
+  </div>
+
+  <div>
+    <br>
+    <button name="tmdb_actor_search" id="tmdb_actor_search"
+        class="btn btn-success"
+        style="background:#bfe67b;border-color:#bfe67b;color:#013f01"
+        hx-post="{% url 'catalog:tmdb_actor_search_form' actor_id=actor.id %}"
+        hx-target=".tmdb-actor-search-form"
+        >Search</button>
+    &nbsp
+    <button class="btn btn-warning"
+        style="background-color:#bababa;border-color:#bababa;color:#1c1b1b"
+        hx-get="{% url 'catalog:tmdb_actor_link' actor_id=actor.id %}"
+        hx-target=".tmdb-actor-search-form"
+        >Cancel</button>
+  </div>
+  <br> <br>
+
+  {#  Body for the TMDB actor search results #}
+  <div class="body" style="color:dodgerblue">
+    {% if tmdb_errors %}
+        {% for item in tmdb_errors %}
+            <div  style="color:#ff253a">
+                <p><strong>{{ item }}</strong></p>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if tmdb_actors %}
+        {% for item in tmdb_actors %}
+            <p>Name: {{ item.name }}</p>
+            {%  if item.mlde_is_orig_name_diff %}
+                <p>Original title: {{ item.original_name }}</p>
+            {% endif %}
+            <p>Birthday: {{ item.mlde_birth_date }}</p>
+            <p>Death day: {{ item.mlde_death_date }}</p>
+            <p>Birthplace: {{ item.mlde_birth_place }}</p>
+            <p>Biography: {{ item.mlde_biography }}</p>
+            {%  if item.mlde_im_profile_uri %}
+                <a href="{{ item.mlde_im_profile_uri }}" target="_self">
+                    <img src="{{ item.mlde_im_profile_uri }}" style="height: 300px;"
+                         alt="{{ item.mlde_im_profile_uri }} picture">
+                </a>
+            {% endif %}
+            <hr style="border-width:2px;border-color:dodgerblue">
+
+        {% endfor %}
+    {% else %}
+        <p class="tmdb_actor">
+        </p>
+    {% endif %}
+  </div>
+</form>

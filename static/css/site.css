@@ -46,3 +46,24 @@ footer a:hover {
     justify-content: center;
     align-items: center;
 }
+
+.tmdb-data .click-to-add {
+    text-align: left;
+}
+
+.tmdb-data .click-to-add a {
+    cursor: pointer;
+}
+
+.tmdb-data .tmdb-movie-search-form input {
+    max-width: 100%;
+    margin: 10px;
+}
+
+.htmx-settling img {
+    opacity: 0;
+}
+
+img.htmx-indicator {
+    transition: opacity 300ms ease-in;
+}

@@ -4,9 +4,10 @@
 
 {% block content %}
     <p>
-        <a class="btn btn-dark" href="{% url 'catalog:movie_list' %}">Movies</a>
-        <a class="btn btn-dark" href="{% url 'catalog:movie_list_by_year' %}">Movies by Year</a>
-        <a class="btn btn-dark" href="{% url 'catalog:movie_list_by_decade' %}">Movies by Decade</a>
+        <a class="btn btn-dark" href="{% url 'catalog:movie_list' %}">Movies</a> &nbsp;
+        <a class="btn btn-dark" href="{% url 'catalog:movie_list_by_year' %}">By Year</a> &nbsp;
+        <a class="btn btn-dark" href="{% url 'catalog:movie_list_by_decade' %}">By Decade</a> &nbsp;
+        <a class="btn btn-dark" href="{% url 'catalog:movie_list_by_genre' %}">By Genre</a>
     </p>
     <h3>Movies with picture</h3>
     <br>

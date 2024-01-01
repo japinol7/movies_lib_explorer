@@ -7,6 +7,10 @@ from django.shortcuts import redirect, render, get_object_or_404
 
 from catalog.models.director import Director
 from catalog.forms.director_forms import DirectorEditForm
+from catalog.src_modules.controller.tmdb_controller import TMDBController, TMDB_CONNECTOR_INFO
+from tools.logger.logger import log
+
+controller = TMDBController()
 
 
 def director_list(request):
@@ -58,3 +62,35 @@ def director_edit_form(request, director_id):
 
     return render(request, 'catalog/director_edit_form.html',
                   {'director': director, 'form': form})
+
+
+@login_required
+def tmdb_director_link(request, director_id):
+    log.info(f"Start view: tmdb_director_link - director_id: {director_id}")
+    director = get_object_or_404(Director, id=director_id)
+
+    return render(request, 'catalog/partials/tmdb_director_link.html',
+                  context={'director': director})
+
+
+@login_required
+def tmdb_director_search_form(request, director_id):
+    log.info(f"Start view: tmdb_director_search_form - director_id: {director_id}")
+    director = get_object_or_404(Director, id=director_id)
+
+    tmdb_data = []
+    if request.method == 'POST':
+        search_director_name = request.POST.get('search_director_name')
+
+        if not controller.client:
+            controller.get_client()
+
+        tmdb_data = controller.get_search_person(search_director_name, filter_='')
+
+    return render(request, 'catalog/partials/tmdb_director_search_form.html',
+                  context={
+                      'director': director,
+                      'tmdb_directors': tmdb_data,
+                      'tmdb_info': TMDB_CONNECTOR_INFO,
+                      'tmdb_errors': controller.tmdb_errors,
+                  })
