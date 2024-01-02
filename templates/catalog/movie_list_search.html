@@ -1,0 +1,33 @@
+{% extends "home/base.html" %}
+
+{% block title %}MLME - Movie Search {% endblock title %}
+
+{% block content %}
+    <p>
+        <a class="btn btn-dark" href="{% url 'catalog:movie_list' %}">Movies</a> &nbsp;
+        <a class="btn btn-dark" href="{% url 'catalog:movie_list_by_decade' %}">By Decade</a> &nbsp;
+        <a class="btn btn-dark" href="{% url 'catalog:movie_list_by_genre' %}">By Genre</a> &nbsp;
+        <a class="btn btn-dark" href="{% url 'catalog:movie_list_search' %}">Search</a> &nbsp;
+        <a class="btn btn-dark" href="{% url 'catalog:movie_with_picture_list' %}">Movies with picture</a>
+    </p>
+
+    <div class="search-inputs">
+      <h3>Search Movie</h3>
+      <h5>by Title and/or Director</h5>
+      <br>
+      <input name="search_text"
+          placeholder="Search for a movie ..."
+          class="form-control"
+          type="text"
+          value="{{ search_text }}"
+          hx-get="{% url 'catalog:movie_list_search' %}"
+          hx-trigger="keyup[target.value.length > 1] changed delay:500ms"
+          hx-target="#search-results"
+          hx-push-url="true">
+    </div>
+
+    <div class="movies search-results" id="search-results">
+      {% include "catalog/partials/movie_list_search_results.html" %}
+    </div>
+
+{% endblock content %}

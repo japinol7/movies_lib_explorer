@@ -6,8 +6,8 @@ It includes a REST API for the catalog models using Django REST Framework. <br>
 About the demo data: All the MLME demo metadata has been entered <br>
 manually over the years as a hobby by the author of MLME. 
 
-Starting with version 0.1.0, MLME includes a TMDB integration with <br> 
-the TMDB REST API that the user cant use to get movie data from TMDB.
+Starting with version 0.1.1, MLME includes a TMDB integration with <br> 
+the TMDB REST API that the user can use to get movie data from TMDB.
 * Regarding the TMDB integration:
   * This product uses the TMDB API but is not endorsed or certified by TMDB <br>
     <img src="static/tmdb/logo.svg" height=50>
@@ -20,7 +20,7 @@ the TMDB REST API that the user cant use to get movie data from TMDB.
 
 	program: MLME. Movies Library Metadata Explorer using Django.
     name as a package: movies_lib_explorer 
-	version: 0.1.0
+	version: 0.1.1
 	author: Joan A. Pinol
 	author_nickname: japinol
 	author_gitHub: japinol7

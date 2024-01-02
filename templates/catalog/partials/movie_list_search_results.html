@@ -1,0 +1,20 @@
+{% load humanize %}
+
+{% if movies %}
+  <div class="search-result-count">{{ movies | length | intcomma }} results</div>
+{% endif %}
+
+<div class="container">
+  {% for movie in movies %}
+    <div class="row search-result-row">
+      <div class="movie search-result col-md-10">
+            <b><a href="{% url 'catalog:movie' movie_id=movie.id %}">{{ movie.title }}</a></b>;
+            {{ movie.year }};
+            {% if movie.director.first_name %}{{ movie.director.first_name }}{% endif %}
+            {% if movie.director.last_name %} {{ movie.director.last_name }}{% endif %}
+            <br>
+      </div>
+    </div>
+  {% endfor %}
+  <br>
+</div>

@@ -1,10 +1,12 @@
 from collections import defaultdict
 from itertools import groupby
 from pathlib import Path
+import urllib
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.db.models import Q
 from django.shortcuts import redirect, render, get_object_or_404
 
 from catalog.config.config import MOVIE_GENRES
@@ -98,6 +100,36 @@ def movie_list_by_genre(request):
                       'genres': MOVIE_GENRES,
                       'search_genre': search_genre,
                   })
+
+
+def movie_list_search(request):
+    search_text = request.GET.get('search_text', '')
+    search_text = urllib.parse.unquote(search_text)
+    search_text = search_text.strip()
+
+    movies = []
+    if search_text:
+        parts = search_text.split()
+        q = (Q(title__icontains=parts[0]) | Q(director__last_name__icontains=parts[0])
+             | Q(director__first_name__icontains=parts[0]))
+        for part in parts[1:]:
+            q |= (Q(title__icontains=part) | Q(director__last_name__icontains=part)
+                  | Q(director__first_name__icontains=parts[0]))
+        movies = Movie.objects.filter(q)
+
+    data = {
+        "search_text": search_text,
+        "movies": movies,
+        }
+    if request.htmx:
+        return render(request, "catalog/partials/movie_list_search_results.html",
+                      context=data)
+    return render(request, "catalog/movie_list_search.html",
+                  context=data)
+
+
+def about(request):
+    return render(request, "partials/about.html")
 
 
 def movie(request, movie_id):

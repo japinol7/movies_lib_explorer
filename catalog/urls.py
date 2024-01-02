@@ -18,6 +18,7 @@ urlpatterns = [
     path('movie_list_by_year/', movie_views.movie_list_by_year, name='movie_list_by_year'),
     path('movie_list_by_decade/', movie_views.movie_list_by_decade, name='movie_list_by_decade'),
     path('movie_list_by_genre/', movie_views.movie_list_by_genre, name='movie_list_by_genre'),
+    path('movie_list_search/', movie_views.movie_list_search, name='movie_list_search'),
     path('movie_with_picture_list/', movie_views.movie_with_picture_list, name='movie_with_picture_list'),
     path('movie/<int:movie_id>/', movie_views.movie, name='movie'),
     path('upload_movie_photo/<int:movie_id>/', movie_views.upload_movie_photo,
