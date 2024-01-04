@@ -39,7 +39,8 @@ the TMDB REST API that the user can use to get movie data from TMDB.
 <img src="screenshots/screenshot4.png"> <br> <br>
 <img src="screenshots/screenshot5.png"> <br> <br>
 <img src="screenshots/screenshot6.png"> <br> <br>
-<img src="screenshots/screenshot7.png"> <br>
+<img src="screenshots/screenshot7.png"> <br> <br>
+<img src="screenshots/screenshot8.png"> <br>
 
 
 ## Catalog Directors REST API
