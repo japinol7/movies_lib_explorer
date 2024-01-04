@@ -1,22 +1,31 @@
-{% extends "base.html" %}
+{% extends "home/base.html" %}
+
+{% block title %}MLME - Actor Search {% endblock title %}
 
 {% block content %}
+
     <p>
         <a class="btn btn-dark" href="{% url 'catalog:calc_new_actors_from_cast' %}"
             >Calculate new actor links from movies cast without links</a>
     </p>
-    <h3>Actors</h3>
-    <p>
-        {% for actor in actors %}
-            <b><a href="{% url 'catalog:actor' actor_id=actor.id %}"
-            >{% if actor.first_name %}{{ actor.first_name }}{% endif %}
-                {% if actor.last_name %} {{ actor.last_name }}{% endif %}
-            </a></b>
-            <br>
 
-        {% empty %}
-            <i>There are no actors in the database</i>
-        {% endfor %}
+    <div class="search-inputs">
+      <h3>Search Actor</h3>
+      <h5>by first name and/or last name</h5>
+      <br>
+      <input name="search_text"
+          placeholder="Search for a actor ..."
+          class="form-control"
+          type="text"
+          value="{{ search_text }}"
+          hx-get="{% url 'catalog:actor_list_search' %}"
+          hx-trigger="keyup[target.value.length > 1] changed delay:500ms"
+          hx-target="#search-results"
+          hx-push-url="true">
+    </div>
 
-    </p>
+    <div class="actors search-results" id="search-results">
+      {% include "catalog/partials/actor_list_search_results.html" %}
+    </div>
+
 {% endblock content %}

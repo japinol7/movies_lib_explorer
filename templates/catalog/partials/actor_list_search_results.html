@@ -1,0 +1,26 @@
+{% load humanize %}
+
+{% if actors %}
+  <p>
+    {% if actors.count == default_people_list_limit %}
+        <div class="search-result-count">{{ actors | length | intcomma }} actors.
+         Max. number of people to list on this page has been reached.</div>
+    {% else %}
+        <div class="search-result-count">{{ actors | length | intcomma }} actors</div>
+    {% endif %}
+  </p>
+{% endif %}
+
+<div class="container">
+  {% for actor in actors %}
+    <div class="row search-result-row">
+      <div class="actor search-result col-md-10">
+            <b><a href="{% url 'catalog:actor' actor_id=actor.id %}"
+            >{% if actor.first_name %}{{ actor.first_name }}{% endif %}
+             {% if actor.last_name %} {{ actor.last_name }}{% endif %}
+            </a></b>
+      </div>
+    </div>
+  {% endfor %}
+  <br>
+</div>

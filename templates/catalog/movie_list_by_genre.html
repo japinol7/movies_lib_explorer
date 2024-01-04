@@ -1,4 +1,5 @@
 {% extends "home/base.html" %}
+{% load humanize %}
 
 {% block title %}MLME - Movie list by Genre{% endblock title %}
 
@@ -32,11 +33,18 @@
 
         {% if search_genre %}
             <div>
-               <br> <br>
+               <br>
                 <p>
                     Search by Genre: &nbsp;<b>{{ search_genre }}</b>
                 </p>
                 <h3>Movies</h3>
+
+                {% if movies %}
+                  <p>
+                     <div class="search-result-count">{{ movies | length | intcomma }} movies.
+                      Max. number of movies to list on this page: {{ default_movies_list_limit }}.</div>
+                  </p>
+                {% endif %}
                 <p>
                     {% for movie in movies %}
                         <b><a href="{% url 'catalog:movie' movie_id=movie.id %}">{{ movie.title }}</a></b>;

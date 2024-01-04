@@ -1,0 +1,26 @@
+{% load humanize %}
+
+{% if directors %}
+  <p>
+    {% if directors.count == default_people_list_limit %}
+        <div class="search-result-count">{{ directors | length | intcomma }} directors.
+         Max. number of people to list on this page has been reached.</div>
+    {% else %}
+        <div class="search-result-count">{{ directors | length | intcomma }} directors</div>
+    {% endif %}
+  </p>
+{% endif %}
+
+<div class="container">
+  {% for director in directors %}
+    <div class="row search-result-row">
+      <div class="director search-result col-md-10">
+            <b><a href="{% url 'catalog:director' director_id=director.id %}"
+            >{% if director.first_name %}{{ director.first_name }}{% endif %}
+             {% if director.last_name %} {{ director.last_name }}{% endif %}
+            </a></b>
+      </div>
+    </div>
+  {% endfor %}
+  <br>
+</div>

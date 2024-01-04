@@ -1,4 +1,5 @@
 {% extends "home/base.html" %}
+{% load humanize %}
 
 {% block title %}MLME - Movie list by year {% endblock title %}
 
@@ -11,6 +12,18 @@
         <a class="btn btn-dark" href="{% url 'catalog:movie_with_picture_list' %}">Movies with picture</a>
     </p>
     <h3>Movies by Year</h3>
+
+    {% if movies %}
+      <p>
+        {% if movies.count == default_movies_list_limit %}
+            <div class="search-result-count">{{ movies | length | intcomma }} movies.
+             Max. number of movies to list on this page has been reached.</div>
+        {% else %}
+            <div class="search-result-count">{{ movies | length | intcomma }} movies</div>
+        {% endif %}
+      </p>
+    {% endif %}
+
     <p>
     {% for year, movies in years.items %}
         <h4>

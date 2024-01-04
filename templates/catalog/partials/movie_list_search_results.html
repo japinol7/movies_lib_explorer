@@ -1,7 +1,14 @@
 {% load humanize %}
 
 {% if movies %}
-  <div class="search-result-count">{{ movies | length | intcomma }} results</div>
+  <p>
+    {% if movies.count == default_movies_list_limit %}
+        <div class="search-result-count">{{ movies | length | intcomma }} movies.
+         Max. number of movies to list on this page has been reached.</div>
+    {% else %}
+        <div class="search-result-count">{{ movies | length | intcomma }} movies</div>
+    {% endif %}
+  </p>
 {% endif %}
 
 <div class="container">

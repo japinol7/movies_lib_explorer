@@ -1,10 +1,13 @@
 from pathlib import Path
+import urllib
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.db.models import Q
 from django.shortcuts import redirect, render, get_object_or_404
 
+from catalog.config.config import DEFAULT_PEOPLE_LIST_LIMIT
 from catalog.models.director import Director
 from catalog.forms.director_forms import DirectorEditForm
 from catalog.src_modules.controller.tmdb_controller import TMDBController, TMDB_CONNECTOR_INFO
@@ -15,9 +18,34 @@ controller = TMDBController()
 
 def director_list(request):
     data = {
-        'directors': Director.objects.order_by('last_name', 'first_name'),
+        'directors': [],
         }
-    return render(request, 'catalog/director_list.html', data)
+    return render(request, 'catalog/director_list.html', context=data)
+
+
+def director_list_search(request):
+    search_text = request.GET.get('search_text', '')
+    search_text = urllib.parse.unquote(search_text)
+    search_text = search_text.strip()
+
+    directors = []
+    if search_text:
+        parts = search_text.split()
+        q = (Q(last_name__icontains=parts[0]) | Q(first_name__icontains=parts[0]))
+        for part in parts[1:]:
+            q |= (Q(last_name__icontains=part) | Q(first_name__icontains=parts[0]))
+        directors = Director.objects.filter(q)[:DEFAULT_PEOPLE_LIST_LIMIT]
+
+    data = {
+        "search_text": search_text,
+        "directors": directors,
+        'default_people_list_limit': DEFAULT_PEOPLE_LIST_LIMIT,
+        }
+    if request.htmx:
+        return render(request, "catalog/partials/director_list_search_results.html",
+                      context=data)
+    return render(request, "catalog/director_list.html",
+                  context=data)
 
 
 def director(request, director_id):

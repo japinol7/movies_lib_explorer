@@ -29,6 +29,7 @@ urlpatterns = [
     path("tmdb_movie_link/<int:movie_id>/", movie_views.tmdb_movie_link, name='tmdb_movie_link'),
 
     path('director_list/', director_views.director_list, name="director_list"),
+    path('director_list_search/', director_views.director_list_search, name='director_list_search'),
     path('director/<int:director_id>/', director_views.director, name="director"),
     path('upload_director_photo/<int:director_id>/', director_views.upload_director_photo,
          name="upload_director_photo"),
@@ -39,6 +40,7 @@ urlpatterns = [
     path("tmdb_director_link/<int:director_id>/", director_views.tmdb_director_link, name='tmdb_director_link'),
 
     path('actor_list/', actor_views.actor_list, name="actor_list"),
+    path('actor_list_search/', actor_views.actor_list_search, name='actor_list_search'),
     path('actor/<int:actor_id>/', actor_views.actor, name="actor"),
     path('upload_actor_photo/<int:actor_id>/', actor_views.upload_actor_photo,
          name="upload_actor_photo"),

@@ -9,7 +9,7 @@ from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.shortcuts import redirect, render, get_object_or_404
 
-from catalog.config.config import MOVIE_GENRES
+from catalog.config.config import MOVIE_GENRES, DEFAULT_MOVIES_LIST_LIMIT
 from catalog.models.actor import Actor
 from catalog.models.movie import Movie
 from catalog.forms.movie_forms import MovieEditForm
@@ -22,7 +22,10 @@ controller = TMDBController()
 def movie_list(request):
     data = {
         'movies': Movie.objects.select_related('director').
-                  order_by('title', 'year', 'director__last_name', 'director__first_name', 'year')
+                  order_by(
+                    'title', 'year', 'director__last_name', 'director__first_name', 'year'
+                  )[:DEFAULT_MOVIES_LIST_LIMIT],
+        'default_movies_list_limit': DEFAULT_MOVIES_LIST_LIMIT,
         }
     return render(request, "catalog/movie_list.html", data)
 
@@ -30,7 +33,10 @@ def movie_list(request):
 def movie_with_picture_list(request):
     data = {
         'movies': Movie.objects.exclude(picture='').select_related('director').
-                  order_by('title', 'director__last_name', 'director__first_name', 'year')
+                  order_by(
+                    'title', 'director__last_name', 'director__first_name', 'year'
+                  )[:DEFAULT_MOVIES_LIST_LIMIT],
+        'default_movies_list_limit': DEFAULT_MOVIES_LIST_LIMIT,
         }
     return render(request, "catalog/movie_with_picture_list.html", data)
 
@@ -38,9 +44,13 @@ def movie_with_picture_list(request):
 def movie_list_by_year(request):
     data = {
         'movies': Movie.objects.select_related('director').
-                  order_by('year', 'title', 'director__last_name', 'director__first_name')
+                  order_by(
+                    'year', 'title', 'director__last_name', 'director__first_name'
+                  )[:DEFAULT_MOVIES_LIST_LIMIT],
+        'default_movies_list_limit': DEFAULT_MOVIES_LIST_LIMIT,
         }
-    return render(request, "catalog/movie_list_by_year.html", _group_data_by_year(data['movies']))
+    data.update(_group_data_by_year(data['movies']))
+    return render(request, "catalog/movie_list_by_year.html", context=data)
 
 
 def _group_data_by_year(data):
@@ -63,9 +73,13 @@ def _group_data_by_year(data):
 def movie_list_by_decade(request):
     data = {
         'movies': Movie.objects.select_related('director').
-                  order_by('title', 'year', 'director__last_name', 'director__first_name')
-        }
-    return render(request, "catalog/movie_list_by_decade.html", _group_data_by_decade(data['movies']))
+                  order_by(
+                    'year', 'title', 'director__last_name', 'director__first_name'
+                  )[:DEFAULT_MOVIES_LIST_LIMIT],
+        'default_movies_list_limit': DEFAULT_MOVIES_LIST_LIMIT,
+    }
+    data.update(_group_data_by_decade(data['movies']))
+    return render(request, "catalog/movie_list_by_decade.html", context=data)
 
 
 def _group_data_by_decade(data):
@@ -91,14 +105,19 @@ def movie_list_by_genre(request):
     if request.method == 'POST':
         search_genre = request.POST.get('search_genres') or ''
         if search_genre:
-            data['movies'] = list(Movie.objects.filter(genres__contains=search_genre).select_related('director').
-                                  order_by('title', 'year', 'director__last_name', 'director__first_name'))
+            data['movies'] = list(
+                Movie.objects.filter(genres__contains=search_genre).select_related('director').
+                order_by(
+                    'title', 'year', 'director__last_name', 'director__first_name'
+                )[:DEFAULT_MOVIES_LIST_LIMIT]
+                )
 
     return render(request, "catalog/movie_list_by_genre.html",
                   context={
                       'movies': data['movies'],
                       'genres': MOVIE_GENRES,
                       'search_genre': search_genre,
+                      'default_movies_list_limit': DEFAULT_MOVIES_LIST_LIMIT,
                   })
 
 
@@ -115,11 +134,12 @@ def movie_list_search(request):
         for part in parts[1:]:
             q |= (Q(title__icontains=part) | Q(director__last_name__icontains=part)
                   | Q(director__first_name__icontains=parts[0]))
-        movies = Movie.objects.filter(q)
+        movies = Movie.objects.filter(q)[:DEFAULT_MOVIES_LIST_LIMIT]
 
     data = {
         "search_text": search_text,
         "movies": movies,
+        'default_movies_list_limit': DEFAULT_MOVIES_LIST_LIMIT,
         }
     if request.htmx:
         return render(request, "catalog/partials/movie_list_search_results.html",
