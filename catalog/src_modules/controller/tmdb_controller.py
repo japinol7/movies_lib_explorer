@@ -82,10 +82,10 @@ class TMDBController:
             person['mlde_is_orig_name_diff'] = person['name'] != person['original_name']
             client.get_person_info(person['id'])
             person_details = client.response.json
-            person['mlde_birth_date'] = person_details['birthday']
-            person['mlde_death_date'] = person_details['deathday']
-            person['mlde_birth_place'] = person_details['place_of_birth']
-            person['mlde_biography'] = person_details['biography']
+            person['mlde_birth_date'] = person_details['birthday'] or ''
+            person['mlde_death_date'] = person_details['deathday'] or ''
+            person['mlde_birth_place'] = person_details['place_of_birth'] or ''
+            person['mlde_biography'] = person_details['biography'] or ''
     
         log.info(data)
         return data

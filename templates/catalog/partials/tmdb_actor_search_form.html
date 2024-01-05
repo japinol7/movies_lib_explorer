@@ -63,8 +63,12 @@
                 <p>Original title: {{ item.original_name }}</p>
             {% endif %}
             <p>Birthday: {{ item.mlde_birth_date }}</p>
-            <p>Death day: {{ item.mlde_death_date }}</p>
-            <p>Birthplace: {{ item.mlde_birth_place }}</p>
+            {% if item.mlde_death_date %}
+                <p>Death day: {{ item.mlde_death_date }}</p>
+            {% endif %}
+            {% if item.mlde_birth_place %}
+                <p>Birthplace: {{ item.mlde_birth_place }}</p>
+            {% endif %}
             <p>Biography: {{ item.mlde_biography }}</p>
             {%  if item.mlde_im_profile_uri %}
                 <a href="{{ item.mlde_im_profile_uri }}" target="_self">
