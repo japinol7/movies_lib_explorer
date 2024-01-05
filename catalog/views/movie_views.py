@@ -1,15 +1,17 @@
 from collections import defaultdict
 from itertools import groupby
 from pathlib import Path
+import time
 import urllib
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import redirect, render, get_object_or_404
 
-from catalog.config.config import MOVIE_GENRES, DEFAULT_MOVIES_LIST_LIMIT
+from catalog.config.config import MOVIE_GENRES, DEFAULT_MOVIES_LIST_LIMIT, TIME_SLEEP_WHEN_FEED_CONTENT
 from catalog.models.actor import Actor
 from catalog.models.movie import Movie
 from catalog.forms.movie_forms import MovieEditForm
@@ -31,13 +33,28 @@ def movie_list(request):
 
 
 def movie_with_picture_list(request):
+    movies = Movie.objects.all().exclude(picture='')
+    paginator = Paginator(movies, 2)
+    page_num = int(request.GET.get("page", 1))
+
+    if page_num < 1:
+        page_num = 1
+    elif page_num > paginator.num_pages:
+        page_num = paginator.num_pages
+
+    page = paginator.page(page_num)
+
     data = {
-        'movies': Movie.objects.exclude(picture='').select_related('director').
-                  order_by(
-                    'title', 'director__last_name', 'director__first_name', 'year'
-                  )[:DEFAULT_MOVIES_LIST_LIMIT],
-        'default_movies_list_limit': DEFAULT_MOVIES_LIST_LIMIT,
+        "movies": page.object_list,
+        "more_movies": page.has_next(),
+        "next_page": page_num + 1,
         }
+
+    if request.htmx:
+        if TIME_SLEEP_WHEN_FEED_CONTENT > 0:
+            time.sleep(TIME_SLEEP_WHEN_FEED_CONTENT)
+        return render(request, "catalog/partials/movie_with_picture_list_results.html", data)
+
     return render(request, "catalog/movie_with_picture_list.html", data)
 
 

@@ -1,0 +1,33 @@
+{% for movie in movies %}
+    <div class="grid-item">
+        <p>
+            {% if movie.picture %}
+                <a href="{% url 'catalog:movie' movie_id=movie.id %}">
+                    <img src="{{ movie.picture.url }}"
+                         href="{% url 'catalog:upload_movie_photo' movie.id %}"
+                         style="max-height:400px">
+                </a>
+            {% elif not movie.picture and request.user.is_staff %}
+                <a class="btn btn-sm btn-dark" id="id_movie_upload"
+                   href="{% url 'catalog:upload_movie_photo' movie.id %}">Upload Movie Photo</a>
+            {% endif %}
+            <br>
+            <b><a href="{% url 'catalog:movie' movie_id=movie.id %}">{{ movie.title }}</a></b><br>
+            {{ movie.year }}
+            {% if movie.director.first_name %}{{ movie.director.first_name }}{% endif %}
+            {% if movie.director.last_name %} {{ movie.director.last_name }}{% endif %}
+            <br> <br>
+        </p>
+    </div>
+{% empty %}
+    <i>There are no movies with picture in the database.</i>
+{% endfor %}
+
+{% if more_movies %}
+  <div class="scroll-trigger htmx-settling"
+    hx-get="{% url 'catalog:movie_with_picture_list' %}?page={{next_page}}"
+    hx-trigger="revealed"
+    hx-swap="outerHTML">
+    <img src="/static/img/bars.svg" width="150px" class="htmx-indicator"/>
+  </div>
+{% endif %}
