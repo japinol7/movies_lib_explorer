@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}MLME - Catalog Settings}{% endblock %}
+
+{% block content %}
+    {% if request.user.is_staff %}
+        <p>
+            <a class="btn btn-dark" href="{% url 'catalog:settings_edit_form' settings_id=data.id %}">Edit</a>
+        <p>
+
+        <h2>Settings</h2> <br>
+
+        <h6>Default movies list limit</h6>
+        <p>{{ data.movies_list_limit }}</p>
+
+        <h6>Default people list limit</h6>
+        <p>{{ data.people_list_limit }}</p>
+    {% endif %}
+
+{% endblock content %}

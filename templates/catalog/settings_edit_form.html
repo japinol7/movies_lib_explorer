@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}MLME - Catalog Settings Edit}{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    <p>
+        <input type="submit" value="Save" class="btn btn-dark">
+        <a class="btn btn-dark" href="{% url 'catalog:settings' %}">Cancel</a>
+    </p>
+
+    <h2>Settings</h2> <br>
+
+    {{ form.as_p }}
+</form>
+
+{% endblock content %}

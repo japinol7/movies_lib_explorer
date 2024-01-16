@@ -3,9 +3,12 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.authtoken.views import obtain_auth_token
 
 from catalog.config.config import API_ACTORS_PATH, API_DIRECTORS_PATH, API_MOVIES_PATH, API_AUTH_TOKEN_PATH
-from catalog.views import actor_views
-from catalog.views import director_views
-from catalog.views import movie_views
+from catalog.views import (
+    actor_views,
+    director_views,
+    movie_views,
+    settings_views,
+    )
 from catalog.views_api.v1 import director_views_api as director_views_api_v1
 from catalog.views_api.v1 import movie_views_api as movie_views_api_v1
 from catalog.views_api.v1 import actor_views_api as actor_views_api_v1
@@ -14,6 +17,9 @@ from home.views import home_views
 
 app_name = 'catalog'
 urlpatterns = [
+    path('settings/', settings_views.catalog_settings, name='settings'),
+    path('settings_edit/<int:settings_id>/', settings_views.settings_edit_form, name='settings_edit_form'),
+
     path('movie_list/', movie_views.movie_list, name='movie_list'),
     path('movie_list_by_year/', movie_views.movie_list_by_year, name='movie_list_by_year'),
     path('movie_list_by_decade/', movie_views.movie_list_by_decade, name='movie_list_by_decade'),

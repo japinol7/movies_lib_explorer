@@ -32,6 +32,9 @@
     <a class="btn btn-dark" href="{% url 'catalog:movie_list' %}">Movies</a>
     <a class="btn btn-dark" href="{% url 'catalog:director_list' %}">Directors</a>
     <a class="btn btn-dark" href="{% url 'catalog:actor_list' %}">Actors</a>
+    {% if request.user.is_staff %}
+        <a class="btn btn-dark" href="{% url 'catalog:settings' %}">Settings</a>
+    {% endif %}
     <a class="btn btn-dark" href="{% url 'home:about' %}">About</a>
 
     <div class="collapse navbar-collapse" id="main_nav_bar">

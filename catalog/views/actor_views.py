@@ -7,7 +7,7 @@ from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.shortcuts import redirect, render, get_object_or_404
 
-from catalog.config.config import DEFAULT_PEOPLE_LIST_LIMIT
+from catalog.config.config import config_settings
 from catalog.src_modules.import_data.import_data import (
     update_actors_n_movie_actor_links,
     get_data_to_update_actors_n_movie_actor_links,
@@ -38,12 +38,12 @@ def actor_list_search(request):
         q = (Q(last_name__icontains=parts[0]) | Q(first_name__icontains=parts[0]))
         for part in parts[1:]:
             q |= (Q(last_name__icontains=part) | Q(first_name__icontains=parts[0]))
-        actors = Actor.objects.filter(q)[:DEFAULT_PEOPLE_LIST_LIMIT]
+        actors = Actor.objects.filter(q)[:config_settings['settings'].people_list_limit]
 
     data = {
         "search_text": search_text,
         "actors": actors,
-        'default_people_list_limit': DEFAULT_PEOPLE_LIST_LIMIT,
+        'default_people_list_limit': config_settings['settings'].people_list_limit,
         }
     if request.htmx:
         return render(request, "catalog/partials/actor_list_search_results.html",

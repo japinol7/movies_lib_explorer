@@ -16,12 +16,16 @@ API_MOVIES_PATH = f'api/v{API_VERSION}/movies'
 API_ACTORS_PATH = f'api/v{API_VERSION}/actors'
 API_AUTH_TOKEN_PATH = f'api/v{API_VERSION}/token-auth'
 
+SETTINGS_ID = 1
 DEFAULT_MOVIES_LIST_LIMIT = 2500
 DEFAULT_PEOPLE_LIST_LIMIT = DEFAULT_MOVIES_LIST_LIMIT
+
+config_settings = {'settings': None}
 
 MOVIE_YEAR_MIN = 1900
 MOVIE_YEAR_MAX = 2500
 TIME_SLEEP_WHEN_FEED_CONTENT = 0
+
 
 MOVIE_GENRES = [
     'Action',
@@ -127,3 +131,17 @@ ACTOR_COLUMN_TO_ADD_TO_GROUP = ActorColumnToAddToGroup('id_and_last_name', 'id',
 DATE_COLUMNS = []
 AMOUNT_COLUMNS = []
 COLUMNS_TO_STRIP_WHITESPACE_FROM = ['title']
+
+
+def update_config_settings(settings_model):
+    try:
+        settings = settings_model.objects.get(id=SETTINGS_ID)
+    except settings_model.DoesNotExist:
+        settings = settings_model.objects.create(
+            id=SETTINGS_ID,
+            movies_list_limit=DEFAULT_MOVIES_LIST_LIMIT,
+            people_list_limit=DEFAULT_PEOPLE_LIST_LIMIT,
+        )
+
+    config_settings['settings'] = settings
+    return settings

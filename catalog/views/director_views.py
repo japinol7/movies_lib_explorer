@@ -7,7 +7,7 @@ from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.shortcuts import redirect, render, get_object_or_404
 
-from catalog.config.config import DEFAULT_PEOPLE_LIST_LIMIT
+from catalog.config.config import config_settings
 from catalog.models.director import Director
 from catalog.forms.director_forms import DirectorEditForm
 from catalog.src_modules.controller.tmdb_controller import TMDBController, TMDB_CONNECTOR_INFO
@@ -34,12 +34,12 @@ def director_list_search(request):
         q = (Q(last_name__icontains=parts[0]) | Q(first_name__icontains=parts[0]))
         for part in parts[1:]:
             q |= (Q(last_name__icontains=part) | Q(first_name__icontains=parts[0]))
-        directors = Director.objects.filter(q)[:DEFAULT_PEOPLE_LIST_LIMIT]
+        directors = Director.objects.filter(q)[:config_settings['settings'].people_list_limit]
 
     data = {
         "search_text": search_text,
         "directors": directors,
-        'default_people_list_limit': DEFAULT_PEOPLE_LIST_LIMIT,
+        'default_people_list_limit': config_settings['settings'].people_list_limit,
         }
     if request.htmx:
         return render(request, "catalog/partials/director_list_search_results.html",
