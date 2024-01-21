@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}MLME - Director delete - {{ actor.first_name }} {{ director.last_name }}{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    <p>
+        <input type="submit" value="Delete" class="btn btn-dark">
+        <a class="btn btn-dark" href="{% url 'catalog:director' director_id=director.id %}">Cancel</a>
+    </p>
+
+    <div>Director</div>
+    <h2>{{ director.first_name }} {{ director.last_name }}</h2>
+    <br>
+    {{ form.as_p }}
+</form>
+
+{% endblock content %}

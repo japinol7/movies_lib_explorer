@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}MLME - Director create{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    <p>
+        <input type="submit" value="Save" class="btn btn-dark">
+        <a class="btn btn-dark" href="{% url 'catalog:director_list' %}">Cancel</a>
+    </p>
+
+    <h2>Create director</h2> <br>
+
+    <h6><strong>First name</strong></h6>
+    <p>
+        <input name="director_first_name" id="director_first_name" type="text"
+               placeholder="Eg: Howard" minlength="2">
+    </p>
+    <h6><strong>Last name</strong></h6>
+    <p>
+        <input name="director_last_name" id="director_last_name" type="text"
+               placeholder="Eg: Hawks" minlength="2" required>
+    </p>
+
+</form>
+
+{% endblock content %}

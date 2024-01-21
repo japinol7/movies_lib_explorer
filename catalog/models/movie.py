@@ -1,5 +1,11 @@
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
+
+from catalog.config.config import (
+    MOVIE_YEAR_MIN,
+    MOVIE_YEAR_MAX,
+    )
 from catalog.models.actor import Actor
 from catalog.models.director import Director
 
@@ -16,7 +22,10 @@ class Movie(models.Model):
         blank=True,
         )
     runtime = models.IntegerField(default=0)
-    year = models.IntegerField(default=0)
+    year = models.IntegerField(
+        default=0,
+        validators=[MinValueValidator(MOVIE_YEAR_MIN), MaxValueValidator(MOVIE_YEAR_MAX)]
+        )
     decade = models.IntegerField(default=0)
     country = models.CharField(max_length=3, blank=True)
     language = models.CharField(max_length=25, blank=True)

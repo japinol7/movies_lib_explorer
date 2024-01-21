@@ -18,12 +18,14 @@ API_AUTH_TOKEN_PATH = f'api/v{API_VERSION}/token-auth'
 
 SETTINGS_ID = 1
 DEFAULT_MOVIES_LIST_LIMIT = 2500
-DEFAULT_PEOPLE_LIST_LIMIT = DEFAULT_MOVIES_LIST_LIMIT
+DEFAULT_PEOPLE_LIST_LIMIT = 1000
+MAX_MOVIES_LIST_LIMIT = 3000
+MAX_PEOPLE_LIST_LIMIT = 3000
 
 config_settings = {'settings': None}
 
 MOVIE_YEAR_MIN = 1900
-MOVIE_YEAR_MAX = 2500
+MOVIE_YEAR_MAX = 2099
 TIME_SLEEP_WHEN_FEED_CONTENT = 0
 
 
@@ -131,6 +133,43 @@ ACTOR_COLUMN_TO_ADD_TO_GROUP = ActorColumnToAddToGroup('id_and_last_name', 'id',
 DATE_COLUMNS = []
 AMOUNT_COLUMNS = []
 COLUMNS_TO_STRIP_WHITESPACE_FROM = ['title']
+
+MOVIES_EXPORT_FILE_NAME = 'movies_report.xlsx'
+
+MOVIES_EXPORT_FIELD_NORMAL_WIDTH = 22
+movies_export_field_titles = namedtuple('movies_export_field_titles', ['name', 'width'])
+MOVIES_EXPORT_FIELD_TITLES = [
+    movies_export_field_titles('id', 12),
+    movies_export_field_titles('title', 49),
+    movies_export_field_titles('year', 9),
+    movies_export_field_titles('runtime', 9.5),
+    movies_export_field_titles('director', 28),
+    movies_export_field_titles('genres', 64),
+    movies_export_field_titles('country', 9.5),
+    movies_export_field_titles('language', 19),
+    movies_export_field_titles('decade', 9),
+    movies_export_field_titles('title_original', 52),
+    movies_export_field_titles('cast', 104),
+    movies_export_field_titles('description', 65),
+    movies_export_field_titles('note', 44),
+    movies_export_field_titles('director_id', 12),
+    movies_export_field_titles('director_fn', MOVIES_EXPORT_FIELD_NORMAL_WIDTH),
+    movies_export_field_titles('director_ln', MOVIES_EXPORT_FIELD_NORMAL_WIDTH),
+    movies_export_field_titles('production_company', MOVIES_EXPORT_FIELD_NORMAL_WIDTH),
+    movies_export_field_titles('cinematography', MOVIES_EXPORT_FIELD_NORMAL_WIDTH),
+    movies_export_field_titles('picture', 70),
+    movies_export_field_titles('producer', MOVIES_EXPORT_FIELD_NORMAL_WIDTH),
+    movies_export_field_titles('writer', MOVIES_EXPORT_FIELD_NORMAL_WIDTH),
+    movies_export_field_titles('created', 14),
+    movies_export_field_titles('updated', 14),
+    ]
+EXPORT_FILE_PROPERTIES = {
+    'title': 'Movie list report from MLME',
+    'subject': 'Movie list report from MLME',
+    'author': 'Movies Library Metadata Explorer - MLME',
+    'keywords': 'movie, MLME',
+    'comments': 'Created with Movies Library Metadata Explorer - MLME using XlsxWriter',
+    }
 
 
 def update_config_settings(settings_model):

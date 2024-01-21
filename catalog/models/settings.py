@@ -1,18 +1,23 @@
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
-from catalog.config.config import DEFAULT_MOVIES_LIST_LIMIT, DEFAULT_PEOPLE_LIST_LIMIT
+from catalog.config.config import (
+    DEFAULT_MOVIES_LIST_LIMIT,
+    DEFAULT_PEOPLE_LIST_LIMIT,
+    MAX_MOVIES_LIST_LIMIT,
+    MAX_PEOPLE_LIST_LIMIT,
+    )
 
 
 class Settings(models.Model):
     movies_list_limit = models.IntegerField(
         default=DEFAULT_MOVIES_LIST_LIMIT,
-        validators=[MinValueValidator(1)]
+        validators=[MinValueValidator(1), MaxValueValidator(MAX_MOVIES_LIST_LIMIT)]
         )
     people_list_limit = models.IntegerField(
         default=DEFAULT_PEOPLE_LIST_LIMIT,
-        validators=[MinValueValidator(1)]
-    )
+        validators=[MinValueValidator(1), MaxValueValidator(MAX_PEOPLE_LIST_LIMIT)]
+        )
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

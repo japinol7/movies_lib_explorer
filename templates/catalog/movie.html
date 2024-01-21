@@ -7,6 +7,7 @@
             <a class="btn btn-dark" href="{% url 'catalog:movie_edit_form' movie_id=movie.id %}">Edit</a>
             <a class="btn btn-dark" id="id_movie_upload"
                href="{% url 'catalog:upload_movie_photo' movie.id %}">Upload Movie Photo</a>
+            <a class="btn btn-dark" href="{% url 'catalog:movie_delete_form' movie_id=movie.id %}">Delete</a>
         <p>
     {% endif %}
 

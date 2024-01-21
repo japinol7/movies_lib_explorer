@@ -11,8 +11,13 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import redirect, render, get_object_or_404
 
-from catalog.config.config import MOVIE_GENRES, config_settings, TIME_SLEEP_WHEN_FEED_CONTENT
+from catalog.config.config import (
+    MOVIE_GENRES,
+    config_settings,
+    TIME_SLEEP_WHEN_FEED_CONTENT,
+    )
 from catalog.models.actor import Actor
+from catalog.models.director import Director
 from catalog.models.movie import Movie
 from catalog.forms.movie_forms import MovieEditForm
 from catalog.src_modules.controller.tmdb_controller import TMDBController, TMDB_CONNECTOR_INFO
@@ -165,10 +170,6 @@ def movie_list_search(request):
                   context=data)
 
 
-def about(request):
-    return render(request, "partials/about.html")
-
-
 def movie(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
     actors = Actor.objects.filter(movie=movie)
@@ -199,6 +200,34 @@ def upload_movie_photo(request, movie_id):
 
 
 @login_required
+def movie_create_form(request):
+    log.info("Start view: movie_create_form")
+
+    data = {
+        'directors': Director.objects.all().order_by('last_name', 'first_name'),
+        }
+
+    if request.method == 'POST':
+        if not request.user.is_staff:
+            raise PermissionDenied("Permission Denied. You are not allowed to create a document for this model")
+        movie_title = request.POST.get('movie_title', '').strip()
+        movie_year = request.POST.get('movie_year')
+        movie_director_id = request.POST.get('movie_director_id')
+        if movie_title and movie_year and movie_director_id:
+            movie = Movie.objects.create(
+                title=movie_title,
+                title_original=movie_title,
+                director_id=movie_director_id,
+                year=movie_year)
+            movie.save()
+            log.info(f"Movie created: {movie}")
+            return redirect('catalog:movie', movie.id)
+
+    return render(request, 'catalog/movie_create_form.html',
+                  context=data)
+
+
+@login_required
 def movie_edit_form(request, movie_id):
     log.info(f"Start view: movie_edit_form - movie_id: {movie_id}")
     movie = get_object_or_404(Movie, id=movie_id)
@@ -214,6 +243,21 @@ def movie_edit_form(request, movie_id):
 
     return render(request, 'catalog/movie_edit_form.html',
                   {'movie': movie, 'form': form})
+
+
+@login_required
+def movie_delete_form(request, movie_id):
+    movie = get_object_or_404(Movie, id=movie_id)
+
+    if request.method == 'POST':
+        if not request.user.is_staff:
+            raise PermissionDenied("Permission Denied. You are not allowed to delete a document for this model")
+        log.info(f"Delete movie : {movie}")
+        movie.delete()
+        return redirect('catalog:movie_list')
+
+    return render(request, 'catalog/movie_delete_form.html',
+                  {'movie': movie})
 
 
 @login_required

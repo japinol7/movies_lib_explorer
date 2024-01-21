@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}MLME - Movie create{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    <p>
+        <input type="submit" value="Save" class="btn btn-dark">
+        <a class="btn btn-dark" href="{% url 'catalog:movie_list' %}">Cancel</a>
+    </p>
+
+    <h2>Create movie</h2> <br>
+
+    <h6><strong>Title</strong></h6>
+    <p>
+        <input name="movie_title" id="movie_title" type="text"
+               placeholder="Eg: Rio Bravo" minlength="2" required>
+    </p>
+    <h6><strong>Year</strong></h6>
+    <p>
+        <input name="movie_year" id="movie_year" type="number"
+               min="1900" max="2099" required>
+    </p>
+    <h6><strong>Director</strong></h6>
+    <p>
+        <select name="movie_director_id" id="movie_director_id" type="number" required>>
+            {% for director in directors %}
+                <option value="{{ director.id }}"
+                >{{ director.last_name }}, {{ director.first_name }}</option>
+            {% endfor %}
+        </select>
+    </p>
+
+</form>
+
+{% endblock content %}

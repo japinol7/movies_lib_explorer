@@ -10,6 +10,9 @@
         <a class="btn btn-dark" href="{% url 'catalog:movie_list_by_genre' %}">By Genre</a>
         <a class="btn btn-dark" href="{% url 'catalog:movie_list_search' %}">Search</a>
         <a class="btn btn-dark" href="{% url 'catalog:movie_with_picture_list' %}">Movies with Picture</a>
+        {% if request.user.is_staff %}
+            <a class="btn btn-dark" href="{% url 'catalog:movie_create_form' %}">Create</a>
+        {% endif %}
     </p>
     <h3>Movies</h3>
 

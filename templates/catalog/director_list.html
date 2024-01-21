@@ -3,6 +3,11 @@
 {% block title %}MLME - Director Search {% endblock title %}
 
 {% block content %}
+    {% if request.user.is_staff %}
+        <p>
+            <a class="btn btn-dark" href="{% url 'catalog:director_create_form' %}">Create</a>
+        </p>
+    {% endif %}
 
     <div class="search-inputs">
       <h3>Search Director</h3>

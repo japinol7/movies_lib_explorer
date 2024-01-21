@@ -76,6 +76,26 @@ def upload_director_photo(request, director_id):
 
 
 @login_required
+def director_create_form(request):
+    log.info("Start view: director_create_form")
+
+    if request.method == 'POST':
+        if not request.user.is_staff:
+            raise PermissionDenied("Permission Denied. You are not allowed to create a document for this model")
+        first_name = request.POST.get('director_first_name', '').strip()
+        last_name = request.POST.get('director_last_name', '').strip()
+        if last_name:
+            director = Director.objects.create(
+                first_name=first_name,
+                last_name=last_name)
+            director.save()
+            log.info(f"Director created: {director}")
+            return redirect('catalog:director', director.id)
+
+    return render(request, 'catalog/director_create_form.html')
+
+
+@login_required
 def director_edit_form(request, director_id):
     director = get_object_or_404(Director, id=director_id)
     form = DirectorEditForm(instance=director)
@@ -90,6 +110,31 @@ def director_edit_form(request, director_id):
 
     return render(request, 'catalog/director_edit_form.html',
                   {'director': director, 'form': form})
+
+
+@login_required
+def director_delete_form(request, director_id):
+    director = get_object_or_404(Director, id=director_id)
+
+    if request.method == 'POST':
+        if not request.user.is_staff:
+            raise PermissionDenied("Permission Denied. You are not allowed to delete a document for this model")
+
+        if director.movie_set.all():
+            return redirect('catalog:director_delete_not_allowed', director.id)
+
+        log.info(f"Delete movie : {director}")
+        director.delete()
+        return redirect('catalog:director_list')
+
+    return render(request, 'catalog/director_delete_form.html',
+                  {'director': director})
+
+
+def director_delete_not_allowed(request, director_id):
+    director = get_object_or_404(Director, id=director_id)
+    return render(request, 'catalog/director_delete_not_allowed.html',
+                  context={'director': director})
 
 
 @login_required

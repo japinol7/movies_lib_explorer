@@ -7,6 +7,7 @@
             <a class="btn btn-dark" href="{% url 'catalog:director_edit_form' director_id=director.id %}">Edit</a>
             <a class="btn btn-dark" id="id_director_upload"
                href="{% url 'catalog:upload_director_photo' director.id %}">Upload Director Photo</a>
+            <a class="btn btn-dark" href="{% url 'catalog:director_delete_form' director_id=director.id %}">Delete</a>
         <p>
     {% endif %}
 

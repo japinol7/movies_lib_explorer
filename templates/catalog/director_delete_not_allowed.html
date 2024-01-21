@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}MLME - Director delete not allowed - {{ actor.first_name }} {{ director.last_name }}{% endblock %}
+
+{% block content %}
+
+<h3>
+This director is not allowed to be deleted because he/she is associated with some movies.
+</h3>
+<p>
+<div>Director</div>
+<h3>{{ director.first_name }} {{ director.last_name }}</h3>
+</p>
+
+{% endblock content %}

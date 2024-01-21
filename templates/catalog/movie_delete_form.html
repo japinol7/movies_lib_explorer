@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}MLME - Movie delete - {{ movie.title }} {{ movie.year }}{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    <p>
+        <input type="submit" value="Delete" class="btn btn-dark">
+        <a class="btn btn-dark" href="{% url 'catalog:movie' movie_id=movie.id %}">Cancel</a>
+    </p>
+
+
+    <div>Movie title [year]</div>
+    <h2>{{ movie.title }} [{{ movie.year }}]</h2> <br>
+
+    <h5>Director</h5>
+    <p>
+        <a href="{% url 'catalog:director' director_id=movie.director_id %}">
+            {{ movie.director.first_name }} {{ movie.director.last_name }}
+        </a>
+    </p>
+
+    <h5>Runtime</h5>
+    <p>
+        {{ movie.runtime }} min.
+    </p>
+
+    <h5>Cast</h5>
+    <p>
+        {{ movie.cast }}
+    </p>
+</form>
+
+{% endblock content %}

@@ -19,6 +19,7 @@ app_name = 'catalog'
 urlpatterns = [
     path('settings/', settings_views.catalog_settings, name='settings'),
     path('settings_edit/<int:settings_id>/', settings_views.settings_edit_form, name='settings_edit_form'),
+    path('export_movies_report/', settings_views.export_movies_report, name="export_movies_report"),
 
     path('movie_list/', movie_views.movie_list, name='movie_list'),
     path('movie_list_by_year/', movie_views.movie_list_by_year, name='movie_list_by_year'),
@@ -29,9 +30,12 @@ urlpatterns = [
     path('movie/<int:movie_id>/', movie_views.movie, name='movie'),
     path('upload_movie_photo/<int:movie_id>/', movie_views.upload_movie_photo,
          name="upload_movie_photo"),
+    path('movie_create/', movie_views.movie_create_form, name='movie_create_form'),
+    path('movie_delete/<int:movie_id>/', movie_views.movie_delete_form, name='movie_delete_form'),
     path('movie_edit/<int:movie_id>/', movie_views.movie_edit_form, name='movie_edit_form'),
 
-    path("tmdb_movie_search_form/<int:movie_id>/", movie_views.tmdb_movie_search_form, name='tmdb_movie_search_form'),
+    path("tmdb_movie_search_form/<int:movie_id>/", movie_views.tmdb_movie_search_form,
+         name='tmdb_movie_search_form'),
     path("tmdb_movie_link/<int:movie_id>/", movie_views.tmdb_movie_link, name='tmdb_movie_link'),
 
     path('director_list/', director_views.director_list, name="director_list"),
@@ -39,6 +43,10 @@ urlpatterns = [
     path('director/<int:director_id>/', director_views.director, name="director"),
     path('upload_director_photo/<int:director_id>/', director_views.upload_director_photo,
          name="upload_director_photo"),
+    path('director_create/', director_views.director_create_form, name='director_create_form'),
+    path('director_delete_not_allowed/<int:director_id>/', director_views.director_delete_not_allowed,
+         name='director_delete_not_allowed'),
+    path('director_delete/<int:director_id>/', director_views.director_delete_form, name='director_delete_form'),
     path('director_edit/<int:director_id>/', director_views.director_edit_form, name='director_edit_form'),
 
     path("tmdb_director_search_form/<int:director_id>/", director_views.tmdb_director_search_form,
