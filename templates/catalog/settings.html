@@ -5,7 +5,7 @@
     {% if request.user.is_staff %}
         <p>
             <a class="btn btn-dark" href="{% url 'catalog:settings_edit_form' settings_id=data.id %}">Edit</a>
-            <a class="btn btn-dark" href="{% url 'catalog:export_movies_report' %}">Export movies</a>
+            <a class="btn btn-dark" href="{% url 'catalog:export_movies_report' %}">Export movies to Excel</a>
         <p>
 
         <h2>Settings</h2> <br>
@@ -15,6 +15,15 @@
 
         <h6>Default people list limit</h6>
         <p>{{ data.people_list_limit }}</p>
+
+        <br>
+        {% if is_error %}
+            <div class="movie-list-api-call-error">
+                <p> <br>
+                    <strong>{{ error_msg }}</strong>
+                <p> <br>
+            </div>
+        {% endif %}
     {% endif %}
 
 {% endblock content %}

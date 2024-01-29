@@ -13,12 +13,12 @@ from catalog.config.config import (
     update_config_settings,
     MOVIES_EXPORT_FIELD_TITLES,
     MOVIES_EXPORT_FILE_NAME,
-    MOVIES_EXPORT_FIELD_NORMAL_WIDTH,
     EXPORT_FILE_PROPERTIES,
     )
 from catalog.forms.settings_forms import SettingsEditForm
 from catalog.models.movie import Movie
 from catalog.models.settings import Settings
+from tools.logger.logger import log
 
 
 def catalog_settings(request):
@@ -76,7 +76,8 @@ def _get_movies_export_field_values(movie, text_left__format, date_format):
     ]
 
 
-def export_movies_report(request):
+def _export_movies_report():
+    log.info("Start exporting movies report")
     movies = Movie.objects.order_by('title', 'year', 'director__last_name', 'director__first_name')
 
     buffer = io.BytesIO()
@@ -109,5 +110,23 @@ def export_movies_report(request):
 
     workbook.close()
     buffer.seek(0)
+    log.info("Exporting movies report: Report ready to send.")
 
     return FileResponse(buffer, as_attachment=True, filename=MOVIES_EXPORT_FILE_NAME)
+
+
+def export_movies_report(request):
+    res, error_msg = None, None
+    is_error = False
+    try:
+        res = _export_movies_report()
+    except Exception as e:
+        is_error = True
+        error_msg = "Error exporting movies data"
+        log.error("%s. Error msg: %s", error_msg, e)
+
+    return (res or render(request, 'catalog/settings.html',
+                          context={
+                              'data': config_settings['settings'],
+                              'is_error': is_error, 'error_msg': error_msg,
+                            }))

@@ -67,3 +67,18 @@ footer a:hover {
 img.htmx-indicator {
     transition: opacity 300ms ease-in;
 }
+
+.movie-list-api-call-success {
+    background: #98e6a0;
+    color: #15411a;
+}
+
+.movie-list-api-call-error {
+    background: #fffbe3;
+    color: red;
+}
+
+.movie-list-api-call-warning {
+    background: #fffbe3;
+    color: #4472e8;
+}

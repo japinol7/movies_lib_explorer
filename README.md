@@ -20,15 +20,12 @@ the TMDB REST API that the user can use to get movie data from TMDB.
 
 	program: MLME. Movies Library Metadata Explorer using Django.
     name as a package: movies_lib_explorer 
-	version: 0.1.2
+	version: 0.1.3
 	author: Joan A. Pinol
 	author_nickname: japinol
 	author_gitHub: japinol7
 	author_twitter: @japinol
 	Python requires: 3.11 or greater.
-	Python versions tested: 
-        > 3.11.5 64bits under Ubuntu 22.04
-        > 3.11.5 64bits under Windows 11
 
 
 ## Screenshots
@@ -41,6 +38,10 @@ the TMDB REST API that the user can use to get movie data from TMDB.
 <img src="screenshots/screenshot6.png"> <br> <br>
 <img src="screenshots/screenshot7.png"> <br> <br>
 <img src="screenshots/screenshot8.png"> <br>
+
+#### Starting with version 0.1.3 you can export the movie data to Excel
+<img src="screenshots/screenshot9.png"> <br/>
+<br> <br>
 
 
 ## Catalog Directors REST API
