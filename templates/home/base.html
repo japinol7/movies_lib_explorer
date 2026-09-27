@@ -6,9 +6,7 @@
     <title>{% block title %}MLME{% endblock %}</title>
 
     <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
-          crossorigin="anonymous">
+          href="{% static 'css/bootstrap-5.3.8.min.css' %}">
 
     <link rel="stylesheet" href="{% static 'css/site.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/animations.css' %}"/>
@@ -17,61 +15,94 @@
     {% block extra_head %}{% endblock %}
     {% block extra_script %}{% endblock %}
 </head>
+
 <body>
 
-<nav class="navbar navbar-toggleable-md navbar-expand-md navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <a class="navbar-brand" href="/">
         <img class="logo-img" src="{% static 'logo.png' %}"> MLME
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#main_nav_bar" aria-controls="main_nav_bar"
-            aria-expanded="false" aria-label="Toggle navigation">
+
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#main_nav_bar"
+            aria-controls="main_nav_bar"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <a class="btn btn-dark" href="{% url 'catalog:movie_list' %}">Movies</a>
     <a class="btn btn-dark" href="{% url 'catalog:director_list' %}">Directors</a>
     <a class="btn btn-dark" href="{% url 'catalog:actor_list' %}">Actors</a>
+
     {% if request.user.is_staff %}
         <a class="btn btn-dark" href="{% url 'catalog:settings' %}">Settings</a>
     {% endif %}
+
     <a class="btn btn-dark" href="{% url 'home:about' %}">About</a>
 
     <div class="collapse navbar-collapse" id="main_nav_bar">
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ms-auto">
+
             {% if request.user.is_authenticated %}
+
                 <span class="navbar-text">
-          {{ user.username }}
+                    {{ user.username }}
                     {% if user.is_staff %} [Staff]{% endif %}
-        </span>
+                </span>
+
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" data-toggle="dropdown"
-                       href="#" role="button" aria-haspopup="true" aria-expanded="false"
-                    >Actions</a>
-                    <div class="dropdown-menu dropdown-menu-right">
+                    <a class="nav-link dropdown-toggle text-white"
+                       data-bs-toggle="dropdown"
+                       href="#"
+                       role="button"
+                       aria-haspopup="true"
+                       aria-expanded="false">
+                        Actions
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-end">
                         <a class="dropdown-item"
-                           href="/users/profile/{{ user.id }}/">My Profile</a>
+                           href="/users/profile/{{ user.id }}/">
+                            My Profile
+                        </a>
+
                         {% if user.is_staff %}
-                            <a class="dropdown-item" href="/admin/">Admin Area</a>
+                            <a class="dropdown-item" href="/admin/">
+                                Admin Area
+                            </a>
                         {% endif %}
+
                         <a class="dropdown-item"
-                           href="/accounts/password_change/">Change Password</a>
+                           href="/accounts/password_change/">
+                            Change Password
+                        </a>
+
                         <a class="dropdown-item"
-                           href="/accounts/logout/">Logout</a>
+                           href="/accounts/logout/">
+                            Logout
+                        </a>
                     </div>
                 </li>
+
             {% else %}
+
                 <li class="nav-item info-text">
-                    <a class="text-white" href="/accounts/login/">Login</a>
+                    <a class="text-white" href="/accounts/login/">
+                        Login
+                    </a>
                 </li>
+
             {% endif %}
+
         </ul>
     </div>
 </nav>
 
 {% block container %}
     <main role="main" class="container">
-    <br>
+        <br>
         {% block content %}
         {% endblock content %}
     </main>
@@ -83,10 +114,8 @@
     </div>
 </footer>
 
-<script src="/static/js/jquery-3.5.1.slim.min.js"></script>
-<script src="/static/js/popper-1.16.1.min.js"></script>
-<script src="/static/js/bootstrap-4.6.1.min.js"></script>
-<script src="/static/js/htmx.min.js?v=1.5.0"></script>
+<script src="{% static 'js/bootstrap-5.3.8.bundle.min.js' %}"></script>
+<script src="{% static 'js/htmx-2.0.11.min.js' %}"></script>
 
 {% block body_script %}{% endblock %}
 
