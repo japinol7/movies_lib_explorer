@@ -41,6 +41,20 @@ class Movie(models.Model):
     description = models.CharField(max_length=900, blank=True)
     picture = models.ImageField(blank=True, null=True)
 
+    # External fetched fields
+    ext_title = models.CharField(max_length=110, blank=True)
+    ext_orig_title = models.CharField(max_length=110, blank=True)
+    ext_is_orig_title_diff = models.BooleanField(default=True)
+    ext_release_date = models.CharField(max_length=50, blank=True)
+    ext_runtime = models.CharField(max_length=30, blank=True)
+    ext_orig_lang = models.CharField(max_length=50, blank=True)
+    ext_genres = models.CharField(max_length=254, blank=True)
+    ext_overview = models.CharField(max_length=8000, blank=True)
+    ext_picture_uri = models.CharField(max_length=1024, blank=True)
+    ext_picture = models.ImageField(blank=True, null=True)
+    ext_tmdb_id = models.CharField(max_length=110, blank=True)
+    ext_imdb_id = models.CharField(max_length=110, blank=True)
+
     class Meta:
         ordering = ['title', 'director__last_name', 'director__first_name']
         verbose_name = 'Movie'

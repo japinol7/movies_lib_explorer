@@ -25,6 +25,7 @@
         <br>
     {% endif %}
 
+    <!-- Movies section -->
     <h3>Movies</h3>
     <p>
         {% for movie in actor.movie_set.all|dictsort:"year" %}
@@ -36,6 +37,64 @@
             <i>No movies available</i>
         {% endfor %}
     </p>
+
+    <!-- Form section for external persisted fields -->
+    {% if actor.ext_name %}
+        <h5>External name</h5>
+        <p>
+            {{ actor.ext_name }}
+        </p>
+    {% endif %}
+
+    {% if actor.ext_birth_date %}
+        <h5>External birthdate</h5>
+        <p>
+            {{ actor.ext_birth_date }}
+        </p>
+    {% endif %}
+
+    {% if actor.ext_death_date %}
+        <h5>External death date</h5>
+        <p>
+            {{ actor.ext_death_date }}
+        </p>
+    {% endif %}
+
+    {% if actor.ext_birth_place %}
+        <h5>External place of birth</h5>
+        <p>
+            {{ actor.ext_birth_place }}
+        </p>
+    {% endif %}
+
+    {% if actor.ext_biography %}
+        <h5>External biography</h5>
+        <p>
+            {{ actor.ext_biography }}
+        </p>
+    {% endif %}
+
+    {% if actor.ext_picture %}
+        <p>
+        <a href="{{ actor.ext_picture.url }}" target="_self">
+            <img src="{{ actor.ext_picture.url }}" style="max-height:250px">
+        </a>
+        <p>
+    {% endif %}
+
+    {% if actor.ext_tmdb_id %}
+        <h5>External TMDB id</h5>
+        <p>
+            {{ actor.ext_tmdb_id }}
+        </p>
+    {% endif %}
+
+    {% if actor.ext_imdb_id %}
+        <h5>External IMDB id</h5>
+        <p>
+            {{ actor.ext_imdb_id }}
+        </p>
+    {% endif %}
 
     <!-- Form section for TMDB data connector -->
     <div class="container tmdb-data actor">

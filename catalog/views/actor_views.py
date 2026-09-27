@@ -1,7 +1,5 @@
-from pathlib import Path
 import urllib
 
-from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
@@ -14,7 +12,15 @@ from catalog.src_modules.import_data.import_data import (
     )
 from catalog.models.actor import Actor
 from catalog.forms.actor_forms import ActorEditForm
-from catalog.src_modules.controller.tmdb_controller import TMDBController, TMDB_CONNECTOR_INFO
+from catalog.services.actor_services import set_actor_external_data_fields
+from catalog.services.resource_services import (
+    get_person_full_name,
+    save_uploaded_picture_to_resource,
+    )
+from catalog.src_modules.controller.tmdb_controller import (
+    TMDBController,
+    TMDB_CONNECTOR_INFO,
+    )
 from tools.logger.logger import log
 
 controller = TMDBController()
@@ -76,19 +82,15 @@ def upload_actor_photo(request, actor_id):
     data = {
         'actor': actor,
         }
+
     if request.method == 'GET':
         return render(request, 'catalog/upload_actor_photo.html', data)
 
     # POST
-    upload = request.FILES['actor_photo']
-    # TODO: Do not use the file name as given by the user as part of the file name,
-    #  it could contain characters than could cause problems.
-    path = Path(settings.MEDIA_ROOT) / f'{request.user.id}_actor_{upload.name}'
-    with open(path, 'wb+') as output:
-        for chunk in upload.chunks():
-            output.write(chunk)
-    actor.picture = path.name
-    actor.save()
+    actor_name = get_person_full_name(actor.first_name, actor.last_name)
+    uploaded_file = request.FILES['actor_photo']
+    save_uploaded_picture_to_resource(actor, uploaded_file, actor_name)
+
     return redirect('catalog:actor', actor.id)
 
 
@@ -131,6 +133,10 @@ def tmdb_actor_search_form(request, actor_id):
             controller.get_client()
 
         tmdb_data = controller.get_search_person(search_actor_name, filter_='')
+
+        # if tmdb_data persist its fields to the db and save
+        if tmdb_data:
+            set_actor_external_data_fields(actor, tmdb_data[0])
 
     return render(request, 'catalog/partials/tmdb_actor_search_form.html',
                   context={

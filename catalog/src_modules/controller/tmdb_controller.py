@@ -59,6 +59,7 @@ class TMDBController:
             movie_details = client.response.json
             movie['mlde_genres'] = ', '.join(sorted([genre['name'] for genre in movie_details['genres']]))
             movie['mlde_runtime'] = movie_details['runtime']
+            movie['mlde_imdb_id'] = movie_details['imdb_id'] or ''
 
         log.info(data)
         return data
@@ -86,7 +87,8 @@ class TMDBController:
             person['mlde_death_date'] = person_details['deathday'] or ''
             person['mlde_birth_place'] = person_details['place_of_birth'] or ''
             person['mlde_biography'] = person_details['biography'] or ''
-    
+            person['mlde_imdb_id'] = person_details['imdb_id'] or ''
+
         log.info(data)
         return data
 

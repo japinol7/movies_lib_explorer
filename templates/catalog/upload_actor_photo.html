@@ -14,10 +14,11 @@
             {% csrf_token %}
 
             <div class="form-group">
-                <label for="id_actor_photo">Choose File</label>
+                <br><br>
                 <input type="file" class="form-control-file" name="actor_photo"
                        id="id_actor_photo">
             </div>
+            <br><br>
 
             <button class="btn btn-dark" type="submit">Save</button>
             <a class="btn btn-dark" href="{% url 'catalog:actor' actor_id=actor.id %}">Cancel</a>

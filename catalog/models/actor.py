@@ -8,6 +8,17 @@ class Actor(models.Model):
     updated = models.DateTimeField(auto_now=True)
     picture = models.ImageField(blank=True, null=True)
 
+    # External fetched fields
+    ext_name = models.CharField(max_length=110, blank=True)
+    ext_birth_date = models.CharField(max_length=50, blank=True)
+    ext_death_date = models.CharField(max_length=50, blank=True)
+    ext_birth_place = models.CharField(max_length=254, blank=True)
+    ext_biography = models.CharField(max_length=8000, blank=True)
+    ext_picture_uri = models.CharField(max_length=1024, blank=True)
+    ext_picture = models.ImageField(blank=True, null=True)
+    ext_tmdb_id = models.CharField(max_length=110, blank=True)
+    ext_imdb_id = models.CharField(max_length=110, blank=True)
+
     class Meta:
         ordering = ['last_name', 'first_name']
         verbose_name = 'Actor'

@@ -112,6 +112,79 @@
         </p>
     {% endif %}
 
+    <!-- Form section for external persisted fields -->
+    {% if movie.ext_title %}
+        <h5>External title</h5>
+        <p>
+            {{ movie.ext_title }}
+        </p>
+    {% endif %}
+
+    {% if ext_is_orig_title_diff and movie.ext_orig_title %}
+        <h5>External original title</h5>
+        <p>
+            {{ movie.ext_orig_title }}
+        </p>
+    {% endif %}
+
+    {% if movie.ext_release_date %}
+        <h5>External release date</h5>
+        <p>
+            {{ movie.ext_release_date }}
+        </p>
+    {% endif %}
+
+    {% if movie.ext_runtime %}
+        <h5>External runtime</h5>
+        <p>
+            {{ movie.ext_runtime }}
+        </p>
+    {% endif %}
+
+    {% if movie.ext_orig_lang %}
+        <h5>External orig. language</h5>
+        <p>
+            {{ movie.ext_orig_lang }}
+        </p>
+    {% endif %}
+
+    {% if movie.ext_genres %}
+        <h5>External genres</h5>
+        <p>
+            {{ movie.ext_genres }}
+        </p>
+    {% endif %}
+
+    {% if movie.ext_overview %}
+        <h5>External overview</h5>
+        <p>
+            {{ movie.ext_overview }}
+        </p>
+    {% endif %}
+
+    {% if movie.ext_picture %}
+        <p>
+        <a href="{{ movie.ext_picture.url }}" target="_self">
+            <img src="{{ movie.ext_picture.url }}" style="max-height:300px">
+        </a>
+        <p>
+    {% endif %}
+
+    {% if movie.ext_tmdb_id %}
+        <h5>External TMDB id</h5>
+        <p>
+            {{ movie.ext_tmdb_id }}
+        </p>
+    {% endif %}
+
+    {% if movie.ext_imdb_id %}
+        <h5>External IMDB id</h5>
+        <p>
+            {{ movie.ext_imdb_id }}
+        </p>
+    {% endif %}
+
+    <!-- Form section for reviews -->
     <div class="row">
         <div class="col">
             <h5>Movie reviews</h5>

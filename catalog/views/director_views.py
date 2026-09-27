@@ -1,7 +1,5 @@
-from pathlib import Path
 import urllib
 
-from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
@@ -10,7 +8,15 @@ from django.shortcuts import redirect, render, get_object_or_404
 from catalog.config.config import config_settings
 from catalog.models.director import Director
 from catalog.forms.director_forms import DirectorEditForm
-from catalog.src_modules.controller.tmdb_controller import TMDBController, TMDB_CONNECTOR_INFO
+from catalog.services.director_services import set_director_external_data_fields
+from catalog.services.resource_services import (
+    get_person_full_name,
+    save_uploaded_picture_to_resource,
+    )
+from catalog.src_modules.controller.tmdb_controller import (
+    TMDBController,
+    TMDB_CONNECTOR_INFO,
+    )
 from tools.logger.logger import log
 
 controller = TMDBController()
@@ -59,19 +65,15 @@ def upload_director_photo(request, director_id):
     data = {
         'director': director,
         }
+
     if request.method == 'GET':
         return render(request, 'catalog/upload_director_photo.html', data)
 
     # POST
-    upload = request.FILES['director_photo']
-    # TODO: Do not use the file name as given by the user as part of the file name,
-    #  it could contain characters than could cause problems.
-    path = Path(settings.MEDIA_ROOT) / f'{request.user.id}_director_{upload.name}'
-    with open(path, 'wb+') as output:
-        for chunk in upload.chunks():
-            output.write(chunk)
-    director.picture = path.name
-    director.save()
+    director_name = get_person_full_name(director.first_name, director.last_name)
+    uploaded_file = request.FILES['director_photo']
+    save_uploaded_picture_to_resource(director, uploaded_file, director_name)
+
     return redirect('catalog:director', director.id)
 
 
@@ -159,6 +161,10 @@ def tmdb_director_search_form(request, director_id):
             controller.get_client()
 
         tmdb_data = controller.get_search_person(search_director_name, filter_='')
+
+        # if tmdb_data persist its fields to the db and save
+        if tmdb_data:
+            set_director_external_data_fields(director, tmdb_data[0])
 
     return render(request, 'catalog/partials/tmdb_director_search_form.html',
                   context={
