@@ -19,8 +19,14 @@ API_AUTH_TOKEN_PATH = f'api/v{API_VERSION}/token-auth'
 SETTINGS_ID = 1
 DEFAULT_MOVIES_LIST_LIMIT = 2500
 DEFAULT_PEOPLE_LIST_LIMIT = 1000
+DEFAULT_AUTO_FETCH_EXT_RESOURCES_LIMIT = 10
+DEFAULT_AUTO_FETCH_EXT_RESOURCES_SLEEP = 9
+
 MAX_MOVIES_LIST_LIMIT = 3000
 MAX_PEOPLE_LIST_LIMIT = 3000
+MAX_AUTO_FETCH_EXT_RESOURCES_LIMIT = 300
+MIN_AUTO_FETCH_EXT_RESOURCES_SLEEP = 6
+MAX_AUTO_FETCH_EXT_RESOURCES_SLEEP = 30
 
 config_settings = {'settings': None}
 
@@ -180,6 +186,8 @@ def update_config_settings(settings_model):
             id=SETTINGS_ID,
             movies_list_limit=DEFAULT_MOVIES_LIST_LIMIT,
             people_list_limit=DEFAULT_PEOPLE_LIST_LIMIT,
+            auto_fetch_ext_resources_limit=DEFAULT_AUTO_FETCH_EXT_RESOURCES_LIMIT,
+            auto_fetch_ext_resources_sleep=DEFAULT_AUTO_FETCH_EXT_RESOURCES_SLEEP,
         )
 
     config_settings['settings'] = settings

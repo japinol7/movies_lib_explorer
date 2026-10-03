@@ -3,11 +3,12 @@
 {% block title %}MLME - Director Search {% endblock title %}
 
 {% block content %}
-    {% if request.user.is_staff %}
-        <p>
-            <a class="btn btn-dark" href="{% url 'catalog:director_create_form' %}">Create</a>
-        </p>
-    {% endif %}
+    <p>
+        <a class="btn btn-dark" href="{% url 'catalog:director_with_picture_list' %}">Directors with Picture</a>
+            {% if request.user.is_staff %}
+                <a class="btn btn-dark" href="{% url 'catalog:director_create_form' %}">Create</a>
+            {% endif %}
+    </p>
 
     <div class="search-inputs">
       <h3>Search Director</h3>

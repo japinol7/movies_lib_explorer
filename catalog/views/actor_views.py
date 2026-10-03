@@ -1,11 +1,16 @@
+import time
 import urllib
 
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import redirect, render, get_object_or_404
 
-from catalog.config.config import config_settings
+from catalog.config.config import (
+    config_settings,
+    TIME_SLEEP_WHEN_FEED_CONTENT,
+    )
 from catalog.src_modules.import_data.import_data import (
     update_actors_n_movie_actor_links,
     get_data_to_update_actors_n_movie_actor_links,
@@ -56,6 +61,33 @@ def actor_list_search(request):
                       context=data)
     return render(request, "catalog/actor_list.html",
                   context=data)
+
+
+def actor_with_picture_list(request):
+    actors = Actor.objects.all().exclude(picture='')
+    paginator = Paginator(actors, 2)
+    page_num = int(request.GET.get("page", 1))
+
+    if page_num < 1:
+        page_num = 1
+    elif page_num > paginator.num_pages:
+        page_num = paginator.num_pages
+
+    page = paginator.page(page_num)
+
+    data = {
+        "actors": page.object_list,
+        "more_actors": page.has_next(),
+        "next_page": page_num + 1,
+        }
+
+    if request.htmx:
+        if TIME_SLEEP_WHEN_FEED_CONTENT > 0:
+            time.sleep(TIME_SLEEP_WHEN_FEED_CONTENT)
+        return render(
+            request, "catalog/partials/actor_with_picture_list_results.html", data)
+
+    return render(request, "catalog/actor_with_picture_list.html", data)
 
 
 def actor(request, actor_id):

@@ -1,0 +1,17 @@
+{% extends "home/base.html" %}
+{% load humanize %}
+
+{% block title %}MLME - Actor list with picture {% endblock title %}
+
+{% block content %}
+    <p>
+        <a class="btn btn-dark" href="{% url 'catalog:actor_list' %}">Actors</a>
+    </p>
+    <h3>Actors with picture</h3>
+    <br>
+    <p>
+    <div class="grid-wrapper">
+        {% include 'catalog/partials/actor_with_picture_list_results.html' %}
+    </div>
+    </p>
+{% endblock content %}

@@ -1,5 +1,6 @@
 import io
 from datetime import datetime
+import time
 
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
@@ -18,7 +19,11 @@ from catalog.config.config import (
 from catalog.forms.settings_forms import SettingsEditForm
 from catalog.models.movie import Movie
 from catalog.models.settings import Settings
+from catalog.services.movie_services import set_movie_external_data_fields
+from catalog.src_modules.controller.tmdb_controller import TMDBController
 from tools.logger.logger import log
+
+controller = TMDBController()
 
 
 def catalog_settings(request):
@@ -130,3 +135,65 @@ def export_movies_report(request):
                               'data': config_settings['settings'],
                               'is_error': is_error, 'error_msg': error_msg,
                             }))
+
+
+def _fetch_external_movies_data(request):
+    if not controller.client:
+        controller.get_client()
+
+    log_prefix = "Auto Fetch External Movies Data --- "
+    movies = Movie.objects.filter(ext_title__exact=''). \
+        order_by('title', 'director__last_name', 'director__first_name', 'year')
+
+    movies_count = movies.count()
+    processed_count = 0
+    process_max = min(
+        config_settings['settings'].auto_fetch_ext_resources_limit, movies_count)
+
+    for movie in movies:
+        processed_count +=1
+
+        log.info(f"{log_prefix}Process {processed_count:3} of {process_max} movies")
+        log.info(f"{log_prefix}Movie: {movie.title} [{movie.year}]")
+
+        search_movie_title = movie.title
+        search_movie_year = str(movie.year) or ''
+
+        filter_ = f"include_adult=false"
+        if search_movie_year:
+            filter_ += f"&year={search_movie_year}"
+
+        tmdb_data = controller.get_search_movie(search_movie_title, filter_)
+
+        # if tmdb_data persist its fields to the db and save
+        if tmdb_data:
+            set_movie_external_data_fields(movie, tmdb_data[0])
+        else:
+            movie.ext_title = 'not_found'
+            movie.save()
+
+        if processed_count >= process_max:
+            break
+        time.sleep(config_settings['settings'].auto_fetch_ext_resources_sleep)
+
+    log.info(f"{log_prefix}Movies candidates found to change: {movies_count}")
+    log.info(f"{log_prefix}Processed movies: {processed_count} "
+             f"of a max of {process_max}")
+
+
+def fetch_external_movies_data(request):
+    res, error_msg = None, None
+    is_error = False
+    try:
+        _fetch_external_movies_data(request)
+    except Exception as e:
+        is_error = True
+        error_msg = "Error fetching external movies data"
+        log.error("%s. Error msg: %s", error_msg, e)
+
+    return render(
+        request, 'catalog/settings.html',
+        context={
+            'data': config_settings['settings'],
+            'is_error': is_error, 'error_msg': error_msg,
+            })

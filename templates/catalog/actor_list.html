@@ -3,10 +3,12 @@
 {% block title %}MLME - Actor Search {% endblock title %}
 
 {% block content %}
-
     <p>
-        <a class="btn btn-dark" href="{% url 'catalog:calc_new_actors_from_cast' %}"
-            >Calculate new actor links from movies cast without links</a>
+        <a class="btn btn-dark" href="{% url 'catalog:actor_with_picture_list' %}">Actors with Picture</a>
+        {% if request.user.is_staff %}
+            <a class="btn btn-dark" href="{% url 'catalog:calc_new_actors_from_cast' %}"
+                >Calculate new actor links from movies cast without links</a>
+        {% endif %}
     </p>
 
     <div class="search-inputs">

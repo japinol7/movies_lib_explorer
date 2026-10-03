@@ -1,0 +1,17 @@
+{% extends "home/base.html" %}
+{% load humanize %}
+
+{% block title %}MLME - Director list with picture {% endblock title %}
+
+{% block content %}
+    <p>
+        <a class="btn btn-dark" href="{% url 'catalog:director_list' %}">Directors</a>
+    </p>
+    <h3>Directors with picture</h3>
+    <br>
+    <p>
+    <div class="grid-wrapper">
+        {% include 'catalog/partials/director_with_picture_list_results.html' %}
+    </div>
+    </p>
+{% endblock content %}

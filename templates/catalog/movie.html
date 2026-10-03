@@ -170,6 +170,15 @@
         <p>
     {% endif %}
 
+    {% if movie.ext_picture_uri %}
+        <h5>External picture URL</h5>
+        <p>
+            <a href="{{ movie.ext_picture_uri }}" target="_self">
+                {{ movie.ext_picture_uri }}
+            </a>
+        </p>
+    {% endif %}
+
     {% if movie.ext_tmdb_id %}
         <h5>External TMDB id</h5>
         <p>

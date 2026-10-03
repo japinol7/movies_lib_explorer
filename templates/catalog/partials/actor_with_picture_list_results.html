@@ -1,0 +1,34 @@
+{% for actor in actors %}
+    <div class="grid-item">
+        <p>
+            {% if actor.picture %}
+                <a href="{% url 'catalog:actor' actor_id=actor.id %}">
+                    <img src="{{ actor.picture.url }}"
+                         href="{% url 'catalog:upload_actor_photo' actor.id %}"
+                         style="max-height:400px">
+                </a>
+            {% elif not actor.picture and request.user.is_staff %}
+                <a class="btn btn-sm btn-dark" id="id_actor_upload"
+                   href="{% url 'catalog:upload_actor_photo' actor.id %}">Upload Actor Photo</a>
+            {% endif %}
+            <br>
+            <b><a href="{% url 'catalog:actor' actor_id=actor.id %}">
+                {% if actor.first_name %}{{ actor.first_name }}{% endif %}
+                {% if actor.last_name %} {{ actor.last_name }}{% endif %}
+            </a></b><br>
+                {% if actor.ext_birth_date %}Birthdate: {{ actor.ext_birth_date }}{% endif %}
+            <br> <br>
+        </p>
+    </div>
+{% empty %}
+    <i>There are no actors with picture in the database.</i>
+{% endfor %}
+
+{% if more_actors %}
+  <div class="scroll-trigger htmx-settling"
+    hx-get="{% url 'catalog:actor_with_picture_list' %}?page={{next_page}}"
+    hx-trigger="revealed"
+    hx-swap="outerHTML">
+    <img src="/static/img/bars.svg" width="150px" class="htmx-indicator"/>
+  </div>
+{% endif %}

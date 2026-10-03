@@ -38,30 +38,62 @@ def save_uploaded_picture_to_resource(resource, uploaded_file, name):
     resource.save()
 
 
-def save_picture_to_resource(resource, image_url, name):
+def _download_image(image_url):
     response = requests.get(image_url, timeout=10)
     response.raise_for_status()
 
-    content_type = response.headers.get("Content-Type", "")
-    if not content_type.startswith("image/"):
+    content_type = response.headers.get('Content-Type', '')
+    if not content_type.startswith('image/'):
         raise ValueError("URL does not point to an image")
 
-    path = urlparse(image_url).path
-    extension = os.path.splitext(path)[1] or ".jpg"
+    extension = os.path.splitext(urlparse(image_url).path)[1] or '.jpg'
 
+    return response.content, extension
+
+
+def _build_picture_name(resource, name, prefix, extension):
     safe_name = get_valid_filename(str(name))
-    picture_name = (
-        f"ex_im_{resource.__class__.__name__.lower()}"
-        f"_{resource.pk}_{safe_name}{extension}"
-        )
-    picture_name = get_valid_filename(picture_name)
 
-    # Remove the previous file
+    picture_name = (
+        f"{prefix}_im_{resource.__class__.__name__.lower()}"
+        f"_{resource.pk}_{safe_name}{extension}")
+
+    return get_valid_filename(picture_name)
+
+
+def save_picture_to_resource_ext_even_if_already_set(
+    resource, image_url, name
+    ):
+    """Saves a picture to ext_picture, replacing the existing one."""
+    content, extension = _download_image(image_url)
+
+    picture_name = _build_picture_name(
+        resource, name, prefix='ex', extension=extension)
+
     if resource.ext_picture:
         resource.ext_picture.delete(save=False)
 
     resource.ext_picture.save(
         picture_name,
-        ContentFile(response.content),
+        ContentFile(content),
+        save=True,
+        )
+
+
+def save_picture_to_resource(
+        resource, image_url, name
+    ):
+    """Saves a picture to the resource picture if one isn't already set."""
+    if resource.picture:
+        return
+
+    content, extension = _download_image(image_url)
+
+    picture_name = _build_picture_name(
+        resource, name, prefix='up', extension=extension)
+
+    resource.picture.save(
+        picture_name,
+        ContentFile(content),
         save=True,
         )

@@ -1,11 +1,16 @@
+import time
 import urllib
 
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import redirect, render, get_object_or_404
 
-from catalog.config.config import config_settings
+from catalog.config.config import (
+    config_settings,
+    TIME_SLEEP_WHEN_FEED_CONTENT,
+    )
 from catalog.models.director import Director
 from catalog.forms.director_forms import DirectorEditForm
 from catalog.services.director_services import set_director_external_data_fields
@@ -52,6 +57,33 @@ def director_list_search(request):
                       context=data)
     return render(request, "catalog/director_list.html",
                   context=data)
+
+
+def director_with_picture_list(request):
+    directors = Director.objects.all().exclude(picture='')
+    paginator = Paginator(directors, 2)
+    page_num = int(request.GET.get("page", 1))
+
+    if page_num < 1:
+        page_num = 1
+    elif page_num > paginator.num_pages:
+        page_num = paginator.num_pages
+
+    page = paginator.page(page_num)
+
+    data = {
+        "directors": page.object_list,
+        "more_directors": page.has_next(),
+        "next_page": page_num + 1,
+        }
+
+    if request.htmx:
+        if TIME_SLEEP_WHEN_FEED_CONTENT > 0:
+            time.sleep(TIME_SLEEP_WHEN_FEED_CONTENT)
+        return render(
+            request, "catalog/partials/director_with_picture_list_results.html", data)
+
+    return render(request, "catalog/director_with_picture_list.html", data)
 
 
 def director(request, director_id):

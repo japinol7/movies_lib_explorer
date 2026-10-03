@@ -1,0 +1,34 @@
+{% for director in directors %}
+    <div class="grid-item">
+        <p>
+            {% if director.picture %}
+                <a href="{% url 'catalog:director' director_id=director.id %}">
+                    <img src="{{ director.picture.url }}"
+                         href="{% url 'catalog:upload_director_photo' director.id %}"
+                         style="max-height:400px">
+                </a>
+            {% elif not director.picture and request.user.is_staff %}
+                <a class="btn btn-sm btn-dark" id="id_director_upload"
+                   href="{% url 'catalog:upload_director_photo' director.id %}">Upload Director Photo</a>
+            {% endif %}
+            <br>
+            <b><a href="{% url 'catalog:director' director_id=director.id %}">
+                {% if director.first_name %}{{ director.first_name }}{% endif %}
+                {% if director.last_name %} {{ director.last_name }}{% endif %}
+            </a></b><br>
+                {% if director.ext_birth_date %}Birthdate: {{ director.ext_birth_date }}{% endif %}
+            <br> <br>
+        </p>
+    </div>
+{% empty %}
+    <i>There are no directors with picture in the database.</i>
+{% endfor %}
+
+{% if more_directors %}
+  <div class="scroll-trigger htmx-settling"
+    hx-get="{% url 'catalog:director_with_picture_list' %}?page={{next_page}}"
+    hx-trigger="revealed"
+    hx-swap="outerHTML">
+    <img src="/static/img/bars.svg" width="150px" class="htmx-indicator"/>
+  </div>
+{% endif %}
