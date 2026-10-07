@@ -163,6 +163,7 @@ MOVIES_EXPORT_FIELD_TITLES = [
     movies_export_field_titles('director_ln', MOVIES_EXPORT_FIELD_NORMAL_WIDTH),
     movies_export_field_titles('production_company', MOVIES_EXPORT_FIELD_NORMAL_WIDTH),
     movies_export_field_titles('cinematography', MOVIES_EXPORT_FIELD_NORMAL_WIDTH),
+    movies_export_field_titles('ext_picture_url', 70),
     movies_export_field_titles('picture', 70),
     movies_export_field_titles('producer', MOVIES_EXPORT_FIELD_NORMAL_WIDTH),
     movies_export_field_titles('writer', MOVIES_EXPORT_FIELD_NORMAL_WIDTH),

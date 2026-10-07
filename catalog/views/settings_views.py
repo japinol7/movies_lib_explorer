@@ -73,6 +73,7 @@ def _get_movies_export_field_values(movie, text_left__format, date_format):
         {'val': movie.director.last_name, 'format': text_left__format},
         {'val': movie.production_company, 'format': None},
         {'val': movie.cinematography, 'format': text_left__format},
+        {'val': movie.ext_picture_uri, 'format': text_left__format},
         {'val': movie.picture.name, 'format': text_left__format},
         {'val': movie.producer, 'format': text_left__format},
         {'val': movie.writer, 'format': text_left__format},
