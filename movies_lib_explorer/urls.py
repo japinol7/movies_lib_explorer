@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
-# from django.views.generic.base import RedirectView
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.views.generic.base import RedirectView
 
 import debug_toolbar
 
@@ -28,6 +29,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     # path('favicon.ico', RedirectView.as_view(url='/static/favicon.ico')),
+    path(
+        "favicon.ico",
+        RedirectView.as_view(
+            url=staticfiles_storage.url("favicon.ico"), permanent=True
+            ),
+        ),
     path('home/', include('home.urls')),
     path('', home_views.home),
     path('catalog/', include('catalog.urls')),
