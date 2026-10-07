@@ -20,7 +20,7 @@ the TMDB REST API that the user can use to get movie data from TMDB.
 
 	program: MLME. Movies Library Metadata Explorer using Django.
     name as a package: movies_lib_explorer 
-	version: 0.2.0
+	version: 0.2.1
 	author: Joan A. Pinol
 	author_nickname: japinol
 	author_gitHub: japinol7
@@ -265,6 +265,33 @@ http://127.0.0.1:8000/
 python manage.py test --settings=movies_lib_explorer.test_settings
 <br> <br>
 
+
+## To make this app server work - Empty database version without demo data
+
+	Do this:
+	    1. Clone this repository in your local system.
+	    2. Go to its folder in your system.
+	       2.1 Delete the demo database file: db.sqlite3
+	    3. $ pip install -r requirements.txt
+	    4. Follow the instructions we put in this file regarding the django app secret key
+           ./extras/movies_lib_explorer_secret_keys/movies_lib_explorer_secret_key.key
+	    5. Optional; only if you want to use the TMDB integration: 
+	          Follow the instructions we put in this file regarding the TMDB API key
+               ./extras/movies_lib_explorer_secret_keys/tmdb_api_key.key  
+	    6. The first time you must create a new database with the right tables this way:
+	       $ python manage.py migrate
+	       4.1 You can also create an admin user this way, so you can log in, create other users, etc:
+	          $ python manage.py createsuperuser
+	    7. Run as local environment:
+	       $ python manage.py runserver --settings=movies_lib_explorer.local_settings
+	    8. Open the website indicated in the console in your browser.
+	       Example: http://127.0.0.1:8000/
+	    9. Optional: Load the demo data:
+	       The first time, press the button [Load Initial Data] on the main web page.
+	       This imports sample data with several movies, directors and actors.
+	       This also creates links between actors and movies.
+<br> <br>
+
   
 ## To make this app server work - Quick start with data already loaded
 
@@ -285,29 +312,3 @@ python manage.py test --settings=movies_lib_explorer.test_settings
 	       $ python manage.py runserver --settings=movies_lib_explorer.local_settings
 	    8. Open the website indicated in the console in your browser.
 	       Example: http://127.0.0.1:8000/
-<br> <br>
-
-
-## To make this app server work - Recommended steps
-
-	Do this:
-	    1. Clone this repository in your local system.
-	    2. Go to its folder in your system.
-	       2.1 Delete the demo database file: db.sqlite3
-	    3. $ pip install -r requirements.txt
-	    4. Follow the instructions we put in this file regarding the django app secret key
-           ./extras/movies_lib_explorer_secret_keys/movies_lib_explorer_secret_key.key
-	    5. Optional; only if you want to use the TMDB integration: 
-	          Follow the instructions we put in this file regarding the TMDB API key
-               ./extras/movies_lib_explorer_secret_keys/tmdb_api_key.key  
-	    6. The first time you must create a new database with the right tables this way:
-	       $ python manage.py migrate
-	       4.1 You can also create an admin user this way, so you can log in, create other users, etc:
-	          $ python manage.py createsuperuser
-	    7. Run as local environment:
-	       $ python manage.py runserver --settings=movies_lib_explorer.local_settings
-	    8. Open the website indicated in the console in your browser.
-	       Example: http://127.0.0.1:8000/
-	    9. The first time, press the button [Load Initial Data] on the main web page.
-	       This imports sample data with several movies, directors and actors.
-	       This also creates links between actors and movies.
